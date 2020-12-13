@@ -28,4 +28,5 @@
 
 <style>
   @import './assets/css/icons.css';
+  @import './assets/css/style.css';
 </style>

@@ -6,7 +6,7 @@
         <div class="col text-center">
           <img src="../assets/logo.png" alt="MINISITIO" height="150">
         </div>
-        <div class="col text-right py-4">
+        <div class="col text-right pt-5">
           <p><span class="badge badge-warning badge-baixe-o-app">BAIXE O APP</span></p>
           <a href="https://play.google.com/store/apps/details?id=net.mycardcity" target="_blank">
             <img src="../assets/img/google-play-badge.png" alt='Disponível no Google Play' height="38">
