@@ -1,0 +1,20 @@
+.icon {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  background: #777676;
+  mask-size: cover;
+}
+.icon:hover,
+.icon:focus {
+  background: #ffcc29;
+}
+.icon-facebook {
+  mask: url(../icons/facebook-square-brands.svg) no-repeat;
+}
+.icon-twitter {
+  mask: url(../icons/twitter-square-brands.svg) no-repeat;
+}
+.icon-youtube {
+  mask: url(../icons/youtube-square-brands.svg) no-repeat;
+}
