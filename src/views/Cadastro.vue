@@ -24,7 +24,7 @@
                 <div class="row">
                   <div class="col-md-12 mb-3">
                     <label for="lastName">CPF/CNPJ</label>
-                    <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                    <the-mask :mask="['###.###.###-##', '##.###.###/####-##']" class="form-control" autocomplete="off" placeholder="" id="cpf_cnpj" name="cpf_cnpj" />
                     <div class="invalid-feedback">
                       Valid last name is required.
                     </div>
@@ -34,7 +34,7 @@
                 <div class="row">
                   <div class="col-md-12 mb-3">
                     <label for="phone">Celular <span class="text-muted">(com WhatsApp)</span></label>
-                    <input type="text" class="form-control" id="phone" placeholder="" value="" required="">
+                    <the-mask :mask="['(##) ####-####', '(##) #####-####']" class="form-control" placeholder="" id="phone" name="phone" />
                     <div class="invalid-feedback">
                       Valid last name is required.
                     </div>
@@ -118,3 +118,11 @@
     </div>
   </div>
 </template>
+
+<script>
+import {mask} from 'vue-the-mask'
+
+export default {
+  directives: {mask}
+}
+</script>

@@ -13,7 +13,7 @@
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title">R$ 90,00 <small class="text-muted">/ anual</small></h1>
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Comprar</button>
+            <button type="button" class="btn btn-lg btn-block btn-outline-primary" @click="comprar()">Comprar</button>
           </div>
         </div>
         <div class="card mb-4 shadow-sm">
@@ -22,7 +22,7 @@
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title">R$ 240,00 <small class="text-muted">/ anual</small></h1>
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Comprar</button>
+            <button type="button" class="btn btn-lg btn-block btn-outline-primary" @click="comprar()">Comprar</button>
           </div>
         </div>
         <div class="card mb-4 shadow-sm">
@@ -31,7 +31,7 @@
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title">R$ 700,00 <small class="text-muted">/ anual</small></h1>
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Comprar</button>
+            <button type="button" class="btn btn-lg btn-block btn-outline-primary" @click="comprar()">Comprar</button>
           </div>
         </div>
         <div class="card mb-4 shadow-sm">
@@ -40,7 +40,7 @@
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title">R$ 1.200,00 <small class="text-muted">/ anual</small></h1>
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Comprar</button>
+            <button type="button" class="btn btn-lg btn-block btn-outline-primary" @click="comprar()">Comprar</button>
           </div>
         </div>
 
@@ -48,3 +48,19 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'VendaAfiliado',
+
+  data() {
+    return {}
+  },
+
+  methods: {
+    comprar() {
+      this.$router.push({ name: `venda-finalizar` })
+    }
+  }
+}
+</script>
