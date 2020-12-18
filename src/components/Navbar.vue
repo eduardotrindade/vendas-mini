@@ -6,8 +6,11 @@
       </button>
       <div class="collapse navbar-collapse justify-content-md-center">
         <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link text-uppercase" href="#">Compra de espaços</a>
+          <li class="nav-item">
+            <a class="nav-link text-uppercase" href="/">Compra de espaços</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-uppercase" href="/cadastro">Solicite seu cadastro</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-uppercase" href="#">Trabalhe conosco</a>
