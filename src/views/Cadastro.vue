@@ -106,7 +106,7 @@
                 <hr class="mb-4">
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" id="save-info">
-                  <label class="custom-control-label" for="save-info">Eu li e concordo com os termos de uso e privacidade.</label>
+                  <label class="custom-control-label" for="save-info">Ao solicitar cadastro, você concorda com nossos <strong>Termos</strong> e <strong>Políticas de Privacidade</strong>.</label>
                 </div>
               </div>
             </div>
