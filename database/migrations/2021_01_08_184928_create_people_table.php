@@ -24,6 +24,8 @@ class CreatePeopleTable extends Migration
             $table->string('complement', 150)->nullable();
             $table->string('neighborhood', 100)->nullable();
             $table->string('zip_code', 8);
+            $table->string('indicated_by', 100);
+            $table->text('resume');
             $table->tinyInteger('terms_accepted');
             $table->tinyInteger('is_active')->default(false);
             $table->foreignId('city_id')->constrained();
