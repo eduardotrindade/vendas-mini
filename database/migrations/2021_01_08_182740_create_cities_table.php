@@ -18,7 +18,6 @@ class CreateCitiesTable extends Migration
             $table->string('name', 100);
             $table->tinyInteger('is_capital');
             $table->foreignId('state_id')->constrained();
-            $table->timestamps();
         });
     }
 
