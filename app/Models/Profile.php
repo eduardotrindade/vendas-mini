@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
-    use HasFactory;
+    public const ADMINISTRATOR = 1;
+    public const MASTER = 2;
+    public const AFILIADO = 3;
 }
