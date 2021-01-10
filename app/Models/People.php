@@ -52,6 +52,6 @@ class People extends Model
 {
     protected $fillable = [
         'name', 'document_number', 'cellphone', 'email', 'address', 'number', 'complement', 'neighborhood',
-        'zip_code', 'city_id', 'indicated_by', 'resume', 'terms_accepted'
+        'zip_code', 'city_id', 'indicated_by', 'resume', 'terms_accepted', 'is_active', 'profile_id'
     ];
 }

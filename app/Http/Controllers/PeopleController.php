@@ -29,4 +29,9 @@ class PeopleController extends Controller
     {
         return $people;
     }
+
+    public function update(People $people, PeopleRequest $request)
+    {
+        return $this->peopleService->update($people, $request->validated());
+    }
 }
