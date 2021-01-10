@@ -24,4 +24,9 @@ class PeopleController extends Controller
     {
         return $this->peopleService->insert($request->validated());
     }
+
+    public function show(People $people)
+    {
+        return $people;
+    }
 }
