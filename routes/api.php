@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/people', [PeopleController::class, 'index']);
 Route::post('/people', [PeopleController::class, 'store']);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
