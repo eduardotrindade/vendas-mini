@@ -5,35 +5,52 @@
       <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
     </div>
     <div class="container">
-      <form class="form-signin">
+      <ValidationObserver ref="$validator" tag="form" class="form-signin">
         <div class="text-center mb-4">
           <h1 class="h3 mb-3 font-weight-normal">Informe seu CPF/CNPJ</h1>
         </div>
-        <div class="form-label-group mb-3">
-          <the-mask :mask="['###.###.###-##', '##.###.###/####-##']" class="form-control" autocomplete="off" placeholder="000.000.000-00 ou 00.000.000/0000-00" id="cpf_cnpj" name="cpf_cnpj" v-model="cpf_cnpj" />
-        </div>
+        <ValidationProvider rules="required" v-slot="{ classes }" name="numero" tag="div" class="form-label-group mb-3">
+          <the-mask :mask="['###.###.###-##', '##.###.###/####-##']" class="form-control" :class="classes" autocomplete="off" placeholder="000.000.000-00 ou 00.000.000/0000-00" id="document_number" name="document_number" v-model="document_number" />
+          <div class="invalid-feedback">{{ errorMessages.document_number }}</div>
+        </ValidationProvider>
         <button class="btn btn-lg btn-primary btn-block" type="button" @click="continuar()">Continuar</button>
-      </form>
+      </ValidationObserver>
     </div>
   </div>
 </template>
 
 <script>
+import ValidationMixin from '@/mixins/validation'
+import PeopleApi from '@/api/people'
+
 export default {
   name: "HomePage",
+  mixins: [ValidationMixin],
 
   data() {
     return {
-      cpf_cnpj: null
+      document_number: null,
+      errorMessages: {
+        document_number: 'Imforme o CPF/CNPJ para continuar.'
+      }
     }
   },
 
   methods: {
     continuar() {
-      if(!this.cpf_cnpj) return false
-      console.log(this.cpf_cnpj)
-      const proximo = this.cpf_cnpj.length > 11 ? 'master' : 'afiliado'
-      this.$router.push({ name: `venda-${proximo}` })
+      return this.$refs.$validator.validate().then(isValid => {
+        if (!isValid) return Promise.reject()
+
+        PeopleApi.getByDocumentNumber(this.document_number)
+          .then(people => {
+            this.$store.dispatch('setPeople', people);
+            this.$router.push({ name: 'products' })
+          }).catch(error => {
+            let errors = error.data.errors;
+            this.setValidationErrors(errors);
+            return Promise.reject(error);
+          })
+      })
     }
   }
 }

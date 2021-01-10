@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import HomePage from '../views/HomePage.vue'
-import Cadastro from '../views/Cadastro.vue'
-import VendaAfiliado from '../views/VendaAfiliado.vue'
-import VendaMaster from '../views/VendaMaster.vue'
-import VendaFinalizar from '../views/VendaFinalizar.vue'
+import HomePage from '@/views/HomePage'
+import Products from '@/views/Products'
+import VendaFinalizar from '@/views/VendaFinalizar'
+import Cadastro from '@/views/Cadastro'
 
 Vue.use(VueRouter)
 
@@ -16,25 +15,20 @@ const routes = [
     component: HomePage,
   },
   {
-    path: '/cadastro',
-    name: 'cadastro',
-    component: Cadastro,
-  },
-  {
-    path: '/venda/afiliado',
-    name: 'venda-afiliado',
-    component: VendaAfiliado,
-  },
-  {
-    path: '/venda/master',
-    name: 'venda-master',
-    component: VendaMaster,
+    path: '/produtos',
+    name: 'products',
+    component: Products,
   },
   {
     path: '/venda/finalizar',
     name: 'venda-finalizar',
     component: VendaFinalizar,
-  }
+  },
+  {
+    path: '/cadastro',
+    name: 'cadastro',
+    component: Cadastro,
+  },
 ]
 
 const router = new VueRouter({

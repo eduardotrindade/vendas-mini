@@ -8,16 +8,24 @@
       </div>
     </main>
     <Footer />
+    <Loading v-show="isLoading"></Loading>
   </div>
 </template>
 
 <script>
-  import Header from './components/Header.vue';
-  import Navbar from './components/Navbar.vue';
-  import Footer from './components/Footer.vue';
+  import Header from '@/components/Header';
+  import Navbar from '@/components/Navbar';
+  import Footer from '@/components/Footer';
+  import Loading from '@/components/Loading'
+  import Toasts  from '@/mixins/toasts'
+  import { mapGetters } from 'vuex'
 
   export default {
-    components: { Header, Navbar, Footer }
+    components: { Header, Navbar, Footer, Loading },
+    mixins: [ Toasts ],
+    computed: {
+      ...mapGetters(['isLoading'])
+    },
   }
 </script>
 
