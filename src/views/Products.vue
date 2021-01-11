@@ -16,7 +16,8 @@
             <h1 class="card-title pricing-card-title">
               <span v-if="product.quantity">R$ {{ product.price }}</span>
               <input v-else type="text" class="form-control" placeholder="Digite o valor" autocomplete="off" name="valor">
-              <small class="text-muted">/ anual</small>
+              <small class="text-muted" v-if="product.quantity">/ lote</small>
+              <small class="text-muted" v-else>/ parcela</small>
             </h1>
             <button type="button" class="btn btn-lg btn-block btn-outline-primary" @click="buy(product)">Comprar</button>
           </div>
@@ -47,8 +48,9 @@ export default {
   },
 
   methods: {
-    buy() {
-      this.$router.push({ name: `venda-finalizar` })
+    buy(product) {
+      this.$store.dispatch('setProduct', product)
+      this.$router.push({ name: `finalize-order` })
     }
   },
 

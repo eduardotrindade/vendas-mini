@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 import HomePage from '@/views/HomePage'
 import Products from '@/views/Products'
-import VendaFinalizar from '@/views/VendaFinalizar'
+import FinalizeOrder from '@/views/FinalizeOrder'
 import Cadastro from '@/views/Cadastro'
 
 Vue.use(VueRouter)
@@ -20,9 +20,9 @@ const routes = [
     component: Products,
   },
   {
-    path: '/venda/finalizar',
-    name: 'venda-finalizar',
-    component: VendaFinalizar,
+    path: '/finalizar-compra',
+    name: 'finalize-order',
+    component: FinalizeOrder,
   },
   {
     path: '/cadastro',

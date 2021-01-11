@@ -14,15 +14,16 @@
           <ul class="list-group mb-3">
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
-                <h6 class="my-0">10 unidades</h6>
+                <h6 class="my-0" v-if="product.quantity">{{ product.quantity }} {{ product.description }}</h6>
+                <h6 class="my-0" v-else>{{ product.description }}</h6>
                 <small class="text-muted">Compra de Espaços</small>
               </div>
-              <span class="text-muted">R$ 120,00</span>
+              <span class="text-muted">R$ {{ product.price }}</span>
             </li>
 
             <li class="list-group-item d-flex justify-content-between">
               <span>Total</span>
-              <strong>R$ 120,00</strong>
+              <strong>R$ {{ product.price }}</strong>
             </li>
           </ul>
         </div>
@@ -32,18 +33,18 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">Nome</label>
-                <p>Felipe Martins</p>
+                <p>{{ people.name }}</p>
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="email">E-mail</label>
-                <p>felipemjesus@gmail.com</p>
+                <p>{{ people.email }}</p>
               </div>
             </div>
 
             <div class="mb-3">
               <label for="address">Endereço</label>
-              <p>SHN Quadra 2 Bloco A, Sala 1010</p>
+              <p>{{ people.address }}, {{ people.number }}, {{ people.complement }}, {{ people.neighborhood }}</p>
             </div>
 
             <div class="row">
@@ -57,7 +58,7 @@
               </div>
               <div class="col-md-3 mb-3">
                 <label for="zip">CEP</label>
-                <p>70.702-000</p>
+                <p>{{ people.zip_code }}</p>
               </div>
             </div>
 
@@ -70,3 +71,24 @@
     </div>
   </div>
 </template>
+
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+  name: 'FinalizeOrder',
+  computed: {
+    ...mapGetters(['people', 'product']),
+  },
+
+  data() {
+    return {}
+  },
+
+  created() {
+    if (!this.people.id || !this.product.id) {
+      this.$router.push({ name: `home` })
+    }
+  },
+}
+</script>

@@ -7,9 +7,10 @@ import store from './store'
 import VueTheMask from 'vue-the-mask'
 Vue.use(VueTheMask)
 
-// Bootstrap Components
-import { ToastPlugin } from 'bootstrap-vue';
-Vue.use(ToastPlugin);
+// VueSweetalert2
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+Vue.use(VueSweetalert2);
 
 // Form Validations
 import { ValidationObserver, ValidationProvider, configure, extend, localize } from 'vee-validate';

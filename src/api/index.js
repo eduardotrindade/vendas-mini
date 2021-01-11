@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { cacheAdapterEnhancer } from 'axios-extensions';
 import store from '@/store';
+import EventBus from '@/event-bus'
 
 const ApiInstance = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL,
@@ -43,7 +44,7 @@ function errorHandler(error) {
     rejectObject = error.response;
     errorMessage = error.response.data.message;
 
-    if (error.response.status === 409) {
+    if (error.response.status === 422) {
       if (error.response.data.errors) {
         extraErrors = error.response.data.errors;
       }
@@ -55,7 +56,7 @@ function errorHandler(error) {
   }
 
   stopLoading();
-  this.$root.$emit('alert-error', errorMessage, extraErrors);
+  EventBus.$emit('alert-error', errorMessage, extraErrors);
 
   return Promise.reject(rejectObject);
 }

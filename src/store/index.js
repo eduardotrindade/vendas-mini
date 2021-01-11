@@ -8,10 +8,12 @@ export default new Vuex.Store({
     loadCount: 0,
     isLoading: false,
     people: {},
+    product: {},
   },
   getters: {
     isLoading: state => state.isLoading,
     people: state => state.people,
+    product: state => state.product,
   },
   mutations: {
     changeLoadingState(state, value) {
@@ -20,7 +22,11 @@ export default new Vuex.Store({
     },
 
     setPeople(state, value) {
-      state.people = value;
+      state.people = value
+    },
+
+    setProduct(state, value) {
+      state.product = value
     },
   },
   actions: {
@@ -33,7 +39,11 @@ export default new Vuex.Store({
     },
 
     setPeople(context, people) {
-      context.commit('setPeople', people);
+      context.commit('setPeople', people)
+    },
+
+    setProduct(context, product) {
+      context.commit('setProduct', product)
     },
   },
   modules: {

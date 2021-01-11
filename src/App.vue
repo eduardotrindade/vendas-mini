@@ -17,12 +17,12 @@
   import Navbar from '@/components/Navbar';
   import Footer from '@/components/Footer';
   import Loading from '@/components/Loading'
-  import Toasts  from '@/mixins/toasts'
+  import SweetAlert2  from '@/mixins/sweetalert2'
   import { mapGetters } from 'vuex'
 
   export default {
     components: { Header, Navbar, Footer, Loading },
-    mixins: [ Toasts ],
+    mixins: [ SweetAlert2 ],
     computed: {
       ...mapGetters(['isLoading'])
     },
