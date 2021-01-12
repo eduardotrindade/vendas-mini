@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PeopleRequest;
 use App\Models\People;
 use App\Services\PeopleService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class PeopleController extends Controller
@@ -38,9 +39,15 @@ class PeopleController extends Controller
 
     public function showDocumentNumber(Request $request)
     {
-        return People::query()->where([
-            'document_number' => $request->documentNumber,
-            'is_active' => true
-        ])->firstOrFail();
+        try {
+            return People::query()->where([
+                'document_number' => $request->documentNumber,
+                'is_active' => true
+            ])->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            return response()
+                ->json(['message' => 'CPF/CNPJ não encontrado. Favor entrar em contato conosco.'])
+                ->setStatusCode(404);
+        }
     }
 }
