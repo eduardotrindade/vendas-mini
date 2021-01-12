@@ -8,7 +8,7 @@
       </p>
     </div>
     <div class="container">
-      <ValidationObserver ref="$validator" tag="form" class="form-signin">
+      <ValidationObserver ref="$validator" tag="form" class="form-signin" @submit.prevent="verifyDocumentNumber">
         <div class="text-center mb-4">
           <h1 class="h3 mb-3 font-weight-normal">Informe seu CPF/CNPJ</h1>
         </div>
@@ -25,7 +25,7 @@
           />
           <div class="invalid-feedback">{{ errorMessages.document_number }}</div>
         </ValidationProvider>
-        <button class="btn btn-lg btn-primary btn-block" type="button" @click="continueButton()">Continuar</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Continuar</button>
       </ValidationObserver>
     </div>
   </div>
@@ -49,7 +49,7 @@ export default {
   },
 
   methods: {
-    continueButton() {
+    verifyDocumentNumber() {
       return this.$refs.$validator.validate().then(isValid => {
         if (!isValid) return Promise.reject()
 

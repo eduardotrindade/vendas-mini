@@ -33,7 +33,7 @@ export default {
     },
 
     _createVNodes(message, extraMessages = []) {
-      let messageNode = `<span>${message}</span>`, ul
+      let messageNode = `<span>${message}</span>`, ul = ''
 
       if (extraMessages.length) {
         let li = extraMessages.map(e => `<li>${e}</span>`)
