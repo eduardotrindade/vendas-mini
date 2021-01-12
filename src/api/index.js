@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { cacheAdapterEnhancer } from 'axios-extensions';
-import store from '@/store';
+import axios from 'axios'
+import { cacheAdapterEnhancer } from 'axios-extensions'
+import store from '@/store'
 import EventBus from '@/event-bus'
 
 const ApiInstance = axios.create({
@@ -10,55 +10,52 @@ const ApiInstance = axios.create({
     'Accept': 'application/json'
   },
   adapter: cacheAdapterEnhancer(axios.defaults.adapter, { enabledByDefault: false }),
-});
+})
 
-ApiInstance.interceptors.request.use(requestInterceptor, errorHandler);
-ApiInstance.interceptors.response.use(responseInterceptor, errorHandler);
+ApiInstance.interceptors.request.use(requestInterceptor, errorHandler)
+ApiInstance.interceptors.response.use(responseInterceptor, errorHandler)
 
 function requestInterceptor(config) {
-  startLoading();
-  return config;
+  startLoading()
+  return config
 }
 
 function responseInterceptor(response) {
-  stopLoading();
-  return response;
+  stopLoading()
+  return response
 }
 
 function startLoading() {
-  store.dispatch('startLoading');
+  store.dispatch('startLoading')
 }
 
 function stopLoading() {
-  store.dispatch('stopLoading');
+  store.dispatch('stopLoading')
 }
 
 function errorHandler(error) {
-  let rejectObject = null, errorMessage = '', extraErrors = [];
+  let rejectObject = null, errorMessage = '', extraErrors = []
   if (error.response) {
     if (error.response.status === 401) {
-      window.location = process.env.BASE_URL;
-      return;
+      window.location = process.env.BASE_URL
+      return
     }
 
-    rejectObject = error.response;
-    errorMessage = error.response.data.message;
-
-    if (error.response.status === 422) {
-      if (error.response.data.errors) {
-        extraErrors = error.response.data.errors;
-      }
+    rejectObject = error.response
+    errorMessage = error.response.data.message
+    if (error.response.status === 422 && error.response.data.errors) {
+      extraErrors = error.response.data.errors
     }
 
   } else if (error.request) {
-    rejectObject = error;
-    errorMessage = 'Não foi possível completar a requisição. Por favor, verifique se a sua conexão está estável ou entre em contato com suporte de TI da sua instituição.';
+    rejectObject = error
+    errorMessage = 'Não foi possível completar a requisição. Por favor, verifique se a sua conexão está estável ou entre em contato com suporte de TI da sua instituição.'
   }
 
-  stopLoading();
-  EventBus.$emit('alert-error', errorMessage, extraErrors);
+  stopLoading()
+  EventBus.$emit('alert-error', errorMessage, extraErrors)
 
-  return Promise.reject(rejectObject);
+  return Promise.reject(rejectObject)
 }
 
-export default ApiInstance;
+export default ApiInstance

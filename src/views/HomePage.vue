@@ -57,9 +57,7 @@ export default {
           .then(people => {
             this.$store.dispatch('setPeople', people)
             this.$router.push({ name: 'products' })
-          }).catch(error => {
-            return Promise.reject(error)
-          })
+          }).catch(() => { })
       })
     }
   }

@@ -21,8 +21,6 @@ export default {
         title: 'Sucesso!',
         icon: 'success',
         html: this._createVNodes(message),
-        showConfirmButton: false,
-        timer: 1500
       })
     },
 
@@ -31,8 +29,6 @@ export default {
         title: 'Atenção!',
         icon: 'warning',
         html: this._createVNodes(message),
-        showConfirmButton: false,
-        timer: 1500
       })
     },
 

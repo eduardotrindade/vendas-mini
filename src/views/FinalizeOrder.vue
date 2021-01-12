@@ -64,7 +64,7 @@
 
             <hr class="mb-4">
 
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Realizar pagamento</button>
+            <button class="btn btn-primary btn-lg btn-block" type="button" @click="finalize()">Realizar pagamento</button>
           </form>
         </div>
       </div>
@@ -74,6 +74,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import EventBus from '@/event-bus'
+import OrderApi from '@/api/order'
 
 export default {
   name: 'FinalizeOrder',
@@ -83,6 +85,23 @@ export default {
 
   data() {
     return {}
+  },
+
+  methods: {
+    finalize() {
+      const order = {
+        people_id: this.people.id,
+        product_id: this.product.id,
+        amount_paid: this.product.price,
+      }
+
+      OrderApi.insert(order)
+        .then(order => {
+          console.log(order)
+          EventBus.$emit('alert-success', 'Parabéns!!! Compra finalizada com sucesso.');
+          this.$router.push({ name: `home` })
+        }).catch(() => { })
+    },
   },
 
   created() {
