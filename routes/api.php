@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\PeopleController;
-use App\Http\Controllers\ProfilesController;
+use App\Http\Controllers\{OrdersController, PeopleController, ProfilesController};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +22,8 @@ Route::put('/people/{people}', [PeopleController::class, 'update']);
 Route::post('/people/document-number', [PeopleController::class, 'showDocumentNumber']);
 
 Route::get('/profiles/{profile}/products', [ProfilesController::class, 'showProducts']);
+
+Route::post('/orders', [OrdersController::class, 'store']);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
