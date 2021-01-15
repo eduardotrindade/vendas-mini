@@ -18,12 +18,12 @@
                 <h6 class="my-0" v-else>{{ product.description }}</h6>
                 <small class="text-muted">Compra de Espaços</small>
               </div>
-              <span class="text-muted">R$ {{ product.price }}</span>
+              <span class="text-muted">{{ product.price | formatMoney }}</span>
             </li>
 
             <li class="list-group-item d-flex justify-content-between">
               <span>Total</span>
-              <strong>R$ {{ product.price }}</strong>
+              <strong>{{ product.price | formatMoney }}</strong>
             </li>
           </ul>
         </div>
@@ -32,32 +32,32 @@
           <form class="needs-validation" novalidate="">
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label for="firstName">Nome</label>
+                <label>Nome</label>
                 <p>{{ people.name }}</p>
               </div>
 
               <div class="col-md-6 mb-3">
-                <label for="email">E-mail</label>
+                <label>E-mail</label>
                 <p>{{ people.email }}</p>
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="address">Endereço</label>
+              <label>Endereço</label>
               <p>{{ people.address }}, {{ people.number }}, {{ people.complement }}, {{ people.neighborhood }}</p>
             </div>
 
             <div class="row">
               <div class="col-md-5 mb-3">
-                <label for="country">Cidade</label>
+                <label>Cidade</label>
                 <p>Brasília</p>
               </div>
               <div class="col-md-4 mb-3">
-                <label for="state">Estado</label>
+                <label>Estado</label>
                 <p>Distrito Federal</p>
               </div>
               <div class="col-md-3 mb-3">
-                <label for="zip">CEP</label>
+                <label>CEP</label>
                 <p>{{ people.zip_code }}</p>
               </div>
             </div>

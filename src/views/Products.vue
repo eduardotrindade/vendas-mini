@@ -14,10 +14,10 @@
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title">
-              <span v-if="product.quantity">R$ {{ product.price }}</span>
+              <span v-if="product.quantity">{{ product.price | formatMoney }}</span>
               <input v-else type="text" class="form-control" placeholder="Digite o valor" autocomplete="off" name="valor">
-              <small class="text-muted" v-if="product.quantity">/ lote</small>
-              <small class="text-muted" v-else>/ parcela</small>
+              <small class="text-muted" v-if="product.quantity">/lote</small>
+              <small class="text-muted" v-else>/parcela</small>
             </h1>
             <button type="button" class="btn btn-lg btn-block btn-outline-primary" @click="buy(product)">Comprar</button>
           </div>
@@ -70,3 +70,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.pricing-card-title span,
+.pricing-card-title small {
+  display: block;
+}
+</style>
