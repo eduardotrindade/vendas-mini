@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{OrdersController, PeopleController, ProfilesController};
+use App\Http\Controllers\{OrdersController, PeopleController, ProfilesController, StatesController};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +24,9 @@ Route::post('/people/document-number', [PeopleController::class, 'showDocumentNu
 Route::get('/profiles/{profile}/products', [ProfilesController::class, 'showProducts']);
 
 Route::post('/orders', [OrdersController::class, 'store']);
+
+Route::get('/states', [StatesController::class, 'index']);
+Route::get('/states/{state}/cities', [StatesController::class, 'showCities']);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

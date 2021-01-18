@@ -22,7 +22,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $terms_accepted
  * @property int $is_active
  * @property int $city_id
+ * @property City $city
  * @property int|null $profile_id
+ * @property Profile|null $profile
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|People newModelQuery()
@@ -54,4 +56,14 @@ class People extends Model
         'name', 'document_number', 'cellphone', 'email', 'address', 'number', 'complement', 'neighborhood',
         'zip_code', 'city_id', 'indicated_by', 'resume', 'terms_accepted', 'is_active', 'profile_id'
     ];
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class);
+    }
 }
