@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-      <h1 class="display-4">{{ title }}</h1>
+      <h1 class="display-4">{{ this.people.profile.name }}</h1>
       <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
     </div>
     <div class="container">
@@ -30,15 +30,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import ValidationMixin from '@/mixins/validation'
 import ProfileApi from '@/api/profile'
 
 export default {
   name: 'Products',
+  mixins: [ValidationMixin],
   computed: {
     ...mapGetters(['people']),
-    title() {
-      return this.people.profile_id === 2 ? 'Master' : 'Afiliado'
-    },
   },
 
   data() {
@@ -59,7 +58,7 @@ export default {
       this.$router.push({ name: `home` })
     }
 
-    ProfileApi.getProducts(this.people.profile_id)
+    ProfileApi.getProducts(this.people.profile.id)
       .then(products => {
         this.products = products
       }).catch(error => {

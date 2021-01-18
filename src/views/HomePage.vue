@@ -12,7 +12,7 @@
         <div class="text-center mb-4">
           <h1 class="h3 mb-3 font-weight-normal">Informe seu CPF/CNPJ</h1>
         </div>
-        <ValidationProvider rules="required" v-slot="{ classes }" name="numero" tag="div" class="form-label-group mb-3">
+        <ValidationProvider rules="required" v-slot="{ classes }" name="document_number" tag="div" class="form-label-group mb-3">
           <the-mask
             autocomplete="off"
             placeholder="000.000.000-00 ou 00.000.000/0000-00"
@@ -21,7 +21,7 @@
             :class="classes"
             id="document_number"
             name="document_number"
-            v-model="document_number"
+            v-model.lazy="document_number"
           />
           <div class="invalid-feedback">{{ errorMessages.document_number }}</div>
         </ValidationProvider>
@@ -57,7 +57,11 @@ export default {
           .then(people => {
             this.$store.dispatch('setPeople', people)
             this.$router.push({ name: 'products' })
-          }).catch(() => { })
+          }).catch(error => {
+            let errors = error.data.errors
+            this.setValidationErrors(errors)
+            return Promise.reject(error)
+        })
       })
     }
   }

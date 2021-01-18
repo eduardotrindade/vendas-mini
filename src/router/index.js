@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import HomePage from '@/views/HomePage'
 import Products from '@/views/Products'
 import FinalizeOrder from '@/views/FinalizeOrder'
-import Cadastro from '@/views/Cadastro'
+import RegistrationPeople from '@/views/RegistrationPeople'
 
 Vue.use(VueRouter)
 
@@ -25,9 +25,9 @@ const routes = [
     component: FinalizeOrder,
   },
   {
-    path: '/cadastro',
-    name: 'cadastro',
-    component: Cadastro,
+    path: '/trabalhe-conosco',
+    name: 'registration-people',
+    component: RegistrationPeople,
   },
 ]
 

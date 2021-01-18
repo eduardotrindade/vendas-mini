@@ -26,6 +26,13 @@
               <strong>{{ product.price | formatMoney }}</strong>
             </li>
           </ul>
+
+          <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Indicado por:</span>
+              <h6 class="my-0">{{ people.indicated_by }}</h6>
+            </li>
+          </ul>
         </div>
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Comprador</h4>
@@ -44,17 +51,21 @@
 
             <div class="mb-3">
               <label>Endereço</label>
-              <p>{{ people.address }}, {{ people.number }}, {{ people.complement }}, {{ people.neighborhood }}</p>
+              <p>
+                {{ people.address }} Nº {{ people.number }}
+                <span v-if="people.complement">{{ people.complement }}</span>
+                <span v-if="people.neighborhood"> - {{ people.neighborhood }}</span>
+              </p>
             </div>
 
             <div class="row">
               <div class="col-md-5 mb-3">
                 <label>Cidade</label>
-                <p>Brasília</p>
+                <p>{{ people.city.name }}</p>
               </div>
               <div class="col-md-4 mb-3">
                 <label>Estado</label>
-                <p>Distrito Federal</p>
+                <p>{{ people.city.state.name }}</p>
               </div>
               <div class="col-md-3 mb-3">
                 <label>CEP</label>
