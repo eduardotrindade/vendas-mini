@@ -16,6 +16,7 @@
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.20.1",
     "core-js": "^3.6.5",
+    "v-money": "^0.8.1",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.11",
     "vue-router": "^3.4.9",

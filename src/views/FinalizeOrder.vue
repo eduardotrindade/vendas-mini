@@ -2,7 +2,7 @@
   <div>
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4">Finalizar Compra</h1>
-      <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
+      <p class="lead">Quando for reconhecido o pagamento, os créditos seram creditados no respectivo ID.</p>
     </div>
     <div class="container">
       <div class="row">
@@ -107,11 +107,11 @@ export default {
       }
 
       OrderApi.insert(order)
-        .then(order => {
-          console.log(order)
-          EventBus.$emit('alert-success', 'Parabéns!!! Compra finalizada com sucesso.');
+        .then(() => {
+          EventBus.$emit('alert-success', 'Parabéns!!! Compra finalizada com sucesso.')
+          this.$store.dispatch('setPeople', {})
           this.$router.push({ name: `home` })
-        }).catch(() => { })
+        }).catch(error => Promise.reject(error))
     },
   },
 

@@ -10,7 +10,7 @@
             <router-link class="nav-link text-uppercase" :to="{ name: 'home' }">Compra de espaços</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link text-uppercase" :to="{ name: 'registration-people' }">Trabalhe conosco</router-link>
+            <router-link class="nav-link text-uppercase" :to="{ name: 'registration-people' }">Seja nosso representante</router-link>
           </li>
         </ul>
       </div>

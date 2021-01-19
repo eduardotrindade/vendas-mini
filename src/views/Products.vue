@@ -1,8 +1,9 @@
 <template>
   <div>
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-      <h1 class="display-4">{{ this.people.profile.name }}</h1>
-      <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
+      <h1 class="display-4">{{ people.profile.name }}</h1>
+      <p class="lead" v-if="isMaster">Somente máster na compra de lotes econômicos para revenda e pagamentos de espaços no programa semente digital.</p>
+      <p class="lead" v-else>Todo afiliado receberá o crédito da compra no ID do respectivo Máster.</p>
     </div>
     <div class="container">
       <div class="card-deck mb-3 text-center">
@@ -15,7 +16,7 @@
           <div class="card-body">
             <h1 class="card-title pricing-card-title">
               <span v-if="product.quantity">{{ product.price | formatMoney }}</span>
-              <input v-else type="text" class="form-control" placeholder="Digite o valor" autocomplete="off" name="valor">
+              <money v-else v-model.lazy="price" v-bind="money" class="form-control" placeholder="Digite o valor"></money>
               <small class="text-muted" v-if="product.quantity">/lote</small>
               <small class="text-muted" v-else>/parcela</small>
             </h1>
@@ -30,24 +31,40 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import ValidationMixin from '@/mixins/validation'
+import { Money } from 'v-money'
 import ProfileApi from '@/api/profile'
 
 export default {
   name: 'Products',
-  mixins: [ValidationMixin],
+  components: { Money },
   computed: {
     ...mapGetters(['people']),
+    isMaster() {
+      return ProfileApi.MASTER == this.people.profile.id
+    }
   },
 
   data() {
     return {
       products: {},
+      price: 0.00,
+      money: {
+        decimal: ',',
+        thousands: '.',
+        prefix: 'R$ ',
+        suffix: '',
+        precision: 2,
+        masked: false
+      }
     }
   },
 
   methods: {
     buy(product) {
+      if (product.price == 0) {
+        product.price = this.price
+      }
+
       this.$store.dispatch('setProduct', product)
       this.$router.push({ name: `finalize-order` })
     }
@@ -61,11 +78,7 @@ export default {
     ProfileApi.getProducts(this.people.profile.id)
       .then(products => {
         this.products = products
-      }).catch(error => {
-        let errors = error.data.errors
-        this.setValidationErrors(errors)
-        return Promise.reject(error)
-      })
+      }).catch(error => Promise.reject(error))
   },
 }
 </script>

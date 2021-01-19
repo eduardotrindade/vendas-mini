@@ -25,7 +25,7 @@ const routes = [
     component: FinalizeOrder,
   },
   {
-    path: '/trabalhe-conosco',
+    path: '/seja-nosso-representante',
     name: 'registration-people',
     component: RegistrationPeople,
   },

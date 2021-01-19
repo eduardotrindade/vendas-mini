@@ -22,7 +22,7 @@
           </ul>
         </div>
         <div class="col py-2 text-right">
-          © Copyright - MINISITIO.net - 2001-2020
+          © Copyright - My Card City - 2001-{{ (new Date()).getFullYear() }}
         </div>
       </div>
     </div>
