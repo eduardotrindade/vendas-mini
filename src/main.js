@@ -27,6 +27,13 @@ configure({ classes: {invalid: 'is-invalid'}, mode: 'lazy', useConstraintAttrs: 
 Vue.component('ValidationObserver', ValidationObserver)
 Vue.component('ValidationProvider', ValidationProvider)
 
+// Font Awesome
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faHome, faFile, faShoppingCart, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+library.add(faHome, faFile, faShoppingCart, faUsers)
+
 Vue.config.productionTip = false
 
 new Vue({

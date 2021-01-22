@@ -19,16 +19,14 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {}
-    },
-  }
+export default {
+  name: "Navbar"
+}
 </script>
 
 <style scoped>
 .bg-yellow {
-  background: #ffcc29 url(../assets/img/bg-navbar.jpg) no-repeat fixed;
+  background: #ffcc29 url(../../assets/img/bg-navbar.jpg) no-repeat fixed;
 }
 a {
   color: #000000;
