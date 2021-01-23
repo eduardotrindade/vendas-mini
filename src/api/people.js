@@ -9,5 +9,8 @@ export default {
   },
   getAll(filters = {}) {
     return ApiInstance.get(`people`, { params: filters }).then(response => response.data)
+  },
+  get(peopleId) {
+    return ApiInstance.get(`people/${peopleId}`).then(response => response.data.data)
   }
 }

@@ -5,7 +5,11 @@ import store from './store'
 
 // Filters
 import formatMoney   from './filters/money'
+import formatDocumentNumber   from './filters/documentNumber'
+import formatZipCode   from './filters/zipCode'
 Vue.filter('formatMoney', formatMoney)
+Vue.filter('formatDocumentNumber', formatDocumentNumber)
+Vue.filter('formatZipCode', formatZipCode)
 
 // Mask
 import VueTheMask from 'vue-the-mask'
@@ -29,16 +33,16 @@ Vue.component('ValidationProvider', ValidationProvider)
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHome, faFile, faShoppingCart, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faFile, faShoppingCart, faUsers, faEye } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-library.add(faHome, faFile, faShoppingCart, faUsers)
+library.add(faHome, faFile, faShoppingCart, faUsers, faEye)
 
 // Bootstrap Components
 // It is necessary to import the components individually
 // to decrease the bundle size, since bootstrap-vue is not "tree-shakable"
-import { ModalPlugin, PaginationPlugin } from 'bootstrap-vue'
-[ModalPlugin, PaginationPlugin].forEach(component => Vue.use(component))
+import { PaginationPlugin, DropdownPlugin } from 'bootstrap-vue'
+[PaginationPlugin, DropdownPlugin].forEach(component => Vue.use(component))
 
 Vue.config.productionTip = false
 

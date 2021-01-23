@@ -2,7 +2,7 @@
   <div>
     <h2 class="mb-3">Representantes</h2>
     <div class="table-responsive">
-      <table id="people-list" class="table table-striped table-sm">
+      <table id="people-list" class="table table-hover table-striped table-sm">
         <thead>
         <tr>
           <th>Nome</th>
@@ -10,6 +10,7 @@
           <th>Celular</th>
           <th>Status</th>
           <th>Perfil</th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
@@ -17,8 +18,15 @@
           <td>{{ person.name }}</td>
           <td>{{ person.email }}</td>
           <td>{{ person.cellphone }}</td>
-          <td>{{ person.is_active ? 'Ativo' : 'Inativo' }}</td>
-          <td>{{ person.profile.name ? person.profile.name : 'Não definido' }}</td>
+          <td>
+            {{ person.is_active ? 'Ativo' : 'Inativo' }}
+          </td>
+          <td>{{ person.profile ? person.profile.name : 'Não definido' }}</td>
+          <td>
+            <router-link class="btn btn-primary btn-sm" title="Detalhes" :to="{ name: 'people-view', params: { id: person.id } }">
+              <font-awesome-icon icon="eye" />
+            </router-link>
+          </td>
         </tr>
         </tbody>
       </table>

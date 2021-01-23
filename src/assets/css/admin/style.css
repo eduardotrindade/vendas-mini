@@ -78,3 +78,7 @@ body {
     top: .25rem;
     right: 1rem;
 }
+
+.table td {
+    vertical-align: initial;
+}

@@ -11,6 +11,7 @@ import RegistrationPeople from '@/views/RegistrationPeople'
 
 import UsersList from '@/views/admin/users/UsersList'
 import PeopleList from '@/views/admin/people/PeopleList'
+import PeopleView from '@/views/admin/people/PeopleView'
 import OrdersList from '@/views/admin/orders/OrdersList'
 
 Vue.use(VueRouter)
@@ -54,6 +55,11 @@ const routes = [
         path: 'people',
         name: 'people-list',
         component: PeopleList
+      },
+      {
+        path: 'people/:id',
+        name: 'people-view',
+        component: PeopleView
       },
       {
         path: 'orders',
