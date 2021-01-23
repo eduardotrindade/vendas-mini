@@ -18,9 +18,7 @@
           <td>{{ person.name }}</td>
           <td>{{ person.email }}</td>
           <td>{{ person.cellphone }}</td>
-          <td>
-            {{ person.is_active ? 'Ativo' : 'Inativo' }}
-          </td>
+          <td>{{ person.is_active ? 'Ativo' : 'Inativo' }}</td>
           <td>{{ person.profile ? person.profile.name : 'Não definido' }}</td>
           <td>
             <router-link class="btn btn-primary btn-sm" title="Detalhes" :to="{ name: 'people-view', params: { id: person.id } }">

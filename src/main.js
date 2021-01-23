@@ -4,9 +4,11 @@ import router from './router'
 import store from './store'
 
 // Filters
-import formatMoney   from './filters/money'
-import formatDocumentNumber   from './filters/documentNumber'
-import formatZipCode   from './filters/zipCode'
+import formatDate from './filters/date'
+import formatMoney from './filters/money'
+import formatDocumentNumber from './filters/documentNumber'
+import formatZipCode from './filters/zipCode'
+Vue.filter('formatDate', formatDate)
 Vue.filter('formatMoney', formatMoney)
 Vue.filter('formatDocumentNumber', formatDocumentNumber)
 Vue.filter('formatZipCode', formatZipCode)

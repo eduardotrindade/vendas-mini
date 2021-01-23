@@ -1,138 +1,82 @@
 <template>
   <div>
-    <h2>Orders List</h2>
+    <h2 class="mb-3">Compras</h2>
     <div class="table-responsive">
-      <table class="table table-striped table-sm">
+      <table id="orders-list" class="table table-striped table-sm">
         <thead>
         <tr>
           <th>#</th>
-          <th>HeaderSite</th>
-          <th>HeaderSite</th>
-          <th>HeaderSite</th>
-          <th>HeaderSite</th>
+          <th>Item</th>
+          <th>Valor</th>
+          <th>Status</th>
+          <th>Criado</th>
+          <th>Representante</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td>1,001</td>
-          <td>random</td>
-          <td>data</td>
-          <td>placeholder</td>
-          <td>text</td>
-        </tr>
-        <tr>
-          <td>1,002</td>
-          <td>placeholder</td>
-          <td>irrelevant</td>
-          <td>visual</td>
-          <td>layout</td>
-        </tr>
-        <tr>
-          <td>1,003</td>
-          <td>data</td>
-          <td>rich</td>
-          <td>dashboard</td>
-          <td>tabular</td>
-        </tr>
-        <tr>
-          <td>1,003</td>
-          <td>information</td>
-          <td>placeholder</td>
-          <td>illustrative</td>
-          <td>data</td>
-        </tr>
-        <tr>
-          <td>1,004</td>
-          <td>text</td>
-          <td>random</td>
-          <td>layout</td>
-          <td>dashboard</td>
-        </tr>
-        <tr>
-          <td>1,005</td>
-          <td>dashboard</td>
-          <td>irrelevant</td>
-          <td>text</td>
-          <td>placeholder</td>
-        </tr>
-        <tr>
-          <td>1,006</td>
-          <td>dashboard</td>
-          <td>illustrative</td>
-          <td>rich</td>
-          <td>data</td>
-        </tr>
-        <tr>
-          <td>1,007</td>
-          <td>placeholder</td>
-          <td>tabular</td>
-          <td>information</td>
-          <td>irrelevant</td>
-        </tr>
-        <tr>
-          <td>1,008</td>
-          <td>random</td>
-          <td>data</td>
-          <td>placeholder</td>
-          <td>text</td>
-        </tr>
-        <tr>
-          <td>1,009</td>
-          <td>placeholder</td>
-          <td>irrelevant</td>
-          <td>visual</td>
-          <td>layout</td>
-        </tr>
-        <tr>
-          <td>1,010</td>
-          <td>data</td>
-          <td>rich</td>
-          <td>dashboard</td>
-          <td>tabular</td>
-        </tr>
-        <tr>
-          <td>1,011</td>
-          <td>information</td>
-          <td>placeholder</td>
-          <td>illustrative</td>
-          <td>data</td>
-        </tr>
-        <tr>
-          <td>1,012</td>
-          <td>text</td>
-          <td>placeholder</td>
-          <td>layout</td>
-          <td>dashboard</td>
-        </tr>
-        <tr>
-          <td>1,013</td>
-          <td>dashboard</td>
-          <td>irrelevant</td>
-          <td>text</td>
-          <td>visual</td>
-        </tr>
-        <tr>
-          <td>1,014</td>
-          <td>dashboard</td>
-          <td>illustrative</td>
-          <td>rich</td>
-          <td>data</td>
-        </tr>
-        <tr>
-          <td>1,015</td>
-          <td>random</td>
-          <td>tabular</td>
-          <td>information</td>
-          <td>text</td>
+        <tr v-for="order in orders" :key="order.id">
+          <td>{{ order.id }}</td>
+          <td>
+            <span v-if="order.product.quantity">{{ order.product.quantity }} {{ order.product.description }}</span>
+            <span v-else>{{ order.product.description }}</span>
+          </td>
+          <td>{{ order.amount_paid | formatMoney }}</td>
+          <td>{{ order.status ? 'Pago' : 'Aguardando Pagamento' }}</td>
+          <td>{{ order.created_at | formatDate }}</td>
+          <td>{{ order.people.name }}</td>
         </tr>
         </tbody>
       </table>
-  </div>
+      <b-pagination
+        size="sm"
+        class="mt-4"
+        align="center"
+        aria-controls="orders-list"
+        v-model="pagination.currentPage"
+        :total-rows="pagination.totalRows"
+        :per-page="pagination.perPage"
+        @change="paginate"
+      ></b-pagination>
+    </div>
   </div>
 </template>
 
 <script>
+import OrderApi from '@/api/order'
+
 export default {
-  name: "OrdersList"
+  name: 'OrdersList',
+
+  data() {
+    return {
+      orders: {},
+      filters: {},
+      pagination: {}
+    }
+  },
+
+  methods: {
+    getAll(filters) {
+      OrderApi.getAll(filters).then(this.setResults)
+    },
+
+    setResults(result) {
+      this.orders = result.data
+      this.pagination = {
+        currentPage: result.meta.current_page,
+        totalRows : result.meta.total,
+        perPage   : result.meta.per_page
+      }
+    },
+
+    paginate(page) {
+      let filters = Object.assign({}, this.filters, { page })
+      this.getAll(filters)
+    },
+  },
+
+  created() {
+    this.getAll(this.filters)
+  }
 }
 </script>
