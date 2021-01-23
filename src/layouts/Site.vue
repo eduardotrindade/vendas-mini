@@ -1,24 +1,24 @@
 <template>
   <div class="d-flex flex-column h-100" id="app-wrapper">
-    <Header />
+    <header-site />
     <navbar />
     <main role="main" class="flex-shrink-0 mb-3">
       <div class="container">
         <slot />
       </div>
     </main>
-    <Footer />
+    <footer-site />
   </div>
 </template>
 
 <script>
-import Header from '@/components/Site/Header'
-import Navbar from '@/components/Site/Navbar'
-import Footer from '@/components/Site/Footer'
+import HeaderSite from '@/components/site/HeaderSite'
+import Navbar from '@/components/site/Navbar'
+import FooterSite from '@/components/site/FooterSite'
 
 export default {
   name: 'Site',
-  components: { Header, Navbar, Footer },
+  components: { HeaderSite, Navbar, FooterSite },
 }
 </script>
 
