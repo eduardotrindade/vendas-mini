@@ -12,5 +12,8 @@ export default {
   },
   get(peopleId) {
     return ApiInstance.get(`people/${peopleId}`).then(response => response.data.data)
-  }
+  },
+  makeActive(peopleId, profile_id = null) {
+    return ApiInstance.patch(`people/${peopleId}/active`, { profile_id }).then(response => response.data.data)
+  },
 }

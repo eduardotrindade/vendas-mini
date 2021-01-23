@@ -3,11 +3,7 @@
     <div class="row">
       <div class="col-12 d-flex justify-content-between align-items-center">
         <h2>Representante {{ people.name }}</h2>
-        <b-dropdown text="Ações" variant="primary" right no-flip>
-          <b-dropdown-item>Anexos</b-dropdown-item>
-          <b-dropdown-item>Histórico</b-dropdown-item>
-          <b-dropdown-item>Pendências</b-dropdown-item>
-        </b-dropdown>
+        <button v-if="!people.is_active" class="btn btn-primary" @click="makeActive">Ativar</button>
       </div>
     </div>
     <hr>
@@ -61,14 +57,18 @@
         <p>{{ people.resume }}</p>
       </div>
     </div>
+    <people-active />
   </div>
 </template>
 
 <script>
+import EventBus from '@/event-bus'
 import PeopleApi from '@/api/people'
+import PeopleActive from './PeopleActive'
 
 export default {
   name: 'PeopleView',
+  components: { PeopleActive },
 
   data() {
     return {
@@ -78,12 +78,22 @@ export default {
 
   methods: {
     getPeople() {
-      PeopleApi.get(this.$route.params.id).then(people => this.people = people)
+      PeopleApi.get(this.$route.params.id).then(this.setPeople)
+    },
+
+    setPeople(people) {
+      this.people = people
+    },
+
+    makeActive() {
+      EventBus.$emit('people-active', this.people.id);
     },
   },
 
   created() {
     this.getPeople()
+
+    EventBus.$on('people-updated', this.setPeople);
   },
 
   watch: {

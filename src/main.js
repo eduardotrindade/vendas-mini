@@ -41,8 +41,8 @@ library.add(faHome, faFile, faShoppingCart, faUsers, faEye)
 // Bootstrap Components
 // It is necessary to import the components individually
 // to decrease the bundle size, since bootstrap-vue is not "tree-shakable"
-import { PaginationPlugin, DropdownPlugin } from 'bootstrap-vue'
-[PaginationPlugin, DropdownPlugin].forEach(component => Vue.use(component))
+import { PaginationPlugin, ModalPlugin } from 'bootstrap-vue'
+[PaginationPlugin, ModalPlugin].forEach(component => Vue.use(component))
 
 Vue.config.productionTip = false
 
