@@ -24,6 +24,7 @@ Route::post('/people/document-number', [PeopleController::class, 'showDocumentNu
 
 Route::get('/profiles/{profile}/products', [ProfilesController::class, 'showProducts']);
 
+Route::get('/orders', [OrdersController::class, 'index']);
 Route::post('/orders', [OrdersController::class, 'store']);
 
 Route::get('/states', [StatesController::class, 'index']);

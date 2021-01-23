@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $status
  * @property string $payment_date
  * @property float $amount_paid
+ * @property Product $product
+ * @property People $people
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|Order newModelQuery()
@@ -31,4 +33,14 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $fillable = ['people_id', 'product_id', 'amount_paid'];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function people()
+    {
+        return $this->belongsTo(People::class);
+    }
 }
