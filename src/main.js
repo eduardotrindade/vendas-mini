@@ -34,6 +34,12 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 library.add(faHome, faFile, faShoppingCart, faUsers)
 
+// Bootstrap Components
+// It is necessary to import the components individually
+// to decrease the bundle size, since bootstrap-vue is not "tree-shakable"
+import { ModalPlugin, PaginationPlugin } from 'bootstrap-vue'
+[ModalPlugin, PaginationPlugin].forEach(component => Vue.use(component))
+
 Vue.config.productionTip = false
 
 new Vue({

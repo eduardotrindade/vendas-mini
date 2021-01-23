@@ -11,19 +11,19 @@
         <li class="nav-item">
           <router-link class="nav-link" :to="{ name: 'users-list' }">
             <font-awesome-icon icon="file" />
-            Users
+            Usuários
           </router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" :to="{ name: 'orders-list' }">
             <font-awesome-icon icon="shopping-cart" />
-            Orders
+            Compras
           </router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" :to="{ name: 'people-list' }">
             <font-awesome-icon icon="users" />
-            Customers
+            Representantes
           </router-link>
         </li>
       </ul>
