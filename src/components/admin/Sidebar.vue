@@ -2,28 +2,10 @@
   <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
     <div class="sidebar-sticky pt-3">
       <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">
-            <font-awesome-icon icon="home" />
-            Dashboard <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link" :to="{ name: 'users-list' }">
-            <font-awesome-icon icon="file" />
-            Usuários
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link" :to="{ name: 'orders-list' }">
-            <font-awesome-icon icon="shopping-cart" />
-            Compras
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link" :to="{ name: 'people-list' }">
-            <font-awesome-icon icon="users" />
-            Representantes
+        <li class="nav-item" v-for="(link, index) in links" :key="index">
+          <router-link class="nav-link" :class="{ 'active': link.active }" :to="{ name: link.route }">
+            <font-awesome-icon :icon="link.icon" />
+            {{ link.name }}
           </router-link>
         </li>
       </ul>
@@ -33,6 +15,43 @@
 
 <script>
 export default {
-  name: "Sidebar"
+  name: 'Sidebar',
+
+  data() {
+    return {
+      links: [
+        {
+          name: 'Compras',
+          icon: 'shopping-cart',
+          route: 'orders-list',
+          active: false
+        },
+        {
+          name: 'Representantes',
+          icon: 'users',
+          route: 'people-list',
+          active: false
+        }
+      ]
+    }
+  },
+
+  methods: {
+    setActive(route) {
+      this.links.map(link => {
+        link.active = link.route === route
+      })
+    }
+  },
+
+  created() {
+    this.setActive(this.$route.name)
+  },
+
+  watch: {
+    '$route' () {
+      this.setActive(this.$route.name)
+    }
+  }
 }
 </script>
