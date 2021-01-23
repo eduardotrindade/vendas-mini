@@ -20,7 +20,9 @@ class PeopleController extends Controller
 
     public function index()
     {
-        return People::paginate();
+        $results = People::query()->orderBy('is_active')->paginate();
+
+        return PeopleResource::collection($results);
     }
 
     public function store(PeopleRequest $request)
@@ -35,7 +37,18 @@ class PeopleController extends Controller
 
     public function update(People $people, PeopleRequest $request)
     {
-        return $this->peopleService->update($people, $request->validated());
+        $people = $this->peopleService->update($people, $request->validated());
+
+        return PeopleResource::make($people);
+    }
+
+    public function active(People $people, Request $request)
+    {
+        $profileId = $request->get('profile_id');
+
+        $people = $this->peopleService->active($people, $profileId);
+
+        return PeopleResource::make($people);
     }
 
     public function showDocumentNumber(Request $request)

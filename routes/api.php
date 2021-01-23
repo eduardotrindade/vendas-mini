@@ -19,6 +19,7 @@ Route::get('/people', [PeopleController::class, 'index']);
 Route::post('/people', [PeopleController::class, 'store']);
 Route::get('/people/{people}', [PeopleController::class, 'show']);
 Route::put('/people/{people}', [PeopleController::class, 'update']);
+Route::patch('/people/{people}/active', [PeopleController::class, 'active']);
 Route::post('/people/document-number', [PeopleController::class, 'showDocumentNumber']);
 
 Route::get('/profiles/{profile}/products', [ProfilesController::class, 'showProducts']);

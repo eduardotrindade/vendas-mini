@@ -35,4 +35,24 @@ class PeopleService
 
         return $people;
     }
+
+    public function active(People $people, ?int $profileId): People
+    {
+        DB::beginTransaction();
+        try {
+            $people->is_active = true;
+
+            if (!$people->profile_id) {
+                $people->profile_id = $profileId;
+            }
+
+            $people->save();
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
+
+        return $people;
+    }
 }
