@@ -1,5 +1,5 @@
 <template>
-  <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+  <b-collapse tag="nav" id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
     <div class="sidebar-sticky pt-3">
       <ul class="nav flex-column">
         <li class="nav-item" v-for="(link, index) in links" :key="index">
@@ -9,8 +9,17 @@
           </router-link>
         </li>
       </ul>
+      <hr>
+      <ul class="nav flex-column mb-2">
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <font-awesome-icon icon="power-off" />
+            Sair
+          </a>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </b-collapse>
 </template>
 
 <script>

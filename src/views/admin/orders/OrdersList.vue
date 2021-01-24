@@ -11,6 +11,7 @@
           <th>Status</th>
           <th>Criado</th>
           <th>Representante</th>
+          <th>Perfil</th>
         </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
           <td>{{ order.status ? 'Pago' : 'Aguardando Pagamento' }}</td>
           <td>{{ order.created_at | formatDate }}</td>
           <td>{{ order.people.name }}</td>
+          <td>{{ order.people.profile.name }}</td>
         </tr>
         </tbody>
       </table>

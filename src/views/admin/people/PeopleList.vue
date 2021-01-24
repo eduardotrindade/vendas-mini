@@ -17,7 +17,7 @@
         <tr v-for="person in people" :key="person.id">
           <td>{{ person.name }}</td>
           <td>{{ person.email }}</td>
-          <td>{{ person.cellphone }}</td>
+          <td>{{ person.cellphone | formatPhone }}</td>
           <td>{{ person.is_active ? 'Ativo' : 'Inativo' }}</td>
           <td>{{ person.profile ? person.profile.name : 'Não definido' }}</td>
           <td>

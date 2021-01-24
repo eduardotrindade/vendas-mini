@@ -20,17 +20,21 @@
         <label>Indicado por:</label>
         <p>{{ people.indicated_by }}</p>
       </div>
-      <div class="form-group col-12 col-sm-4">
+      <div class="form-group col-12 col-sm-6">
         <label>Nome:</label>
         <p>{{ people.name }}</p>
       </div>
-      <div class="form-group col-12 col-sm-4">
+      <div class="form-group col-12 col-sm-6">
         <label>CPF/CNPJ:</label>
         <p>{{ people.document_number | formatDocumentNumber }}</p>
       </div>
-      <div class="form-group col-12 col-sm-4">
+      <div class="form-group col-12 col-sm-6">
         <label>E-mail:</label>
         <p>{{ people.email }}</p>
+      </div>
+      <div class="form-group col-12 col-sm-6">
+        <label>Celular <span class="text-muted">(com WhatsApp)</span>:</label>
+        <p>{{ people.cellphone | formatPhone }}</p>
       </div>
       <div class="form-group col-12 col-sm-12">
         <label>Endereço:</label>
