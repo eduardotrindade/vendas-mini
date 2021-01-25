@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\{OrdersController, PeopleController, ProfilesController, StatesController};
-use Illuminate\Http\Request;
+use App\Http\Controllers\{AuthController, OrdersController, PeopleController, ProfilesController, StatesController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,21 +14,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/people', [PeopleController::class, 'index']);
-Route::post('/people', [PeopleController::class, 'store']);
-Route::get('/people/{people}', [PeopleController::class, 'show']);
-Route::put('/people/{people}', [PeopleController::class, 'update']);
-Route::patch('/people/{people}/active', [PeopleController::class, 'active']);
-Route::post('/people/document-number', [PeopleController::class, 'showDocumentNumber']);
+Route::get('people', [PeopleController::class, 'index']);
+Route::post('people', [PeopleController::class, 'store']);
+Route::get('people/{people}', [PeopleController::class, 'show']);
+Route::put('people/{people}', [PeopleController::class, 'update']);
+Route::patch('people/{people}/active', [PeopleController::class, 'active']);
+Route::post('people/document-number', [PeopleController::class, 'showDocumentNumber']);
 
-Route::get('/profiles/{profile}/products', [ProfilesController::class, 'showProducts']);
+Route::get('profiles/{profile}/products', [ProfilesController::class, 'showProducts']);
 
-Route::get('/orders', [OrdersController::class, 'index']);
-Route::post('/orders', [OrdersController::class, 'store']);
+Route::get('orders', [OrdersController::class, 'index']);
+Route::post('orders', [OrdersController::class, 'store']);
 
-Route::get('/states', [StatesController::class, 'index']);
-Route::get('/states/{state}/cities', [StatesController::class, 'showCities']);
+Route::get('states', [StatesController::class, 'index']);
+Route::get('states/{state}/cities', [StatesController::class, 'showCities']);
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('api')->group(function () {
+
+    Route::prefix('auth')->group(function () {
+        Route::post('login', [AuthController::class, 'login']);
+        Route::post('logout', [AuthController::class, 'logout']);
+        Route::post('refresh', [AuthController::class, 'refresh']);
+        Route::get('me', [AuthController::class, 'me']);
+    });
+
 });
