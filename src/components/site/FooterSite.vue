@@ -2,7 +2,7 @@
   <footer class="py-3 mt-auto">
     <div class="container">
       <div class="row">
-        <div class="col">
+        <div class="col-md-6 col-sm-12">
           <ul class="social-icons list-inline mb-auto">
             <li class="list-inline-item">
               <a href="https://www.facebook.com/Meucartaoweb-296426777221791/" target="_blank">
@@ -21,7 +21,7 @@
             </li>
           </ul>
         </div>
-        <div class="col py-2 text-right">
+        <div class="col-md-6 col-sm-12 py-2 text-md-right">
           © Copyright - My Card City - 2001-{{ (new Date()).getFullYear() }}
         </div>
       </div>

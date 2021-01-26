@@ -2,13 +2,19 @@
   <header class="py-3 bg-white">
     <div class="container">
       <div class="row">
-        <div class="col"></div>
-        <div class="col text-center">
+        <div class="col-md-4 col-sm-12"></div>
+        <div class="col-md-4 col-sm-12 text-center">
           <img src="../../assets/logo.png" alt="MINISITIO" height="150">
         </div>
-        <div class="col text-right pt-5">
-          <p><span class="badge badge-warning badge-baixe-o-app">BAIXE O APP</span></p>
-          <a href="https://play.google.com/store/apps/details?id=net.mycardcity" target="_blank">
+        <div class="col-md-4 col-sm-12 pt-4">
+          <p class="d-flex justify-content-center justify-content-md-end align-items-center align-items-md-end mt-3">
+            <span class="badge badge-warning badge-baixe-o-app">BAIXE O APP</span>
+          </p>
+          <a
+            class="d-flex justify-content-center justify-content-md-end align-items-center align-items-md-end"
+            href="https://play.google.com/store/apps/details?id=net.mycardcity"
+            target="_blank"
+          >
             <img src="../../assets/img/google-play-badge.png" alt='Disponível no Google Play' height="38">
           </a>
         </div>

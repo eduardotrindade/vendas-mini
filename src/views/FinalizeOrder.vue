@@ -14,9 +14,8 @@
           <ul class="list-group mb-3">
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
-                <h6 class="my-0" v-if="product.quantity">{{ product.quantity }} {{ product.description }}</h6>
-                <h6 class="my-0" v-else>{{ product.description }}</h6>
-                <small class="text-muted">Compra de Espaços</small>
+                <h6 class="my-0">{{ product.description }}</h6>
+                <small class="text-muted">Compra de espaço assinatura anual</small>
               </div>
               <span class="text-muted">{{ product.price | formatMoney }}</span>
             </li>

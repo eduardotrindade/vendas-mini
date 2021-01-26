@@ -10,14 +10,14 @@
 
         <div class="card mb-4 shadow-sm" v-for="(product, index) in products" :key="index">
           <div class="card-header">
-            <h4 class="my-0 font-weight-normal" v-if="product.quantity">{{ product.quantity }} {{ product.description }}</h4>
-            <h4 class="my-0 font-weight-normal" v-else>{{ product.description }}</h4>
+            <h4 class="my-0 font-weight-normal">{{ product.description }}</h4>
+            <small class="text-muted">espaço assinatura anual</small>
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title">
               <span v-if="product.quantity">{{ product.price | formatMoney }}</span>
               <money v-else v-model.lazy="price" v-bind="money" class="form-control" placeholder="Digite o valor"></money>
-              <small class="text-muted" v-if="product.quantity">/lote</small>
+              <small class="text-muted" v-if="product.quantity">/anual</small>
               <small class="text-muted" v-else>/parcela</small>
             </h1>
             <button type="button" class="btn btn-lg btn-block btn-outline-primary" @click="buy(product)">Comprar</button>
