@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { cacheAdapterEnhancer } from 'axios-extensions'
-import store from '@/store'
+import store  from '@/store'
 import EventBus from '@/event-bus'
 
 const ApiInstance = axios.create({
@@ -17,6 +17,12 @@ ApiInstance.interceptors.response.use(responseInterceptor, errorHandler)
 
 function requestInterceptor(config) {
   startLoading()
+
+  let token = store.getters.user ? store.getters.user.access_token : false
+  if (token) {
+    config.headers = Object.assign(config.headers, { 'Authorization': `Bearer ${token}` });
+  }
+
   return config
 }
 
@@ -36,13 +42,9 @@ function stopLoading() {
 function errorHandler(error) {
   let rejectObject = null, errorMessage = '', extraErrors = []
   if (error.response) {
-    if (error.response.status === 401) {
-      window.location = process.env.BASE_URL
-      return
-    }
-
     rejectObject = error.response
     errorMessage = error.response.data.message
+
     if (error.response.status === 422 && error.response.data.errors) {
       extraErrors = error.response.data.errors
     }

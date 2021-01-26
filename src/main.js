@@ -37,10 +37,10 @@ Vue.component('ValidationProvider', ValidationProvider)
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHome, faFile, faShoppingCart, faUsers, faEye, faPowerOff } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faFile, faShoppingCart, faUsers, faEye, faPowerOff, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-library.add(faHome, faFile, faShoppingCart, faUsers, faEye, faPowerOff)
+library.add(faHome, faFile, faShoppingCart, faUsers, faEye, faPowerOff, faUserCircle)
 
 // Bootstrap Components
 // It is necessary to import the components individually
