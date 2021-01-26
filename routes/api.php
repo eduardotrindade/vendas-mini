@@ -14,20 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('people', [PeopleController::class, 'index']);
+Route::get('states', [StatesController::class, 'index']);
+Route::get('states/{state}/cities', [StatesController::class, 'showCities']);
+
 Route::post('people', [PeopleController::class, 'store']);
-Route::get('people/{people}', [PeopleController::class, 'show']);
-Route::put('people/{people}', [PeopleController::class, 'update']);
-Route::patch('people/{people}/active', [PeopleController::class, 'active']);
 Route::post('people/document-number', [PeopleController::class, 'showDocumentNumber']);
 
 Route::get('profiles/{profile}/products', [ProfilesController::class, 'showProducts']);
 
-Route::get('orders', [OrdersController::class, 'index']);
 Route::post('orders', [OrdersController::class, 'store']);
-
-Route::get('states', [StatesController::class, 'index']);
-Route::get('states/{state}/cities', [StatesController::class, 'showCities']);
 
 Route::middleware('api')->group(function () {
 
@@ -38,4 +33,12 @@ Route::middleware('api')->group(function () {
         Route::get('me', [AuthController::class, 'me']);
     });
 
+    Route::prefix('people')->group(function () {
+        Route::get('', [PeopleController::class, 'index']);
+        Route::get('{people}', [PeopleController::class, 'show']);
+        Route::put('{people}', [PeopleController::class, 'update']);
+        Route::patch('{people}/active', [PeopleController::class, 'active']);
+    });
+
+    Route::get('orders', [OrdersController::class, 'index']);
 });
