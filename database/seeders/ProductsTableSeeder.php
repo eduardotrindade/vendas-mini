@@ -17,7 +17,7 @@ class ProductsTableSeeder extends Seeder
         DB::table('products')->insert([
             [
                 'id' => 1,
-                'description' => 'unidades',
+                'description' => 'LT 20 unidades',
                 'quantity' => 20,
                 'price' => 400,
                 'is_active' => true,
@@ -27,7 +27,7 @@ class ProductsTableSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'description' => 'unidades',
+                'description' => 'LT 50 unidades',
                 'quantity' => 50,
                 'price' => 900,
                 'is_active' => true,
@@ -37,7 +37,7 @@ class ProductsTableSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'description' => 'unidades',
+                'description' => 'LT 100 unidades',
                 'quantity' => 100,
                 'price' => 1800,
                 'is_active' => true,
@@ -57,9 +57,9 @@ class ProductsTableSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'description' => 'unidades',
+                'description' => 'LT 1 unidade',
                 'quantity' => 1,
-                'price' => 90,
+                'price' => 120,
                 'is_active' => true,
                 'profile_id' => 3,
                 'created_at' => date('Y-m-d H:i:s'),
@@ -67,9 +67,9 @@ class ProductsTableSeeder extends Seeder
             ],
             [
                 'id' => 6,
-                'description' => 'unidades',
+                'description' => 'LT 3 unidades',
                 'quantity' => 3,
-                'price' => 240,
+                'price' => 300,
                 'is_active' => true,
                 'profile_id' => 3,
                 'created_at' => date('Y-m-d H:i:s'),
@@ -77,9 +77,9 @@ class ProductsTableSeeder extends Seeder
             ],
             [
                 'id' => 7,
-                'description' => 'unidades',
+                'description' => 'LT 10 unidades',
                 'quantity' => 10,
-                'price' => 700,
+                'price' => 900,
                 'is_active' => true,
                 'profile_id' => 3,
                 'created_at' => date('Y-m-d H:i:s'),
@@ -87,9 +87,9 @@ class ProductsTableSeeder extends Seeder
             ],
             [
                 'id' => 8,
-                'description' => 'unidades',
+                'description' => 'LT 20 unidades',
                 'quantity' => 20,
-                'price' => 1200,
+                'price' => 1700,
                 'is_active' => true,
                 'profile_id' => 3,
                 'created_at' => date('Y-m-d H:i:s'),

@@ -61,9 +61,7 @@ class PeopleController extends Controller
 
             return PeopleResource::make($people);
         } catch (ModelNotFoundException $e) {
-            return response()
-                ->json(['message' => 'CPF/CNPJ não encontrado. Favor entrar em contato conosco.'])
-                ->setStatusCode(404);
+            return response()->json(['message' => 'CPF/CNPJ não encontrado.'], 404);
         }
     }
 }
