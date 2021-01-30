@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $status
  * @property string $payment_date
  * @property float $amount_paid
+ * @property string $payment_code
+ * @property string $payment_link
  * @property Product $product
  * @property People $people
  * @property \Illuminate\Support\Carbon|null $created_at

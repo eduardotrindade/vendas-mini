@@ -23,6 +23,7 @@ Route::post('people/document-number', [PeopleController::class, 'showDocumentNum
 Route::get('profiles/{profile}/products', [ProfilesController::class, 'showProducts']);
 
 Route::post('orders', [OrdersController::class, 'store']);
+Route::post('orders/change-status/{order}', [OrdersController::class, 'changeStatus']);
 
 Route::middleware('api')->group(function () {
 

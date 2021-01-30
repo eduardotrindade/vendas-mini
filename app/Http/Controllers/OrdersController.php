@@ -6,6 +6,7 @@ use App\Http\Requests\OrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Services\OrderService;
+use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
@@ -29,5 +30,10 @@ class OrdersController extends Controller
     public function store(OrderRequest $orderRequest)
     {
         return $this->orderService->insert($orderRequest->validated());
+    }
+
+    public function changeStatus(Order $order, Request $request)
+    {
+        $this->orderService->changeStatus($order, $request->all());
     }
 }
