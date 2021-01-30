@@ -76,6 +76,7 @@
 
             <button class="btn btn-primary btn-lg btn-block" type="button" @click="finalize()">Realizar pagamento</button>
           </form>
+          <div id="button-checkout"></div>
         </div>
       </div>
     </div>
@@ -84,7 +85,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import EventBus from '@/event-bus'
 import OrderApi from '@/api/order'
 
 export default {
@@ -106,12 +106,20 @@ export default {
       }
 
       OrderApi.insert(order)
-        .then(() => {
-          EventBus.$emit('alert-success', 'Parabéns!!! Compra finalizada com sucesso.')
+        .then(order => {
           this.$store.dispatch('setPeople', {})
-          this.$router.push({ name: `home` })
+          window.location = order.payment_link;
         }).catch(error => Promise.reject(error))
     },
+
+    createCheckoutButton(preferenceId) {
+      var script = document.createElement("script")
+      script.src = "https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js"
+      script.type = "text/javascript"
+      script.dataset.preferenceId = preferenceId
+      document.getElementById("button-checkout").innerHTML = ""
+      document.querySelector("#button-checkout").appendChild(script)
+    }
   },
 
   created() {

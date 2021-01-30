@@ -8,6 +8,7 @@ import Admin from '@/layouts/Admin'
 import HomePage from '@/views/HomePage'
 import Products from '@/views/Products'
 import FinalizeOrder from '@/views/FinalizeOrder'
+import PaymentFeedback from "@/views/PaymentFeedback";
 import RegistrationPeople from '@/views/RegistrationPeople'
 import NotFound from '@/views/NotFound'
 
@@ -36,6 +37,12 @@ const routes = [
     path: '/finalizar-compra',
     name: 'finalize-order',
     component: FinalizeOrder,
+    meta: { layout: Site },
+  },
+  {
+    path: '/feedback',
+    name: 'feedback',
+    component: PaymentFeedback,
     meta: { layout: Site },
   },
   {
