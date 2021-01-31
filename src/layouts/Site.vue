@@ -19,6 +19,10 @@ import FooterSite from '@/components/site/FooterSite'
 export default {
   name: 'Site',
   components: { HeaderSite, Navbar, FooterSite },
+
+  mounted() {
+
+  }
 }
 </script>
 

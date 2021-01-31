@@ -110,15 +110,6 @@ export default {
           this.$store.dispatch('setPeople', {})
           window.location = order.payment_link;
         }).catch(error => Promise.reject(error))
-    },
-
-    createCheckoutButton(preferenceId) {
-      var script = document.createElement("script")
-      script.src = "https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js"
-      script.type = "text/javascript"
-      script.dataset.preferenceId = preferenceId
-      document.getElementById("button-checkout").innerHTML = ""
-      document.querySelector("#button-checkout").appendChild(script)
     }
   },
 
@@ -127,5 +118,13 @@ export default {
       this.$router.push({ name: `home` })
     }
   },
+
+  mounted() {
+    let script = document.createElement('script')
+    script.src = 'https://www.mercadopago.com/v2/security.js'
+    script.type = 'text/javascript'
+    script.setAttribute('view', 'checkout')
+    document.querySelector('body').appendChild(script)
+  }
 }
 </script>

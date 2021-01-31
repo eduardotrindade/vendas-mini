@@ -64,6 +64,14 @@ export default {
         })
       })
     }
+  },
+
+  mounted() {
+    let script = document.createElement('script')
+    script.src = 'https://www.mercadopago.com/v2/security.js'
+    script.type = 'text/javascript'
+    script.setAttribute('view', 'home')
+    document.querySelector('body').appendChild(script)
   }
 }
 </script>

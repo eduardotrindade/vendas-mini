@@ -80,6 +80,14 @@ export default {
         this.products = products
       }).catch(error => Promise.reject(error))
   },
+
+  mounted() {
+    let script = document.createElement('script')
+    script.src = 'https://www.mercadopago.com/v2/security.js'
+    script.type = 'text/javascript'
+    script.setAttribute('view', 'search')
+    document.querySelector('body').appendChild(script)
+  }
 }
 </script>
 
