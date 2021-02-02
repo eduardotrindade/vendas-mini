@@ -14,7 +14,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            cd ~/public_html/vendas-minisitio/
+            cd ~/public_html/vendas_minisitio/
             rm -rf vendor/
           host: ${{ secrets.HOM_HOST }}
           port: ${{ secrets.HOM_PORT }}
@@ -47,7 +47,7 @@ jobs:
           REMOTE_PORT: ${{ secrets.HOM_PORT }}
           REMOTE_USER: ${{ secrets.HOM_USER }}
           SOURCE: './'
-          TARGET: '~/public_html/vendas-minisitio/'
+          TARGET: '~/public_html/vendas_minisitio/'
 
   post-deploy:
     name: Run configurations
@@ -58,7 +58,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            cd ~/public_html/vendas-minisitio/
+            cd ~/public_html/vendas_minisitio/
             php artisan config:clear
             php artisan view:clear
             php artisan route:cache
