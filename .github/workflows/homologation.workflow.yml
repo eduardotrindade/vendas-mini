@@ -12,11 +12,9 @@ jobs:
     steps:
       - name: Remove vendor directory
         uses: fifsky/ssh-action@master
-        env:
-          TARGET: ${{ secrets.HOM_PATH }}
         with:
           command: |
-            cd $TARGET
+            cd ~/public_html/vendas-minisitio
             rm -rf vendor/
           host: ${{ secrets.HOM_HOST }}
           port: ${{ secrets.HOM_PORT }}
@@ -43,9 +41,9 @@ jobs:
 
       - name: Create env file
         env:
-          HOM_ENV_FILE: ${{ secrets.HOM_ENV }}
+          HOM_ENV_FILE: ${{ secrets.HOM_ENV_FILE }}
         run: |
-          echo $HOM_ENV_FILE > .env
+          echo $HOM_ENV_FILE | base64 --decode > .env
           php artisan key:generate --ansi
           php artisan jwt:secret --force
 
@@ -57,7 +55,7 @@ jobs:
           REMOTE_PORT: ${{ secrets.HOM_PORT }}
           REMOTE_USER: ${{ secrets.HOM_USER }}
           SOURCE: './'
-          TARGET: ${{ secrets.HOM_PATH }}
+          TARGET: '~/public_html/vendas-minisitio'
 
   post-deploy:
     name: Run configurations
@@ -66,11 +64,9 @@ jobs:
     steps:
       - name: Run migrations and seeders, clear cache for views, config and routes
         uses: fifsky/ssh-action@master
-        env:
-          TARGET: ${{ secrets.HOM_PATH }}
         with:
           command: |
-            cd $TARGET
+            cd ~/public_html/vendas-minisitio
             php artisan migrate
             php artisan config:clear
             php artisan view:clear
