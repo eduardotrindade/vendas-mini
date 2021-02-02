@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+// Redirecting any web route to the front-end
+Route::get('/{vue_capture?}', function () {
     return File::get(public_path('index.html'));
-});
+})->where('vue_capture', '[@\/\w\.\-\+]*');
