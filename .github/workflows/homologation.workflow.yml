@@ -14,8 +14,8 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            cd public_html/vendas-minisitio
-            rm -rf ./vendor
+            cd public_html/vendas-minisitio/
+            rm -rf vendor/
           host: ${{ secrets.HOM_HOST }}
           port: ${{ secrets.HOM_PORT }}
           user: ${{ secrets.HOM_USER }}
@@ -42,12 +42,12 @@ jobs:
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@v2.1.4
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.HOM_KEY }}
           REMOTE_HOST: ${{ secrets.HOM_HOST }}
           REMOTE_PORT: ${{ secrets.HOM_PORT }}
           REMOTE_USER: ${{ secrets.HOM_USER }}
           SOURCE: './'
-          TARGET: 'public_html/vendas-minisitio'
+          TARGET: 'public_html/vendas-minisitio/'
 
   post-deploy:
     runs-on: ubuntu-latest
@@ -57,7 +57,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            cd public_html/vendas-minisitio
+            cd public_html/vendas-minisitio/
             php artisan config:clear
             php artisan view:clear
             php artisan route:cache
