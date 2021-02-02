@@ -48,14 +48,13 @@ jobs:
           php artisan jwt:secret --force
 
       - name: Deploy to server
-        uses: easingthemes/ssh-deploy@v2.1.4
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.HOM_KEY }}
-          REMOTE_HOST: ${{ secrets.HOM_HOST }}
-          REMOTE_PORT: ${{ secrets.HOM_PORT }}
-          REMOTE_USER: ${{ secrets.HOM_USER }}
-          SOURCE: './'
-          TARGET: '~/public_html/vendas-minisitio'
+        uses: airvzxf/ftp-deployment-action@latest
+        with:
+          server: ${{ secrets.HOM_HOST }}
+          user: ${{ secrets.HOM_USER }}
+          password: ${{ secrets.HOM_PASSWORD }}
+          local_dir: './'
+          remote_dir: './vendas-minisitio'
 
   post-deploy:
     name: Run configurations
@@ -70,7 +69,7 @@ jobs:
             php artisan migrate
             php artisan config:clear
             php artisan view:clear
-            php artisan route:cache
+            php artisan route:clear
           host: ${{ secrets.HOM_HOST }}
           port: ${{ secrets.HOM_PORT }}
           user: ${{ secrets.HOM_USER }}

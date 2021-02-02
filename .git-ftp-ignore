@@ -1,0 +1,16 @@
+.github/*
+.editorconfig
+.env.example
+*/.gitignore
+*/.gitkeep
+.gitlab-ci.yml
+.git-ftp-ignore
+.git-ftp-include
+.gitattributes
+.gitignore
+.phpstorm.meta.php
+.styleci.yml
+_ide_helper.php
+docker-compose.yml
+phpunit.xml
+README.md
