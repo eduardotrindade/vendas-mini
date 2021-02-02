@@ -23,7 +23,7 @@ jobs:
       - name: Build application
         uses: borales/actions-yarn@v2.0.0
         with:
-          cmd: build
+          cmd: build --mode homologation
 
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@v2.1.4
