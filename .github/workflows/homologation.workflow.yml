@@ -15,7 +15,7 @@ jobs:
         with:
           command: |
             cd public_html/vendas-minisitio
-            [ -d ./vendor ] && rm -rf ./vendor
+            rm -rf ./vendor
           host: ${{ secrets.HOM_HOST }}
           port: ${{ secrets.HOM_PORT }}
           user: ${{ secrets.HOM_USER }}
