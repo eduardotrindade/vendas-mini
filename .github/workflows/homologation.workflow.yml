@@ -32,5 +32,5 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOM_HOST }}
           REMOTE_PORT: ${{ secrets.HOM_PORT }}
           REMOTE_USER: ${{ secrets.HOM_USER }}
-          SOURCE: './dist'
+          SOURCE: './dist/*'
           TARGET: '~/public_html/vendas-minisitio/public'
