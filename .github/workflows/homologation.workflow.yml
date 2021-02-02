@@ -12,9 +12,11 @@ jobs:
     steps:
       - name: Remove vendor directory
         uses: fifsky/ssh-action@master
+        env:
+          TARGET: ${{ secrets.HOM_PATH }}
         with:
           command: |
-            cd ~/public_html/vendas_minisitio/
+            cd $TARGET
             rm -rf vendor/
           host: ${{ secrets.HOM_HOST }}
           port: ${{ secrets.HOM_PORT }}
@@ -39,6 +41,14 @@ jobs:
       - name: Install composer dependencies
         run: composer install --dev --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
+      - name: Create env file
+        env:
+          HOM_ENV_FILE: ${{ secrets.HOM_ENV }}
+        run: |
+          echo $HOM_ENV_FILE > .env
+          php artisan key:generate --ansi
+          php artisan jwt:secret --force
+
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@v2.1.4
         env:
@@ -47,7 +57,7 @@ jobs:
           REMOTE_PORT: ${{ secrets.HOM_PORT }}
           REMOTE_USER: ${{ secrets.HOM_USER }}
           SOURCE: './'
-          TARGET: '~/public_html/vendas_minisitio/'
+          TARGET: ${{ secrets.HOM_PATH }}
 
   post-deploy:
     name: Run configurations
@@ -56,9 +66,12 @@ jobs:
     steps:
       - name: Run migrations and seeders, clear cache for views, config and routes
         uses: fifsky/ssh-action@master
+        env:
+          TARGET: ${{ secrets.HOM_PATH }}
         with:
           command: |
-            cd ~/public_html/vendas_minisitio/
+            cd $TARGET
+            php artisan migrate
             php artisan config:clear
             php artisan view:clear
             php artisan route:cache
