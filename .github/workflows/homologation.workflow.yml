@@ -36,9 +36,6 @@ jobs:
         with:
           php-version: '7.4'
 
-      - name: Speed up the packages installation process
-        run: composer global require hirak/prestissimo
-
       - name: Install composer dependencies
         run: composer install --dev --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
