@@ -50,6 +50,7 @@ jobs:
           TARGET: 'public_html/vendas-minisitio/'
 
   post-deploy:
+    name: Run configurations
     runs-on: ubuntu-latest
     needs: deploy
     steps:
