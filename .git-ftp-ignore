@@ -1,8 +1,6 @@
 .github/*
 .editorconfig
 .env.example
-*/.gitignore
-*/.gitkeep
 .gitlab-ci.yml
 .git-ftp-ignore
 .git-ftp-include
