@@ -1,6 +1,7 @@
 module.exports = {
-  productionSourceMap: true,
+  productionSourceMap: false,
   configureWebpack: {
+    devtool: false,
     optimization: {
       splitChunks: {
         chunks: 'all'
