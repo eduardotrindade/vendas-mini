@@ -18,8 +18,10 @@ class CreateOrdersTable extends Migration
             $table->foreignId('people_id')->constrained();
             $table->foreignId('product_id')->constrained();
             $table->tinyInteger('status')->default(0);
-            $table->dateTime('payment_date')->default(null);
+            $table->dateTime('payment_date')->nullable();
             $table->float('amount_paid');
+            $table->string('payment_code')->nullable();
+            $table->string('payment_link')->nullable();
             $table->timestamps();
         });
     }
