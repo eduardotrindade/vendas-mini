@@ -17,6 +17,7 @@ class PeopleService
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+            throw $e;
         }
 
         return $people;
@@ -31,6 +32,7 @@ class PeopleService
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+            throw $e;
         }
 
         return $people;
@@ -51,6 +53,7 @@ class PeopleService
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+            throw $e;
         }
 
         return $people;

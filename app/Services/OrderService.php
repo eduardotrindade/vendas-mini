@@ -24,6 +24,7 @@ class OrderService
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+            throw $e;
         }
 
         return $order;
@@ -89,6 +90,7 @@ class OrderService
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+            throw $e;
         }
     }
 }
