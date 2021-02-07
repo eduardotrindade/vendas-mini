@@ -17,8 +17,8 @@ class CreateOrdersTable extends Migration
             $table->integer('id')->autoIncrement();
             $table->foreignId('people_id')->constrained();
             $table->foreignId('product_id')->constrained();
-            $table->tinyInteger('status');
-            $table->dateTime('payment_date');
+            $table->tinyInteger('status')->default(0);
+            $table->dateTime('payment_date')->default(null);
             $table->float('amount_paid');
             $table->timestamps();
         });
