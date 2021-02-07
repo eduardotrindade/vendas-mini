@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Order;
+use DateTime;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use MercadoPago\Item;
@@ -55,9 +56,9 @@ class OrderService
         $preference->notification_url = url("/api/orders/change-status/{$order->id}");
 
         $preference->expires = true;
-        $dateNow = new \DateTime();
-        $preference->expiration_date_from = $dateNow->format("yyyy-MM-dd'T'HH:mm:ssz");
-        $preference->expiration_date_to = $dateNow->modify('+ 5 days')->format("yyyy-MM-dd'T'HH:mm:ssz");
+        $dateNow = new DateTime();
+        $preference->expiration_date_from = $dateNow->format(DateTime::ISO8601);
+        $preference->expiration_date_to = $dateNow->modify('+ 5 days')->format(DateTime::ISO8601);
 
         $preference->binary_mode = true;
 
