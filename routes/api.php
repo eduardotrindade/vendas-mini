@@ -32,10 +32,11 @@ Route::post('orders/payment-notification', [OrdersController::class, 'paymentNot
 
 Route::get('conta-azul/token', [ContaAzulController::class, 'token'])->name('contaAzulToken');
 
-Route::middleware('api')->group(function () {
+Route::post('auth/login', [AuthController::class, 'login']);
+
+Route::middleware('auth:api')->group(function () {
 
     Route::prefix('auth')->group(function () {
-        Route::post('login', [AuthController::class, 'login']);
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('refresh', [AuthController::class, 'refresh']);
         Route::get('me', [AuthController::class, 'me']);
