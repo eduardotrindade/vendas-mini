@@ -2,17 +2,22 @@
 
 namespace App\Services;
 
+use App\Gateway\ContaAzul\ContaAzul;
 use App\Models\People;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
 class PeopleService
 {
-    public function insert(array $data): People
+    public function insert(array $data, ContaAzulService $contaAzulService): People
     {
         DB::beginTransaction();
         try {
-            $people = People::create($data);
+            $people = new People($data);
+
+            $people->conta_azul_code = $contaAzulService->createCustomer($people);
+
+            $people->save();
 
             DB::commit();
         } catch (Exception $e) {

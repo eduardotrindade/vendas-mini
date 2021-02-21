@@ -43,7 +43,7 @@ class OrderService
         $preference = new Preference();
         $preference->items = array($item);
 
-        $urlFeedback = url('/feedback');
+        $urlFeedback = url('/feedback'); //rota front-end
         $preference->back_urls = array(
             'success' => $urlFeedback,
             'failure' => $urlFeedback,
@@ -53,9 +53,10 @@ class OrderService
 
         $preference->statement_descriptor = 'VENDASMINISITIO';
         $preference->external_reference = $order->id;
-        $preference->notification_url = url("/api/orders/change-status/{$order->id}");
+        $preference->notification_url = route('paymentNotification');
 
         $preference->expires = true;
+
         $dateNow = new DateTime();
         $preference->expiration_date_from = $dateNow->format(DateTime::ISO8601);
         $preference->expiration_date_to = $dateNow->modify('+ 5 days')->format(DateTime::ISO8601);
@@ -69,22 +70,25 @@ class OrderService
         $order->save();
     }
 
-    public function changeStatus(Order $order, array $data): void
+    public function paymentNotification(array $data, ContaAzulService $contaAzulService): void
     {
+        if ($data['topic'] !== 'payment') {
+            return;
+        }
+
         DB::beginTransaction();
         try {
             SDK::setAccessToken(env('MP_ACCESS_TOKEN'));
 
-            if ($data['topic'] !== 'payment') {
+            $payment = Payment::find_by_id($data['id']);
+
+            if ($payment['status'] !== 'approved') {
                 return;
             }
 
-            $payment = Payment::find_by_id($data['id']);
-
-            if ($payment['status'] === 'approved') {
-                $order->status = true;
-                $order->payment_date = date('Y-m-d H:i:s');
-            }
+            $order = Order::find($payment['external_reference'])->first();
+            $order->status = true;
+            $order->payment_date = date('Y-m-d H:i:s');
 
             $order->save();
 
@@ -93,5 +97,7 @@ class OrderService
             DB::rollBack();
             throw $e;
         }
+
+        $contaAzulService->createSale($order);
     }
 }

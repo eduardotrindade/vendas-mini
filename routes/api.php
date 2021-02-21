@@ -1,6 +1,11 @@
 <?php
 
-use App\Http\Controllers\{AuthController, OrdersController, PeopleController, ProfilesController, StatesController};
+use App\Http\Controllers\{AuthController,
+    ContaAzulController,
+    OrdersController,
+    PeopleController,
+    ProfilesController,
+    StatesController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +28,9 @@ Route::post('people/document-number', [PeopleController::class, 'showDocumentNum
 Route::get('profiles/{profile}/products', [ProfilesController::class, 'showProducts']);
 
 Route::post('orders', [OrdersController::class, 'store']);
-Route::post('orders/change-status/{order}', [OrdersController::class, 'changeStatus']);
+Route::post('orders/payment-notification', [OrdersController::class, 'paymentNotification'])->name('paymentNotification');
+
+Route::get('conta-azul/token', [ContaAzulController::class, 'token'])->name('contaAzulToken');
 
 Route::middleware('api')->group(function () {
 
@@ -42,4 +49,9 @@ Route::middleware('api')->group(function () {
     });
 
     Route::get('orders', [OrdersController::class, 'index']);
+
+    Route::prefix('conta-azul')->group(function () {
+        Route::get('authorize', [ContaAzulController::class, 'auth']);
+        Route::get('refresh-token', [ContaAzulController::class, 'refreshToken']);
+    });
 });

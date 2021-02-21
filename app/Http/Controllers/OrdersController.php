@@ -32,8 +32,8 @@ class OrdersController extends Controller
         return $this->orderService->insert($orderRequest->validated());
     }
 
-    public function changeStatus(Order $order, Request $request)
+    public function paymentNotification(Request $request)
     {
-        $this->orderService->changeStatus($order, $request->all());
+        $this->orderService->paymentNotification($request->all());
     }
 }

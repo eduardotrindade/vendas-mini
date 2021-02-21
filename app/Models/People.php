@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property City $city
  * @property int|null $profile_id
  * @property Profile|null $profile
+ * @property string $conta_azul_code
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|People newModelQuery()
@@ -54,7 +55,7 @@ class People extends Model
 {
     protected $fillable = [
         'name', 'document_number', 'cellphone', 'email', 'address', 'number', 'complement', 'neighborhood',
-        'zip_code', 'city_id', 'indicated_by', 'resume', 'terms_accepted', 'is_active', 'profile_id'
+        'zip_code', 'city_id', 'indicated_by', 'resume', 'terms_accepted', 'is_active', 'profile_id', 'conta_azul_code'
     ];
 
     public function city()
