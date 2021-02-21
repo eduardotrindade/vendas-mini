@@ -42,6 +42,14 @@ function stopLoading() {
 function errorHandler(error) {
   let rejectObject = null, errorMessage = '', extraErrors = []
   if (error.response) {
+    if (error.response.status === 401 && error.response.config.url !== 'auth/login') {
+      store.dispatch('unauthenticated').then(() => {
+        stopLoading()
+        window.location = '/login'
+      })
+      return
+    }
+
     rejectObject = error.response
     errorMessage = error.response.data.message
 
