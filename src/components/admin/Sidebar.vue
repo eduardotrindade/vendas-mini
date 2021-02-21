@@ -12,6 +12,12 @@
       <hr>
       <ul class="nav flex-column mb-2">
         <li class="nav-item">
+          <a class="nav-link" href="javascript:;" @click="connectContaAzul">
+            <font-awesome-icon icon="file-invoice" />
+            Conectar Conta Azul
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="javascript:;" @click="logout">
             <font-awesome-icon icon="power-off" />
             Sair
@@ -23,6 +29,8 @@
 </template>
 
 <script>
+import AuthApi from '@/api/auth'
+
 export default {
   name: 'Sidebar',
 
@@ -55,6 +63,12 @@ export default {
       if (elSidebarMenu.$el.style.display !== 'none') {
         this.$root.$emit('bv::toggle::collapse', 'sidebarMenu')
       }
+    },
+
+    connectContaAzul() {
+      AuthApi.connectContaAzul().then(data => {
+        window.location = data.redirect_authorize
+      })
     },
 
     async logout(){
