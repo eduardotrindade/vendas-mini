@@ -105,7 +105,7 @@ export default {
         amount_paid: this.product.price,
       }
 
-      OrderApi.insert(order)
+      OrderApi.create(order)
         .then(order => {
           this.$store.dispatch('setPeople', {})
           window.location = order.payment_link;

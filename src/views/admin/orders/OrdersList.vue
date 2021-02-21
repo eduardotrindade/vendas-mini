@@ -17,10 +17,7 @@
         <tbody>
         <tr v-for="order in orders" :key="order.id">
           <td>{{ order.id }}</td>
-          <td>
-            <span v-if="order.product.quantity">{{ order.product.quantity }} {{ order.product.description }}</span>
-            <span v-else>{{ order.product.description }}</span>
-          </td>
+          <td>{{ order.product.description }}</td>
           <td>{{ order.amount_paid | formatMoney }}</td>
           <td>{{ order.status ? 'Pago' : 'Aguardando Pagamento' }}</td>
           <td>{{ order.created_at | formatDate }}</td>

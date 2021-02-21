@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import OrderApi from '@/api/order'
+
 const messages = {
   success: {
     icon: 'check-circle',
@@ -36,8 +38,8 @@ export default {
   },
 
   methods: {
-    setPaymentStatus() {
-      switch (this.$route.query.status) {
+    setPaymentStatus(status) {
+      switch (status) {
         case 'approved':
         case 'authorized':
           this.message = messages.success
@@ -51,10 +53,23 @@ export default {
           break;
       }
     },
+
+    changeStatus(params) {
+      const data = {
+        topic: 'payment',
+        id: params.payment_id
+      }
+
+      OrderApi.paymentNotification(data)
+        .then(() => {})
+        .catch(error => Promise.reject(error))
+    }
   },
 
   created() {
-    this.setPaymentStatus()
+    const params = this.$route.query
+    this.changeStatus(params)
+    this.setPaymentStatus(params.status)
   }
 }
 </script>
