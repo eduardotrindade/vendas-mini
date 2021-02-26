@@ -14,7 +14,7 @@ class ContaAzulService
             'name' => $people->name,
             'email' => $people->email,
             'business_phone' => $people->cellphone,
-            'person_type' => count($people->document_number) === 11 ? 'NATURAL' : 'LEGAL',
+            'person_type' => strlen($people->document_number) === 11 ? 'NATURAL' : 'LEGAL',
             'document' => $people->document_number,
             'address' => [
                 'zip_code' => $people->zip_code,
@@ -37,9 +37,9 @@ class ContaAzulService
             'emission' => $dateNow->format("yyyy-MM-dd'T'HH:mm:ssz"),
             'status' => 'COMMITTED',
             'customer_id' => $order->people->conta_azul_code,
-            'products' => [
+            'services' => [
                 [
-                    'product_id' => $order->product->id,
+                    'service_id' => $order->product->id,
                     'description' => $order->product->description,
                     'quantity' => 1,
                     'value' => number_format($order->product->price, 2, '.', '')

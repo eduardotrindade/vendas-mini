@@ -2,8 +2,11 @@
 
 namespace App\Gateway\ContaAzul\Services;
 
+use DateTime;
+use DotenvEditor;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Support\Facades\Artisan;
 
 final class Auth
 {
@@ -41,9 +44,15 @@ final class Auth
 
     private function setAccessToken(array $data): void
     {
-        config('conta-azul.access_token', $data['access_token']);
-        config('conta-azul.refresh_token', $data['refresh_token']);
-        config('conta-azul.expires_in', $data['expires_in']);
+        DotenvEditor::setKey('CONTA_AZUL_ACCESS_TOKEN', $data['access_token']);
+        DotenvEditor::setKey('CONTA_AZUL_REFRESH_TOKEN', $data['refresh_token']);
+
+        $dateExpires = (new DateTime())->modify("+ {$data['expires_in']} seconds");
+        DotenvEditor::setKey('CONTA_AZUL_EXPIRES_IN', $dateExpires->format('Y-m-d H:i:s'));
+
+        DotenvEditor::save();
+
+        Artisan::call('config:clear');
     }
 
     public function authorize(): string
@@ -72,8 +81,15 @@ final class Auth
         $this->setAccessToken($data);
     }
 
-    public function refreshToken()
+    public function refreshToken(): string
     {
+        $dateNow = new DateTime();
+        $dateExpires = new DateTime(config('conta-azul.expires_in'));
+        $diff = $dateExpires->diff($dateNow);
+        if ($diff->invert) {
+            return config('conta-azul.access_token');
+        }
+
         $params = [
             'grant_type' => 'refresh_token',
             'refresh_token' => config('conta-azul.refresh_token')
@@ -90,5 +106,7 @@ final class Auth
         $data = json_decode($response->getBody()->getContents(), true);
 
         $this->setAccessToken($data);
+
+        return $data['access_token'];
     }
 }
