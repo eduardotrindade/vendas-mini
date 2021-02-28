@@ -198,10 +198,9 @@ export default {
         PeopleApi.save(this.people).then(() => {
           EventBus.$emit(
             'alert-success',
-            'Solicitação realizada com sucesso!! <br>' +
-            'Em breve entraremos em contato sobre a analise do seu cadastro.'
+            'Cadastro realizado com sucesso!!'
           );
-          this.$route.push({ name: 'people-list' })
+          this.$router.push({ name: 'people-list' })
         }).catch(error => {
           let errors = error.data.errors
           this.setValidationErrors(errors)

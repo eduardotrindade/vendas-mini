@@ -168,7 +168,6 @@ export default {
         state_id: requiredMessage,
         city_id: requiredMessage,
         zip_code: requiredMessage,
-        indicated_by: requiredMessage,
         resume: requiredMessage,
         terms_accepted: 'Para solicitar o cadastro deve aceitar os nossos Termos e Politícas de privacidade.',
       },
@@ -180,6 +179,8 @@ export default {
       return this.$refs.$validator.validate().then(isValid => {
         if (!isValid) return Promise.reject()
 
+        this.setIndicatedBy()
+
         PeopleApi.save(this.people).then(() => {
           EventBus.$emit(
             'alert-success',
@@ -188,6 +189,7 @@ export default {
           );
           this.people = {}
           this.cities = {}
+          this.$refs.$validator.reset()
         }).catch(error => {
           let errors = error.data.errors
           this.setValidationErrors(errors)
@@ -217,23 +219,16 @@ export default {
     },
 
     setIndicatedBy() {
-      if (!this.$route.query.indicated_by) {
+      if (!this.$route.params.indicated_by) {
         return;
       }
-      this.people.indicated_by = this.$route.query.indicated_by
+      this.people.indicated_by = this.$route.params.indicated_by
     }
   },
 
   created() {
-    this.setIndicatedBy()
     this.getStates()
   },
-
-  watch: {
-    '$route' () {
-      this.setIndicatedBy()
-    }
-  }
 }
 </script>
 
