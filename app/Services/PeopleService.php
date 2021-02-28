@@ -3,16 +3,19 @@
 namespace App\Services;
 
 use App\Models\People;
+use App\Models\Profile;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
 class PeopleService
 {
     private ContaAzulService $contaAzulService;
+    private UserService $userService;
 
-    public function __construct(ContaAzulService $contaAzulService)
+    public function __construct(ContaAzulService $contaAzulService, UserService $userService)
     {
         $this->contaAzulService = $contaAzulService;
+        $this->userService = $userService;
     }
 
     public function insert(array $data): People
@@ -21,7 +24,13 @@ class PeopleService
         try {
             $people = new People($data);
 
-            $people->conta_azul_code = $this->contaAzulService->createCustomer($people);
+            if ($people->profile_id === Profile::DIRETOR) {
+                $people->is_active = true;
+                $people->user_id = $this->userService->insert($data);
+            } else {
+                $people->setPeopleId($data['indicated_by']);
+                $people->conta_azul_code = $this->contaAzulService->createCustomer($people);
+            }
 
             $people->save();
 

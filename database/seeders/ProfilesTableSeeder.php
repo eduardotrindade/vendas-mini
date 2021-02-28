@@ -15,7 +15,7 @@ class ProfilesTableSeeder extends Seeder
     public function run()
     {
         DB::table('profiles')->insert([
-            ['id' => 1, 'name' => 'Administrador'],
+            ['id' => 1, 'name' => 'Diretor'],
             ['id' => 2, 'name' => 'Master'],
             ['id' => 3, 'name' => 'Afiliado']
         ]);

@@ -32,18 +32,17 @@ class PeopleRequest extends FormRequest
             'name' => 'required',
             'document_number' => ['required', Rule::unique('people')->ignore($people)],
             'cellphone' => 'required',
-            'email' => 'required',
+            'email' => ['required', Rule::unique('people')->ignore($people)],
             'address' => 'required',
             'number' => 'required',
             'complement' => 'nullable',
             'neighborhood' => 'nullable',
             'zip_code' => 'required',
             'city_id' => 'required',
-            'indicated_by' => 'required',
             'resume' => 'required',
             'terms_accepted' => 'required',
-            'is_active' => 'nullable',
-            'profile_id' => 'nullable'
+            'indicated_by' => 'nullable',
+            'profile_id' => 'nullable',
         ];
     }
 }

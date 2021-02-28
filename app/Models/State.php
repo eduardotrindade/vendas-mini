@@ -12,13 +12,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $abbreviation
  * @property string $name
  * @property City[] $cities
- * @method static \Illuminate\Database\Eloquent\Builder|State newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|State newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|State query()
- * @method static \Illuminate\Database\Eloquent\Builder|State whereAbbreviation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|State whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|State whereName($value)
- * @mixin \Eloquent
  */
 class State extends Model
 {
