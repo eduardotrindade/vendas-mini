@@ -16,9 +16,13 @@
         <label>Status:</label>
         <p>{{ people.is_active ? 'Ativo' : 'Inativo' }}</p>
       </div>
-      <div class="form-group col-12 col-sm-4">
+      <div class="form-group col-12 col-sm-4" v-if="people.indicated_by">
         <label>Indicado por:</label>
         <p>{{ people.indicated_by }}</p>
+      </div>
+      <div class="form-group col-12 col-sm-4" v-else>
+        <label>Link de indicação:</label>
+        <p>{{ people.referral_link }}</p>
       </div>
       <div class="form-group col-12 col-sm-6">
         <label>Nome:</label>

@@ -54,15 +54,6 @@
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-md-12 mb-3">
-                    <label for="indicated_by">Indicado por <span class="text-muted">(Master)</span></label>
-                    <ValidationProvider rules="required" v-slot="{ classes }" name="indicated_by" tag="div">
-                      <input type="text" class="form-control" :class="classes" id="indicated_by" v-model.lazy="people.indicated_by" />
-                      <div class="invalid-feedback">{{ errorMessages.indicated_by }}</div>
-                    </ValidationProvider>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -189,45 +180,60 @@ export default {
       return this.$refs.$validator.validate().then(isValid => {
         if (!isValid) return Promise.reject()
 
-        PeopleApi.save(this.people)
-          .then(() => {
-            EventBus.$emit(
-              'alert-success',
-              'Solicitação realizada com sucesso!! <br>' +
-              'Em breve entraremos em contato sobre a analise do seu cadastro.'
-            );
-            this.people = {}
-            this.cities = {}
-          }).catch(error => {
-            let errors = error.data.errors
-            this.setValidationErrors(errors)
-            return Promise.reject(error)
+        PeopleApi.save(this.people).then(() => {
+          EventBus.$emit(
+            'alert-success',
+            'Solicitação realizada com sucesso!! <br>' +
+            'Em breve entraremos em contato sobre a analise do seu cadastro.'
+          );
+          this.people = {}
+          this.cities = {}
+        }).catch(error => {
+          let errors = error.data.errors
+          this.setValidationErrors(errors)
+          return Promise.reject(error)
         })
       })
     },
 
-    getCities() {
-      StateApi.getCities(this.people.state_id)
-        .then(cities => {
-          this.cities = cities
-        }).catch(error => {
+    getStates() {
+      StateApi.getAll().then(states => {
+          this.states = states
+      }).catch(error => {
         let errors = error.data.errors
         this.setValidationErrors(errors)
         return Promise.reject(error)
       })
+    },
+
+    getCities() {
+      StateApi.getCities(this.people.state_id).then(cities => {
+          this.cities = cities
+      }).catch(error => {
+        let errors = error.data.errors
+        this.setValidationErrors(errors)
+        return Promise.reject(error)
+      })
+    },
+
+    setIndicatedBy() {
+      if (!this.$route.query.indicated_by) {
+        return;
+      }
+      this.people.indicated_by = this.$route.query.indicated_by
     }
   },
 
   created() {
-    StateApi.getAll()
-      .then(states => {
-        this.states = states
-      }).catch(error => {
-      let errors = error.data.errors
-      this.setValidationErrors(errors)
-      return Promise.reject(error)
-    })
+    this.setIndicatedBy()
+    this.getStates()
   },
+
+  watch: {
+    '$route' () {
+      this.setIndicatedBy()
+    }
+  }
 }
 </script>
 
