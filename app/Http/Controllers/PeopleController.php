@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PeopleRequest;
 use App\Http\Resources\PeopleResource;
 use App\Models\People;
+use App\Models\Profile;
 use App\Services\PeopleService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -56,6 +57,7 @@ class PeopleController extends Controller
         try {
             $people = People::query()->where([
                 'document_number' => $request->documentNumber,
+                'profile_id' => [Profile::MASTER, Profile::AFILIADO],
                 'is_active' => true
             ])->firstOrFail();
 
