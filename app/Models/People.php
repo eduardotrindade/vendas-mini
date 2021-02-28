@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * App\Models\People
@@ -40,8 +41,6 @@ class People extends Model
         'conta_azul_code'
     ];
 
-    private $referralSecret = 'fbf356f311e288';
-
     public function city()
     {
         return $this->belongsTo(City::class);
@@ -64,12 +63,14 @@ class People extends Model
 
     public function getReferralLink()
     {
-        return url('/seja-nosso-representante/' . $this->referralSecret . base64_encode($this->id));
+        $referralSecret = Str::random(10);
+
+        return url('/seja-nosso-representante/' . $referralSecret . base64_encode($this->id));
     }
 
     public function setPeopleId(string $indicatedBy)
     {
-        $indicatedByEncode = str_repeat($this->referralSecret, '', $indicatedBy);
+        $indicatedByEncode = substr($indicatedBy, 10);
 
         $this->people_id = base64_decode($indicatedByEncode);
     }
