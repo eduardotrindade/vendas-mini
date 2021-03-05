@@ -61,14 +61,18 @@ class People extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getReferralLink()
+    public function getReferralLink(): string
     {
+        if ($this->profile_id === Profile::AFILIADO) {
+            return '';
+        }
+
         $referralSecret = Str::random(10);
 
         return url('/seja-nosso-representante/' . $referralSecret . base64_encode($this->id));
     }
 
-    public function setPeopleId(string $indicatedBy)
+    public function setPeopleId(string $indicatedBy): void
     {
         $indicatedByEncode = substr($indicatedBy, 10);
 
