@@ -29,6 +29,12 @@ jobs:
           php artisan key:generate --ansi
           php artisan jwt:secret --force
 
+      - name: Confirming the deployment changes
+        run: |
+          rm -rf .gitignore
+          git add .
+          git commit -m "Deploy"
+
       - name: Deploy to server
         uses: sebastianpopp/git-ftp-action@releases/v3
         with:
