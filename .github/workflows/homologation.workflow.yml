@@ -32,6 +32,8 @@ jobs:
       - name: Confirming the deployment changes
         run: |
           rm -rf .gitignore
+          git config --global user.email "felipemjesus@outlook.com"
+          git config --global user.name "Felipe Martins"
           git add .
           git commit -m "Deploy"
 
