@@ -25,12 +25,19 @@ class ContaAzulService
             ]
         ]);
 
-        return $customer['id'];
+        $people->conta_azul_code = $customer['id'];
+        $people->save();
+
+        return $people->conta_azul_code;
     }
 
     public function createSale(Order $order): string
     {
         $dateNow = new \DateTime();
+
+        if (!$order->people->conta_azul_code) {
+            $order->people->conta_azul_code = $this->createCustomer($order->people);
+        }
 
         ContaAzul::sales()->create([
             'number' => $order->id,

@@ -29,7 +29,6 @@ class PeopleService
                 $people->user_id = $this->userService->insert($data);
             } else {
                 $people->setPeopleId($data['indicated_by']);
-                $people->conta_azul_code = $this->contaAzulService->createCustomer($people);
             }
 
             $people->save();

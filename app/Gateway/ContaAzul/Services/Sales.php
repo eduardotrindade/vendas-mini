@@ -27,7 +27,7 @@ final class Sales
             '/v1/sales',
             [
                 RequestOptions::HEADERS => [
-                    'Authorization' => 'Bearer ' . $this->auth->refreshToken()
+                    'Authorization' => 'Bearer ' . $this->auth->getToken()
                 ],
                 RequestOptions::JSON => $sale
             ]

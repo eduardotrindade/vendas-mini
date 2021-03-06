@@ -27,7 +27,7 @@ final class Customers
             '/v1/customers',
             [
                 RequestOptions::HEADERS => [
-                    'Authorization' => 'Bearer ' . $this->auth->refreshToken()
+                    'Authorization' => 'Bearer ' . $this->auth->getToken()
                 ],
                 RequestOptions::JSON => $customer
             ]

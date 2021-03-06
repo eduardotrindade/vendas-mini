@@ -27,7 +27,7 @@ final class Products
             '/v1/products',
             [
                 RequestOptions::HEADERS => [
-                    'Authorization' => 'Bearer ' . $this->auth->refreshToken()
+                    'Authorization' => 'Bearer ' . $this->auth->getToken()
                 ],
                 RequestOptions::JSON => $product
             ]
