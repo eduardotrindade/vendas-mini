@@ -41,7 +41,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOM_HOST }}
           REMOTE_PORT: ${{ secrets.HOM_PORT }}
           REMOTE_USER: ${{ secrets.HOM_USER }}
-          SOURCE: './*'
+          ARGS: '-rltgoDzvO --include=.env'
           TARGET: '~/public_html/vendas-minisitio'
 
       - name: Run migrations and seeders, clear cache for views, config and routes
