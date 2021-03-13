@@ -55,11 +55,11 @@ class PeopleController extends Controller
     public function showDocumentNumber(Request $request)
     {
         try {
-            $people = People::query()->where([
-                'document_number' => $request->documentNumber,
-                'profile_id' => [Profile::MASTER, Profile::AFILIADO],
-                'is_active' => true
-            ])->firstOrFail();
+            $people = People::query()
+                ->where('document_number', $request->get('documentNumber'))
+                ->whereIn('profile_id', [Profile::MASTER, Profile::AFILIADO])
+                ->where('is_active', true)
+                ->firstOrFail();
 
             return PeopleResource::make($people);
         } catch (ModelNotFoundException $e) {
