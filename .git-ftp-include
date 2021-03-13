@@ -1,9 +1,0 @@
-!bootstrap/cache/.gitignore
-!storage/app/public/.gitignore
-!storage/app/framework/cache/data/.gitignore
-!storage/app/framework/sessions/.gitignore
-!storage/app/framework/testing/.gitignore
-!storage/app/framework/views/.gitignore
-!storage/app/logs/.gitignore
-!vendor
-!.env

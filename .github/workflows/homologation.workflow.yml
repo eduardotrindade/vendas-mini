@@ -18,6 +18,12 @@ jobs:
         with:
           php-version: '7.4'
 
+      - name: Remove unnecessary files
+        run: |
+          rm -rf .git .github .gitattributes .gitignore .editorconfig .env.example
+          rm -rf .phpstorm.meta.php .styleci.yml _ide_helper.php
+          rm -rf docker-compose.yml package.json webpack.mix.js
+
       - name: Install composer dependencies
         run: composer install --prefer-dist --no-dev --optimize-autoloader --no-suggest --ignore-platform-reqs --no-scripts --no-interaction
 
