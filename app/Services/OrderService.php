@@ -10,7 +10,6 @@ use MercadoPago\Item;
 use MercadoPago\Payment;
 use MercadoPago\Preference;
 use MercadoPago\SDK;
-use voku\helper\ASCII;
 
 class OrderService
 {
@@ -33,7 +32,7 @@ class OrderService
 
     private function createPayment(Order $order): void
     {
-        SDK::setAccessToken(env('MP_ACCESS_TOKEN'));
+        SDK::setAccessToken(config('mercado-pago.access_token'));
 
         $item = new Item();
         $item->title = $order->product->description;
@@ -78,7 +77,7 @@ class OrderService
 
         DB::beginTransaction();
         try {
-            SDK::setAccessToken(env('MP_ACCESS_TOKEN'));
+            SDK::setAccessToken(config('mercado-pago.access_token'));
 
             $payment = Payment::find_by_id($data['id']);
 
