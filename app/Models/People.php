@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Base64Url;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -69,13 +70,15 @@ class People extends Model
 
         $referralSecret = Str::random(10);
 
-        return url('/seja-nosso-representante/' . $referralSecret . base64_encode($this->id));
+        $idEncoded = Base64Url::encode($this->id);
+
+        return url('/seja-nosso-representante/' . $referralSecret . $idEncoded);
     }
 
     public function setPeopleId(string $indicatedBy): void
     {
         $indicatedByEncode = substr($indicatedBy, 10);
 
-        $this->people_id = base64_decode($indicatedByEncode);
+        $this->people_id = Base64Url::decode($indicatedByEncode);
     }
 }
