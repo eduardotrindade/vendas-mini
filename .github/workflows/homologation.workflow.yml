@@ -2,8 +2,7 @@ name: Homologation
 
 on:
   workflow_dispatch:
-    branches:
-      - develop
+    branches: [ develop ]
 
 jobs:
   deploy:
@@ -52,7 +51,6 @@ jobs:
             cd ~/public_html/vendas-minisitio
             php artisan migrate
             php artisan optimize
-            php artisan route:clear
           host: ${{ secrets.HOM_HOST }}
           port: ${{ secrets.HOM_PORT }}
           user: ${{ secrets.HOM_USER }}
