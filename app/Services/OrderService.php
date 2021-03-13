@@ -56,9 +56,7 @@ class OrderService
 
         $preference->expires = true;
 
-        $dateNow = new DateTime();
-        $preference->expiration_date_from = $dateNow->format(DateTime::ISO8601);
-        $preference->expiration_date_to = $dateNow->modify('+ 5 days')->format(DateTime::ISO8601);
+        $preference->expiration_date_to = (new DateTime())->modify('+ 5 days')->format('Y-m-d\TH:i:sO');
 
         $preference->binary_mode = true;
 
