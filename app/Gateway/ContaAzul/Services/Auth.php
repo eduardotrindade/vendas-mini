@@ -9,35 +9,21 @@ use GuzzleHttp\RequestOptions;
 final class Auth
 {
     private HttpClient $http;
-    private string $redirectUri;
+    private string $urlApi;
     private string $clientId;
     private string $clientSecret;
     private string $state;
+    private string $redirectUri;
 
     public function __construct()
     {
-        $urlApi = config('conta-azul.url_api');
+        $this->urlApi = config('conta-azul.url_api');
         $this->clientId = config('conta-azul.client_id');
         $this->clientSecret = config('conta-azul.client_secret');
         $this->state = config('conta-azul.state');
+        $this->redirectUri = route('contaAzulToken');
 
-        $this->setRedirectUri($urlApi);
-
-        $this->http = new HttpClient(['base_uri' => $urlApi]);
-    }
-
-    private function setRedirectUri(string $urlApi): void
-    {
-        $resource = '/auth/authorize?';
-
-        $params = [
-            'client_id' => $this->clientId,
-            'redirect_uri' => route('contaAzulToken'),
-            'scope' => 'sales',
-            'state' => $this->state
-        ];
-
-        $this->redirectUri = $urlApi . $resource . http_build_query($params);
+        $this->http = new HttpClient(['base_uri' => $this->urlApi]);
     }
 
     public function getToken(): string
@@ -62,7 +48,16 @@ final class Auth
 
     public function authorize(): string
     {
-        return $this->redirectUri;
+        $resource = '/auth/authorize?';
+
+        $params = [
+            'client_id' => $this->clientId,
+            'redirect_uri' => $this->redirectUri,
+            'scope' => 'sales',
+            'state' => $this->state
+        ];
+
+        return $this->urlApi . $resource . http_build_query($params);
     }
 
     public function token(string $code): void
@@ -83,7 +78,7 @@ final class Auth
 
         $data = json_decode($response->getBody()->getContents(), true);
 
-        $this->setAccessToken($data);
+        $this->setToken($data);
     }
 
     public function refreshToken(): string
@@ -103,7 +98,7 @@ final class Auth
 
         $data = json_decode($response->getBody()->getContents(), true);
 
-        $this->setAccessToken($data);
+        $this->setToken($data);
 
         return $data['access_token'];
     }

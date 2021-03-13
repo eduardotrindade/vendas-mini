@@ -15,10 +15,14 @@ class ContaAzulController extends Controller
     public function token(Request $request)
     {
         ContaAzul::auth()->token($request->get('code'));
+
+        return redirect(url('/admin'));
     }
 
     public function refreshToken()
     {
         ContaAzul::auth()->refreshToken();
+
+        return redirect(url('/admin'));
     }
 }
