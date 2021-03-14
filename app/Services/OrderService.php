@@ -13,6 +13,13 @@ use MercadoPago\SDK;
 
 class OrderService
 {
+    private ContaAzulService $contaAzulService;
+
+    public function __construct(ContaAzulService $contaAzulService)
+    {
+        $this->contaAzulService = $contaAzulService;
+    }
+
     public function insert(array $data): Order
     {
         DB::beginTransaction();
@@ -67,7 +74,7 @@ class OrderService
         $order->save();
     }
 
-    public function paymentNotification(array $data, ContaAzulService $contaAzulService): void
+    public function paymentNotification(array $data): void
     {
         if ($data['topic'] !== 'payment') {
             return;
@@ -79,11 +86,11 @@ class OrderService
 
             $payment = Payment::find_by_id($data['id']);
 
-            if ($payment['status'] !== 'approved') {
+            if ($payment->status !== 'approved') {
                 return;
             }
 
-            $order = Order::find($payment['external_reference'])->first();
+            $order = Order::find($payment->external_reference)->first();
             $order->status = true;
             $order->payment_date = date('Y-m-d H:i:s');
 
@@ -95,6 +102,6 @@ class OrderService
             throw $e;
         }
 
-        $contaAzulService->createSale($order);
+        $this->contaAzulService->createSale($order);
     }
 }
