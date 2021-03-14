@@ -18,11 +18,4 @@ class ContaAzulController extends Controller
 
         return redirect(url('/admin'));
     }
-
-    public function refreshToken()
-    {
-        ContaAzul::auth()->refreshToken();
-
-        return redirect(url('/admin'));
-    }
 }

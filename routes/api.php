@@ -51,8 +51,5 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('orders', [OrdersController::class, 'index']);
 
-    Route::prefix('conta-azul')->group(function () {
-        Route::get('authorize', [ContaAzulController::class, 'auth']);
-        Route::get('refresh-token', [ContaAzulController::class, 'refreshToken']);
-    });
+    Route::get('conta-azul/authorize', [ContaAzulController::class, 'auth']);
 });

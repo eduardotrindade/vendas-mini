@@ -5,6 +5,7 @@ namespace App\Gateway\ContaAzul\Services;
 use DateTime;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Support\Facades\Storage;
 
 final class Auth
 {
@@ -26,10 +27,18 @@ final class Auth
         $this->http = new HttpClient(['base_uri' => $this->urlApi]);
     }
 
-    public function getToken(): string
+    private function setToken(string $json): void
     {
-        $contaAzul = session('CONTA_AZUL');
-        $dateExpires = $contaAzul['expires_in'];
+        $data = json_decode($json, true);
+        $data['expires_in'] = (new DateTime())->modify("+ {$data['expires_in']} seconds")->format('Y-m-d H:i:s');
+
+        Storage::put('conta-azul.json', json_encode($data));
+    }
+
+    public function getAccessToken(): string
+    {
+        $contaAzul = json_decode(Storage::get('conta-azul.json'), true);
+        $dateExpires = new DateTime($contaAzul['expires_in']);
 
         $dateNow = new DateTime();
         if ($dateNow > $dateExpires) {
@@ -39,11 +48,11 @@ final class Auth
         return $contaAzul['access_token'];
     }
 
-    private function setToken(array $data): void
+    private function getRefreshToken(): string
     {
-        $data['expires_in'] = (new DateTime())->modify("+ {$data['expires_in']} seconds");
+        $contaAzul = json_decode(Storage::get('conta-azul.json'), true);
 
-        session('CONTA_AZUL', $data);
+        return $contaAzul['refresh_token'];
     }
 
     public function authorize(): string
@@ -64,7 +73,7 @@ final class Auth
     {
         $params = [
             'grant_type' => 'authorization_code',
-            'redirect_uri' => $this->redirectUri,
+            'redirect_uri' => 'https://felipemjesus.com/vendas-minisitio/api/conta-azul/token',//$this->redirectUri,
             'code' => $code
         ];
 
@@ -76,16 +85,14 @@ final class Auth
             ]
         );
 
-        $data = json_decode($response->getBody()->getContents(), true);
-
-        $this->setToken($data);
+        $this->setToken($response->getBody()->getContents());
     }
 
-    public function refreshToken(): string
+    private function refreshToken(): string
     {
         $params = [
             'grant_type' => 'refresh_token',
-            'refresh_token' => session('CONTA_AZUL')['refresh_token']
+            'refresh_token' => $this->getRefreshToken()
         ];
 
         $response = $this->http->post(
@@ -96,10 +103,8 @@ final class Auth
             ]
         );
 
-        $data = json_decode($response->getBody()->getContents(), true);
+        $this->setToken($response->getBody()->getContents());
 
-        $this->setToken($data);
-
-        return $data['access_token'];
+        return $this->getToken();
     }
 }
