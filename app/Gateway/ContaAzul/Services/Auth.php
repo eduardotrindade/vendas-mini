@@ -105,6 +105,6 @@ final class Auth
 
         $this->setToken($response->getBody()->getContents());
 
-        return $this->getToken();
+        return $this->getAccessToken();
     }
 }
