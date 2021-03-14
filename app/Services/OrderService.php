@@ -94,6 +94,8 @@ class OrderService
             $order->status = true;
             $order->payment_date = date('Y-m-d H:i:s');
 
+            $order->conta_azul_code = $this->contaAzulService->createSale($order);
+
             $order->save();
 
             DB::commit();
@@ -102,6 +104,6 @@ class OrderService
             throw $e;
         }
 
-        $this->contaAzulService->createSale($order);
+
     }
 }

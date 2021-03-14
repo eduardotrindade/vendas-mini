@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $price
  * @property int $is_active
  * @property int $profile_id
+ * @property string $conta_azul_code
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  */

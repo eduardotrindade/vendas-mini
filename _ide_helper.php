@@ -1663,18 +1663,19 @@ namespace Illuminate\Support\Facades {
         }
 
     }
-            /**
-             *
-             *
-             * @method static \Illuminate\Contracts\Auth\Authenticatable loginUsingId(mixed $id, bool $remember = false)
-             * @method static \Symfony\Component\HttpFoundation\Response|null onceBasic(string $field = 'email', array $extraConditions = [])
-             * @method static bool viaRemember()
-             * @method static bool|null logoutOtherDevices(string $password, string $attribute = 'password')
-             * @see \Illuminate\Auth\AuthManager
-             * @see \Illuminate\Contracts\Auth\Factory
-             * @see \Illuminate\Contracts\Auth\Guard
-             * @see \Illuminate\Contracts\Auth\StatefulGuard
-             */
+
+    /**
+     *
+     *
+     * @method static \Illuminate\Contracts\Auth\Authenticatable loginUsingId(mixed $id, bool $remember = false)
+     * @method static \Symfony\Component\HttpFoundation\Response|null onceBasic(string $field = 'email', array $extraConditions = [])
+     * @method static bool viaRemember()
+     * @method static bool|null logoutOtherDevices(string $password, string $attribute = 'password')
+     * @see \Illuminate\Auth\AuthManager
+     * @see \Illuminate\Contracts\Auth\Factory
+     * @see \Illuminate\Contracts\Auth\Guard
+     * @see \Illuminate\Contracts\Auth\StatefulGuard
+     */
     class Auth
     {
         /**
@@ -19673,17 +19674,49 @@ namespace {
     {
     }
 
-    class File extends \Illuminate\Support\Facades\File {}
-            class Gate extends \Illuminate\Support\Facades\Gate {}
-            class Hash extends \Illuminate\Support\Facades\Hash {}
-            class Http extends \Illuminate\Support\Facades\Http {}
-            class Lang extends \Illuminate\Support\Facades\Lang {}
-            class Log extends \Illuminate\Support\Facades\Log {}
-            class Mail extends \Illuminate\Support\Facades\Mail {}
-            class Notification extends \Illuminate\Support\Facades\Notification {}
-            class Password extends \Illuminate\Support\Facades\Password {}
-            class Queue extends \Illuminate\Support\Facades\Queue {}
-            class Redirect extends \Illuminate\Support\Facades\Redirect {}
+    class File extends \Illuminate\Support\Facades\File
+    {
+    }
+
+    class Gate extends \Illuminate\Support\Facades\Gate
+    {
+    }
+
+    class Hash extends \Illuminate\Support\Facades\Hash
+    {
+    }
+
+    class Http extends \Illuminate\Support\Facades\Http
+    {
+    }
+
+    class Lang extends \Illuminate\Support\Facades\Lang
+    {
+    }
+
+    class Log extends \Illuminate\Support\Facades\Log
+    {
+    }
+
+    class Mail extends \Illuminate\Support\Facades\Mail
+    {
+    }
+
+    class Notification extends \Illuminate\Support\Facades\Notification
+    {
+    }
+
+    class Password extends \Illuminate\Support\Facades\Password
+    {
+    }
+
+    class Queue extends \Illuminate\Support\Facades\Queue
+    {
+    }
+
+    class Redirect extends \Illuminate\Support\Facades\Redirect
+    {
+    }
 
     class Request extends \Illuminate\Support\Facades\Request
     {

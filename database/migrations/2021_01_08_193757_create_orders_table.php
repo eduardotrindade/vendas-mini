@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->float('amount_paid');
             $table->string('payment_code')->nullable();
             $table->string('payment_link')->nullable();
+            $table->string('conta_azul_code')->nullable();
             $table->timestamps();
         });
     }

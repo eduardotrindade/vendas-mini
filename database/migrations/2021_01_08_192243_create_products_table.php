@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->float('price');
             $table->tinyInteger('is_active')->default(true);
             $table->foreignId('profile_id')->constrained();
+            $table->string('conta_azul_code')->nullable();
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $payment_link
  * @property Product $product
  * @property People $people
+ * @property string $conta_azul_code
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  */
