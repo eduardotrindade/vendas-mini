@@ -41,7 +41,7 @@ class ContaAzulService
 
         ContaAzul::sales()->create([
             'number' => $order->id,
-            'emission' => $dateNow->format("yyyy-MM-dd'T'HH:mm:ssz"),
+            'emission' => $dateNow->format('Y-m-d\TH:i:sO'),
             'status' => 'COMMITTED',
             'customer_id' => $order->people->conta_azul_code,
             'services' => [
@@ -58,7 +58,7 @@ class ContaAzulService
                     [
                         'number' => 1,
                         'value' => number_format($order->amount_paid, 2, '.', ''),
-                        'due_date' => $dateNow->format("yyyy-MM-dd'T'HH:mm:ssz"),
+                        'due_date' => $dateNow->format('Y-m-d\TH:i:sO'),
                         'status' => 'PENDING'
                     ]
                 ]
