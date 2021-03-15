@@ -11,7 +11,7 @@
       </ul>
       <hr>
       <ul class="nav flex-column mb-2">
-        <li class="nav-item">
+        <li class="nav-item" v-if="user.name === 'Administrador'">
           <a class="nav-link" href="javascript:;" @click="connectContaAzul">
             <font-awesome-icon icon="file-invoice" />
             Conectar Conta Azul
@@ -30,6 +30,7 @@
 
 <script>
 import AuthApi from '@/api/auth'
+import {mapGetters} from "vuex";
 
 export default {
   name: 'Sidebar',
@@ -51,6 +52,10 @@ export default {
         }
       ]
     }
+  },
+
+  computed: {
+    ...mapGetters(['user']),
   },
 
   methods: {
