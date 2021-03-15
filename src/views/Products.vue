@@ -36,6 +36,7 @@
 import { mapGetters } from 'vuex'
 import { Money } from 'v-money'
 import ProfileApi from '@/api/profile'
+import EventBus from '@/event-bus';
 
 export default {
   name: 'Products',
@@ -64,8 +65,13 @@ export default {
 
   methods: {
     buy(product) {
-      if (product.price == 0) {
+      if (product.price === 0) {
         product.price = this.price
+      }
+
+      if (!product.price) {
+        EventBus.$emit('alert-error', 'Deve ser um valor diferente que zero.')
+        return
       }
 
       this.$store.dispatch('setProduct', product)
