@@ -28,8 +28,19 @@ Vue.use(VueSweetalert2)
 import { ValidationObserver, ValidationProvider, configure, extend, localize } from 'vee-validate'
 import { required, max_value } from 'vee-validate/dist/rules'
 import pt_BR from 'vee-validate/dist/locale/pt_BR'
+import { cpf, cnpj } from 'cpf-cnpj-validator'
 extend('required', required)
 extend('max_value', max_value)
+extend('cpf_cnpj', {
+  validate: (value) => {
+    if (value.length <= 11) {
+      return cpf.isValid(value)
+    } else {
+      return cnpj.isValid(value)
+    }
+  },
+  message: 'O campo {_field_} deve ter um valor válido'
+})
 localize('pt_BR', pt_BR)
 configure({ classes: {invalid: 'is-invalid'}, mode: 'lazy', useConstraintAttrs: false })
 Vue.component('ValidationObserver', ValidationObserver)

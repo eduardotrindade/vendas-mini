@@ -22,7 +22,7 @@
 
               <div class="mb-3">
                 <label for="document_number">CPF/CNPJ</label>
-                <ValidationProvider rules="required" v-slot="{ classes }" name="document_number" tag="div">
+                <ValidationProvider rules="required|cpf_cnpj" v-slot="{ classes }" name="document_number" tag="div">
                   <the-mask :mask="['###.###.###-##', '##.###.###/####-##']" class="form-control" :class="classes" id="document_number" v-model.lazy="people.document_number" />
                   <div class="invalid-feedback">{{ errorMessages.document_number }}</div>
                 </ValidationProvider>
@@ -145,7 +145,7 @@ export default {
       cities: {},
       errorMessages: {
         name: requiredMessage,
-        document_number: requiredMessage,
+        document_number: 'Informe um CPF/CNPJ válido.',
         cellphone: requiredMessage,
         email: requiredMessage,
         address: requiredMessage,
