@@ -14,13 +14,16 @@
             <small class="text-muted">espaço assinatura anual</small>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">
+            <h2 class="card-title pricing-card-title">
               <span v-if="product.quantity">{{ product.price | formatMoney }}</span>
               <money v-else v-model.lazy="price" v-bind="money" class="form-control" placeholder="Digite o valor"></money>
               <small class="text-muted" v-if="product.quantity">/anual</small>
               <small class="text-muted" v-else>/parcela</small>
-            </h1>
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary" @click="buy(product)">Comprar</button>
+            </h2>
+            <button type="button" class="btn btn-lg btn-block btn-outline-primary" @click="buy(product)">
+              <span v-if="product.quantity">Comprar</span>
+              <span v-else>Pagar</span>
+            </button>
           </div>
         </div>
 
@@ -92,8 +95,26 @@ export default {
 </script>
 
 <style scoped>
+.pricing-header {
+  max-width: 700px;
+}
+
 .pricing-card-title span,
 .pricing-card-title small {
   display: block;
+}
+
+.card-deck .card {
+  min-width: 220px;
+}
+
+@media (min-width: 576px) {
+  .card-deck {
+    justify-content: center;
+  }
+
+  .card-deck .card {
+    max-width: 247.5px;
+  }
 }
 </style>

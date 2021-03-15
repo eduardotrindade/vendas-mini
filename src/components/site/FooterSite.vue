@@ -19,6 +19,16 @@
                 <i class="icon icon-youtube"></i>
               </a>
             </li>
+            <li class="list-inline-item">
+              <a href="https://br.minisitio.net/resources/files/ebook.pdf" target="_blank">
+                <i class="icon icon-ebook"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://br.minisitio.net/resources/files/formulario.pdf" target="_blank">
+                <i class="icon icon-form"></i>
+              </a>
+            </li>
           </ul>
         </div>
         <div class="col-md-6 col-sm-12 py-2 text-md-right">
