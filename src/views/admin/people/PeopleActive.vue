@@ -1,19 +1,24 @@
 <template>
   <b-modal
     id="people-active-modal"
-    title="Ativar Representante"
+    title="Deseja alterar o status?"
     size="md"
-    @ok.prevent="makeActive"
-    ok-title="Salvar"
-    cancel-title="Cancelar"
+    @ok.prevent="submit"
+    ok-title="Sim"
+    cancel-title="Não"
   >
     <ValidationObserver ref="$validator" tag="div" class="row">
-      <div class="form-group col-12">
+      <div class="form-group col-12" v-if="!profileId">
         <label for="profile_id">Perfil:</label>
         <ValidationProvider rules="required" v-slot="{ classes }" name="profile_id" tag="div">
           <select id="profile_id" class="form-control" :class="classes" v-model.lazy="profileId">
-            <option :value="masterId">Master</option>
-            <option :value="afiliadoId">Afiliado</option>
+            <option
+              v-for="profile in profiles"
+              :key="profile.id"
+              :value="profile.id"
+            >
+              {{ profile.name }}
+            </option>
           </select>
           <div class="invalid-feedback">{{ errorMessages.profile_id }}</div>
         </ValidationProvider>
@@ -34,8 +39,20 @@ export default {
 
   data() {
     return {
-      masterId: ProfileApi.MASTER,
-      afiliadoId: ProfileApi.AFILIADO,
+      profiles: [
+        {
+          id: ProfileApi.DIRETOR,
+          name: 'Diretor'
+        },
+        {
+          id: ProfileApi.MASTER,
+          name: 'Master'
+        },
+        {
+          id: ProfileApi.AFILIADO,
+          name: 'Afiliado'
+        }
+      ],
       peopleId: null,
       profileId: null,
       errorMessages: {
@@ -45,18 +62,19 @@ export default {
   },
 
   methods: {
-    showModal(peopleId) {
-      this.peopleId = peopleId
+    showModal(people) {
+      this.peopleId = people.id
+      this.profileId = people.profile.id ?? null
       this.$root.$emit('bv::show::modal','people-active-modal')
     },
 
-    makeActive() {
+    submit() {
       return this.$refs.$validator.validate().then(isValid => {
         if (!isValid) return Promise.reject()
 
-        PeopleApi.makeActive(this.peopleId, this.profileId)
+        PeopleApi.changeActive(this.peopleId, this.profileId)
           .then(people => {
-            EventBus.$emit('alert-success', 'Representante ativado com sucesso!')
+            EventBus.$emit('alert-success', 'Representante atualizado com sucesso!')
             EventBus.$emit('people-updated', people)
             this.$root.$emit('bv::hide::modal','people-active-modal')
           }).catch(error => {

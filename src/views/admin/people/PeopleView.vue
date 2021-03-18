@@ -3,7 +3,15 @@
     <div class="row">
       <div class="col-12 d-flex justify-content-between align-items-center">
         <h2>Representante {{ people.name }}</h2>
-        <button v-if="!people.is_active" class="btn btn-primary" @click="makeActive">Ativar</button>
+        <span>
+          <button class="btn mr-3" :class="!people.is_active ? 'btn-primary' : 'btn-danger'" @click="makeActive">
+            <span v-if="!people.is_active">Ativar</span>
+            <span v-else>Inativar</span>
+          </button>
+          <router-link class="btn btn-info" :to="{ name: 'people-form', params: { id: people.id } }">
+            Editar
+          </router-link>
+        </span>
       </div>
     </div>
     <hr>
@@ -95,7 +103,7 @@ export default {
     },
 
     makeActive() {
-      EventBus.$emit('people-active', this.people.id);
+      EventBus.$emit('people-active', this.people);
     },
   },
 

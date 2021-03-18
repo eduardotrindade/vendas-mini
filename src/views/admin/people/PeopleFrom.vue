@@ -8,10 +8,11 @@
     <hr>
     <div class="row">
       <div class="col-md-12 px-5">
-        <ValidationObserver ref="$validator" tag="form" @submit.prevent="registrationPeople">
+        <ValidationObserver ref="$validator" tag="form" @submit.prevent="submit">
           <div class="row">
             <h4 class="col-md-12 mb-3">Dados Pessoais</h4>
             <div class="col-md-6">
+
               <div class="mb-3">
                 <label for="name">Nome</label>
                 <ValidationProvider rules="required" v-slot="{ classes }" name="name" tag="div">
@@ -27,8 +28,10 @@
                   <div class="invalid-feedback">{{ errorMessages.document_number }}</div>
                 </ValidationProvider>
               </div>
+
             </div>
             <div class="col-md-6">
+
               <div class="mb-3">
                 <label for="cellphone">Celular <span class="text-muted">(com WhatsApp)</span></label>
                 <ValidationProvider rules="required" v-slot="{ classes }" name="cellphone" tag="div">
@@ -44,12 +47,25 @@
                   <div class="invalid-feedback">{{ errorMessages.email }}</div>
                 </ValidationProvider>
               </div>
+
+            </div>
+            <div class="col-md-12">
+
+              <div class="mb-3">
+                <label for="resume">Resumo de sua experiência</label>
+                <ValidationProvider rules="required" v-slot="{ classes }" name="resume" tag="div">
+                  <textarea class="form-control" :class="classes" id="resume" cols="30" rows="5" v-model.lazy="people.resume"></textarea>
+                  <div class="invalid-feedback">{{ errorMessages.resume }}</div>
+                </ValidationProvider>
+              </div>
+
             </div>
           </div>
 
           <div class="row mt-3">
             <h4 class="col-md-12 mb-3">Dados de Endereço</h4>
             <div class="col-md-6">
+
               <div class="mb-3">
                 <label for="address">Logradouro</label>
                 <ValidationProvider rules="required" v-slot="{ classes }" name="address" tag="div">
@@ -70,14 +86,17 @@
                 <label for="complement">Complemento <span class="text-muted">(opcional)</span></label>
                 <input type="text" class="form-control" id="complement" v-model.lazy="people.complement">
               </div>
+
             </div>
             <div class="col-md-6">
+
               <div class="mb-3">
                 <label for="neighborhood">Bairro <span class="text-muted">(opcional)</span></label>
                 <input type="text" class="form-control" id="neighborhood" v-model.lazy="people.neighborhood">
               </div>
 
               <div class="row">
+
                 <div class="col-md-6 mb-3">
                   <label for="state_id">Estado</label>
                   <ValidationProvider rules="required" v-slot="{ classes }" name="state_id" tag="div">
@@ -88,6 +107,7 @@
                     <div class="invalid-feedback">{{ errorMessages.state_id }}</div>
                   </ValidationProvider>
                 </div>
+
                 <div class="col-md-6 mb-3">
                   <label for="city">Cidade</label>
                   <ValidationProvider rules="required" v-slot="{ classes }" name="city" tag="div">
@@ -98,6 +118,7 @@
                     <div class="invalid-feedback">{{ errorMessages.city_id }}</div>
                   </ValidationProvider>
                 </div>
+
               </div>
 
               <div class="mb-3">
@@ -105,6 +126,38 @@
                 <ValidationProvider rules="required" v-slot="{ classes }" name="zip_code" tag="div">
                   <the-mask :mask="['##.###-###']" class="form-control" :class="classes" id="zip_code" v-model.lazy="people.zip_code" />
                   <div class="invalid-feedback">{{ errorMessages.zip_code }}</div>
+                </ValidationProvider>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+
+              <div class="mb-3">
+                <label for="profile_id">Perfil:</label>
+                <ValidationProvider rules="required" v-slot="{ classes }" name="profile_id" tag="div">
+                  <select id="profile_id" class="form-control" :class="classes" v-model.lazy="people.profile_id">
+                    <option
+                      v-for="profile in profiles"
+                      :key="profile.id"
+                      :value="profile.id"
+                    >
+                      {{ profile.name }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback">{{ errorMessages.profile_id }}</div>
+                </ValidationProvider>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <ValidationProvider v-slot="{ classes }" name="indicated_by" tag="div">
+                  <label for="indicated_by">Indicador por <span class="text-muted">(opcional)</span></label>
+                  <input type="text" class="form-control" :class="classes" id="indicated_by" v-model.lazy="people.indicated_by">
+                  <div class="invalid-feedback">{{ errorMessages.indicated_by }}</div>
                 </ValidationProvider>
               </div>
             </div>
@@ -136,11 +189,21 @@ export default {
     const requiredMessage = 'Preenchimento  obrigatório.'
 
     return {
-      people: {
-        profile_id: ProfileApi.DIRETOR,
-        resume: 'Diretor',
-        terms_accepted: true
-      },
+      profiles: [
+        {
+          id: ProfileApi.DIRETOR,
+          name: 'Diretor'
+        },
+        {
+          id: ProfileApi.MASTER,
+          name: 'Master'
+        },
+        {
+          id: ProfileApi.AFILIADO,
+          name: 'Afiliado'
+        }
+      ],
+      people: {},
       states: {},
       cities: {},
       errorMessages: {
@@ -155,6 +218,8 @@ export default {
         state_id: requiredMessage,
         city_id: requiredMessage,
         zip_code: requiredMessage,
+        profile_id: requiredMessage,
+        indicated_by: ''
       },
     }
   },
@@ -189,18 +254,28 @@ export default {
 
     setPeople(people) {
       this.people = people
+      this.people.profile_id = people.profile.id
+      this.people.state_id = people.city.state.id
+      this.people.city_id = people.city.id
+      this.people.indicated_by = null
+      this.getCities()
     },
 
-    registrationPeople() {
+    submit() {
       return this.$refs.$validator.validate().then(isValid => {
         if (!isValid) return Promise.reject()
 
-        PeopleApi.save(this.people).then(() => {
-          EventBus.$emit(
-            'alert-success',
-            'Cadastro realizado com sucesso!!'
-          );
-          this.$router.push({ name: 'people-list' })
+        if (this.people.profile_id === ProfileApi.DIRETOR) {
+          this.people.terms_accepted = true
+        }
+
+        const peopleRequest = this.people.id
+          ? PeopleApi.update(this.people)
+          : PeopleApi.save(this.people)
+
+        peopleRequest.then(people => {
+          EventBus.$emit('alert-success', 'Dados salvo com sucesso!')
+          this.$router.push({ name: 'people-view', params: { id: people.id } })
         }).catch(error => {
           let errors = error.data.errors
           this.setValidationErrors(errors)
