@@ -46,7 +46,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('', [PeopleController::class, 'index']);
         Route::get('{people}', [PeopleController::class, 'show']);
         Route::put('{people}', [PeopleController::class, 'update']);
-        Route::patch('{people}/active', [PeopleController::class, 'active']);
+        Route::patch('{people}/change-active', [PeopleController::class, 'changeActive']);
     });
 
     Route::get('orders', [OrdersController::class, 'index']);

@@ -46,7 +46,13 @@ class PeopleService
     {
         DB::beginTransaction();
         try {
-            $people->update($data);
+            $people->fill($data);
+
+            if (strlen($data['indicated_by']) >= 12 && $people->profile_id != Profile::DIRETOR) {
+                $people->setPeopleId($data['indicated_by']);
+            }
+
+            $people->save();
 
             DB::commit();
         } catch (Exception $e) {
@@ -57,11 +63,11 @@ class PeopleService
         return $people;
     }
 
-    public function active(People $people, ?int $profileId): People
+    public function changeActive(People $people, ?int $profileId): People
     {
         DB::beginTransaction();
         try {
-            $people->is_active = true;
+            $people->is_active = !$people->is_active;
 
             if (!$people->profile_id) {
                 $people->profile_id = $profileId;

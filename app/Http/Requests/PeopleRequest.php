@@ -41,7 +41,7 @@ class PeopleRequest extends FormRequest
             'city_id' => 'required',
             'resume' => 'required',
             'terms_accepted' => 'required',
-            'indicated_by' => 'nullable',
+            'indicated_by' => 'nullable|min:12',
             'profile_id' => 'nullable',
         ];
     }

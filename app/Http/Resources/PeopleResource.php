@@ -35,8 +35,6 @@ class PeopleResource extends JsonResource
             'resume' => $this->resource->resume,
             'terms_accepted' => $this->resource->terms_accepted,
             'is_active' => $this->resource->is_active,
-            'created_at' => $this->resource->created_at,
-            'updated_at' => $this->resource->updated_at,
             'city' => CityResource::make($this->resource->city),
             'profile' => ProfileResource::make($this->resource->profile),
             'indicated_by' => $this->resource->people->name ?? null,
