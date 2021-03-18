@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use ReflectionClass;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -36,5 +37,20 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * Prepare exception for rendering.
+     *
+     * @param  \Throwable  $e
+     * @return \Throwable
+     */
+    protected function prepareException(Throwable $e)
+    {
+        $prop = (new ReflectionClass($e))->getProperty('message');
+        $prop->setAccessible(true);
+        $prop->setValue($e, __($e->getMessage()) ?? $e->getMessage());
+
+        return parent::prepareException($e);
     }
 }
