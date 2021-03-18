@@ -30,7 +30,7 @@ class ProductsTableSeeder extends Seeder
                 'id' => 2,
                 'description' => 'LT 20 unidades',
                 'quantity' => 20,
-                'price' => 680,
+                'price' => 580,
                 'is_active' => true,
                 'profile_id' => 2,
                 'conta_azul_code' => '70567949-23d5-41ea-8a40-a5c38f283b55',
