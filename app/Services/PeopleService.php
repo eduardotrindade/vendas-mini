@@ -2,10 +2,13 @@
 
 namespace App\Services;
 
+use App\Mail\PeopleActived;
+use App\Mail\PeopleRegistered;
 use App\Models\People;
 use App\Models\Profile;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class PeopleService
 {
@@ -39,6 +42,10 @@ class PeopleService
             throw $e;
         }
 
+        if ($people->profile_id !== Profile::DIRETOR) {
+            Mail::to($people->email)->send(new PeopleRegistered($people->name));
+        }
+
         return $people;
     }
 
@@ -63,7 +70,7 @@ class PeopleService
         return $people;
     }
 
-    public function changeActive(People $people, ?int $profileId): People
+    public function changeActive(People $people, ?int $profileId = null): People
     {
         DB::beginTransaction();
         try {
@@ -79,6 +86,10 @@ class PeopleService
         } catch (Exception $e) {
             DB::rollBack();
             throw $e;
+        }
+
+        if ($profileId) {
+            Mail::to($people->email)->send(new PeopleActived($people->name));
         }
 
         return $people;

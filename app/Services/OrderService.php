@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Mail\OrderIdentifiedPayment;
 use App\Models\Order;
 use DateTime;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use MercadoPago\Item;
 use MercadoPago\Payment;
 use MercadoPago\Preference;
@@ -90,6 +92,7 @@ class OrderService
                 return;
             }
 
+            /** @var Order $order */
             $order = Order::find($payment->external_reference)->first();
             $order->status = true;
             $order->payment_date = date('Y-m-d H:i:s');
@@ -104,6 +107,6 @@ class OrderService
             throw $e;
         }
 
-
+        Mail::to($order->people->name)->send(new OrderIdentifiedPayment($order));
     }
 }
