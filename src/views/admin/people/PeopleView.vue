@@ -109,7 +109,6 @@ export default {
 
   created() {
     this.getPeople()
-
     EventBus.$on('people-updated', this.setPeople);
   },
 

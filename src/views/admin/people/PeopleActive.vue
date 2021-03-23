@@ -8,7 +8,7 @@
     cancel-title="Não"
   >
     <ValidationObserver ref="$validator" tag="div" class="row">
-      <div class="form-group col-12" v-if="!profileId">
+      <div class="form-group col-12" v-if="isProfile">
         <label for="profile_id">Perfil:</label>
         <ValidationProvider rules="required" v-slot="{ classes }" name="profile_id" tag="div">
           <select id="profile_id" class="form-control" :class="classes" v-model.lazy="profileId">
@@ -41,10 +41,6 @@ export default {
     return {
       profiles: [
         {
-          id: ProfileApi.DIRETOR,
-          name: 'Diretor'
-        },
-        {
           id: ProfileApi.MASTER,
           name: 'Master'
         },
@@ -53,7 +49,10 @@ export default {
           name: 'Afiliado'
         }
       ],
-      peopleId: null,
+      people: {
+        id: null,
+        profile: null
+      },
       profileId: null,
       errorMessages: {
         profile_id: 'Selecione o perfil'
@@ -61,10 +60,15 @@ export default {
     }
   },
 
+  computed: {
+    isProfile() {
+      return !this.people.profile
+    }
+  },
+
   methods: {
     showModal(people) {
-      this.peopleId = people.id
-      this.profileId = people.profile.id ?? null
+      this.people = people
       this.$root.$emit('bv::show::modal','people-active-modal')
     },
 
@@ -72,7 +76,7 @@ export default {
       return this.$refs.$validator.validate().then(isValid => {
         if (!isValid) return Promise.reject()
 
-        PeopleApi.changeActive(this.peopleId, this.profileId)
+        PeopleApi.changeActive(this.people.id, this.profileId)
           .then(people => {
             EventBus.$emit('alert-success', 'Representante atualizado com sucesso!')
             EventBus.$emit('people-updated', people)
