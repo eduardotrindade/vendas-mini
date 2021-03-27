@@ -6,6 +6,6 @@
             Olá {{ $name }},
         </strong>
         <br/>
-        {{ $message }}
+        {{ $text }}
     </p>
 @endsection

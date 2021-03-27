@@ -30,11 +30,11 @@ class OrderIdentifiedPayment extends Mailable
      */
     public function build()
     {
-        $message = __('Confirmamos que sua compra foi realizada com sucesso, em até 48 horas o respectivo crédito
-            estará disponível na conta do ID do seu pertinente Máster.');
+        $text = 'Confirmamos que sua compra foi realizada com sucesso, em até 48 horas o respectivo crédito
+            estará disponível na conta do ID do seu pertinente Máster.';
 
         if ($this->order->product->price == 0) {
-            $message = __('Confirmamos o pagamento da parcela do respectivo Contrato ou Termo de Convênio.');
+            $text = 'Confirmamos o pagamento da parcela do respectivo Contrato ou Termo de Convênio.';
         }
 
         return $this
@@ -42,8 +42,8 @@ class OrderIdentifiedPayment extends Mailable
             ->subject(__('Pagamento identificado'))
             ->with([
                 'name' => $this->order->people->name,
-                'message' => $message
+                'text' => $text
             ])
-            ->view('emails.orders.payment');
+            ->view('emails.orders.identified-payment');
     }
 }
