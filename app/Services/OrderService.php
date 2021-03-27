@@ -109,6 +109,6 @@ class OrderService
             return;
         }
 
-        Mail::to($order->people->name)->send(new OrderIdentifiedPayment($order));
+        Mail::to($order->people->email)->send(new OrderIdentifiedPayment($order));
     }
 }
