@@ -7,6 +7,7 @@ use App\Models\Order;
 use DateTime;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use MercadoPago\Item;
 use MercadoPago\Payment;
@@ -104,7 +105,8 @@ class OrderService
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-            throw $e;
+            Log::error($e);
+            return;
         }
 
         Mail::to($order->people->name)->send(new OrderIdentifiedPayment($order));

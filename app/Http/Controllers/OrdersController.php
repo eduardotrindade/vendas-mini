@@ -35,5 +35,7 @@ class OrdersController extends Controller
     public function paymentNotification(Request $request)
     {
         $this->orderService->paymentNotification($request->all());
+
+        return response()->json(['message' => 'Pagamento processado'], 200);
     }
 }
