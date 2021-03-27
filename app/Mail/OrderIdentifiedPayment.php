@@ -44,6 +44,6 @@ class OrderIdentifiedPayment extends Mailable
                 'name' => $this->order->people->name,
                 'message' => $message
             ])
-            ->view('emails.orders.identified-payment');
+            ->view('emails.orders.payment');
     }
 }
