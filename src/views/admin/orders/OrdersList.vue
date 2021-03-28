@@ -10,6 +10,7 @@
           <th>Valor</th>
           <th>Status</th>
           <th>Criado</th>
+          <th>Informação</th>
           <th>Representante</th>
           <th>Perfil</th>
         </tr>
@@ -21,6 +22,7 @@
           <td>{{ order.amount_paid | formatMoney }}</td>
           <td>{{ order.status ? 'Pago' : 'Aguardando Pagamento' }}</td>
           <td>{{ order.created_at | formatDate }}</td>
+          <td>{{ order.information }}</td>
           <td>{{ order.people.name }}</td>
           <td>{{ order.people.profile.name }}</td>
         </tr>

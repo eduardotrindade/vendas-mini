@@ -20,7 +20,11 @@
               <small class="text-muted" v-if="product.quantity">/anual</small>
               <small class="text-muted" v-else>/parcela</small>
             </h2>
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary" @click="buy(product)">
+            <button
+              type="button"
+              class="btn btn-lg btn-block btn-outline-primary"
+              @click="buy(product)"
+            >
               <span v-if="product.quantity">Comprar</span>
               <span v-else>Pagar</span>
             </button>
@@ -29,6 +33,8 @@
 
       </div>
     </div>
+
+    <order-information-modal/>
   </div>
 </template>
 
@@ -36,11 +42,13 @@
 import { mapGetters } from 'vuex'
 import { Money } from 'v-money'
 import ProfileApi from '@/api/profile'
-import EventBus from '@/event-bus';
+import EventBus from '@/event-bus'
+import OrderInformationModal from '@/views/OrderInformationModal'
 
 export default {
   name: 'Products',
-  components: { Money },
+  components: { Money, OrderInformationModal },
+
   computed: {
     ...mapGetters(['people']),
     isMaster() {
@@ -51,6 +59,7 @@ export default {
   data() {
     return {
       products: {},
+      product: {},
       price: 0.00,
       money: {
         decimal: ',',
@@ -74,9 +83,26 @@ export default {
         return
       }
 
+      this.product = product;
+
+      if (this.product.quantity) {
+        this.product.orderInformation = null
+        this.finalizeBuy(product)
+        return
+      }
+
+      EventBus.$emit('order-information-modal-show')
+    },
+
+    finalizeBuy(product) {
       this.$store.dispatch('setProduct', product)
       this.$router.push({ name: `finalize-order` })
-    }
+    },
+
+    setOrderInformation(information) {
+      this.product.orderInformation = information
+      this.finalizeBuy(this.product)
+    },
   },
 
   created() {
@@ -88,6 +114,8 @@ export default {
       .then(products => {
         this.products = products
       }).catch(error => Promise.reject(error))
+
+    EventBus.$on('order-set-information', this.setOrderInformation)
   },
 
   mounted() {

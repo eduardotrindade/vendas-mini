@@ -15,7 +15,8 @@
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
                 <h6 class="my-0">{{ product.description }}</h6>
-                <small class="text-muted">Compra de espaço assinatura anual</small>
+                <small class="text-muted" v-if="product.orderInformation">{{ product.orderInformation }}</small>
+                <small class="text-muted" v-else>Compra de espaço assinatura anual</small>
               </div>
               <span class="text-muted">{{ product.price | formatMoney }}</span>
             </li>
@@ -103,6 +104,7 @@ export default {
         people_id: this.people.id,
         product_id: this.product.id,
         amount_paid: this.product.price,
+        information: this.product.orderInformation
       }
 
       OrderApi.create(order)
