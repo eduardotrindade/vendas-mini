@@ -26,7 +26,8 @@ class OrderRequest extends FormRequest
         return [
             'people_id' => 'required|numeric',
             'product_id' => 'required|numeric',
-            'amount_paid' => 'required'
+            'amount_paid' => 'required',
+            'information' => 'nullable'
         ];
     }
 }

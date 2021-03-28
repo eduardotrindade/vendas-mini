@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $status
  * @property string $payment_date
  * @property float $amount_paid
+ * @property string $information
  * @property string $payment_code
  * @property string $payment_link
  * @property Product $product
@@ -23,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Order extends Model
 {
-    protected $fillable = ['people_id', 'product_id', 'amount_paid'];
+    protected $fillable = ['people_id', 'product_id', 'amount_paid', 'information'];
 
     public function product()
     {

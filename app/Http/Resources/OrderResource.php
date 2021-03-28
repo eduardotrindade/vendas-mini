@@ -25,6 +25,7 @@ class OrderResource extends JsonResource
             'status' => $this->resource->status,
             'payment_date' => $this->resource->payment_date,
             'amount_paid' => $this->resource->amount_paid,
+            'information' => $this->resource->information,
             'payment_code' => $this->resource->payment_code,
             'product' => ProductResource::make($this->resource->product),
             'people' => PeopleResource::make($this->resource->people),

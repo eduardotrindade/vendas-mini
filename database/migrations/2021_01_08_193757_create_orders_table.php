@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->tinyInteger('status')->default(0);
             $table->dateTime('payment_date')->nullable();
             $table->float('amount_paid');
+            $table->string('information')->nullable();
             $table->string('payment_code')->nullable();
             $table->string('payment_link')->nullable();
             $table->string('conta_azul_code')->nullable();
