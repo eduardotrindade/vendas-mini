@@ -43,8 +43,8 @@ jobs:
 
       - name: Commit deploy changes
         run:
-          git config user.name "Felipe Martins"
-          git config user.email "felipemjesus@outlook.com"
+          git config --local user.name "Felipe Martins"
+          git config --local user.email "felipemjesus@outlook.com"
           git add .
           git commit -m "Deploy"
 
