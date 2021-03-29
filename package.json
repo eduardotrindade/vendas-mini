@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --modern --no-clean",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -16,6 +16,7 @@
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.20.1",
     "core-js": "^3.6.5",
+    "cpf-cnpj-validator": "^1.0.3",
     "v-money": "^0.8.1",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.11",

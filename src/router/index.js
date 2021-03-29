@@ -32,7 +32,7 @@ const routes = [
     meta: { layout: Site },
   },
   {
-    path: '/seja-nosso-representante',
+    path: '/seja-nosso-representante/:indicated_by?',
     name: 'registration-people',
     component: () => import(/* webpackChunkName: "site" */ '@/views/RegistrationPeople'),
     meta: { layout: Site },
@@ -48,6 +48,7 @@ const routes = [
     name: 'admin',
     component: () => import(/* webpackChunkName: "admin" */ '@/layouts/Admin'),
     meta: { requiresAuth: true },
+    redirect: { name: 'orders-list' },
     children: [
       {
         path: 'orders',
@@ -60,9 +61,14 @@ const routes = [
         component: () => import(/* webpackChunkName: "people" */ '@/views/admin/people/PeopleList'),
       },
       {
-        path: 'people/:id',
+        path: 'people/view/:id',
         name: 'people-view',
         component: () => import(/* webpackChunkName: "people" */ '@/views/admin/people/PeopleView'),
+      },
+      {
+        path: 'people/form/:id?',
+        name: 'people-form',
+        component: () => import(/* webpackChunkName: "people" */ '@/views/admin/people/PeopleFrom'),
       },
     ]
   },

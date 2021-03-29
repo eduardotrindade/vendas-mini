@@ -23,9 +23,14 @@ export default {
       await commit('setUser', user)
     },
 
-    async logout({commit}){
-      let user = null
+    async logout({commit}) {
       await AuthApi.logout()
+      let user = null
+      commit('logout', user)
+    },
+
+    unauthenticated({commit}) {
+      let user = null
       commit('logout', user)
     }
   },

@@ -1,6 +1,13 @@
 <template>
   <div>
-    <h2 class="mb-3">Representantes</h2>
+    <div class="row">
+      <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2>Representantes</h2>
+        <router-link class="btn btn-primary" :to="{ name: 'people-form' }">
+          Novo
+        </router-link>
+      </div>
+    </div>
     <div class="table-responsive">
       <table id="people-list" class="table table-hover table-striped table-sm">
         <thead>
@@ -10,7 +17,7 @@
           <th>Celular</th>
           <th>Status</th>
           <th>Perfil</th>
-          <th></th>
+          <th width="100px"></th>
         </tr>
         </thead>
         <tbody>
@@ -21,8 +28,8 @@
           <td>{{ person.is_active ? 'Ativo' : 'Inativo' }}</td>
           <td>{{ person.profile ? person.profile.name : 'Não definido' }}</td>
           <td>
-            <router-link class="btn btn-primary btn-sm" title="Detalhes" :to="{ name: 'people-view', params: { id: person.id } }">
-              <font-awesome-icon icon="eye" />
+            <router-link class="btn btn-info btn-sm" :to="{ name: 'people-view', params: { id: person.id } }">
+              Visualizar
             </router-link>
           </td>
         </tr>

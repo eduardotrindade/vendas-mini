@@ -2,6 +2,7 @@ import axios from 'axios'
 import { cacheAdapterEnhancer } from 'axios-extensions'
 import store  from '@/store'
 import EventBus from '@/event-bus'
+import router from '@/router';
 
 const ApiInstance = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL,
@@ -42,6 +43,14 @@ function stopLoading() {
 function errorHandler(error) {
   let rejectObject = null, errorMessage = '', extraErrors = []
   if (error.response) {
+    if (error.response.status === 401 && error.response.config.url !== 'auth/login') {
+      store.dispatch('unauthenticated').then(() => {
+        stopLoading()
+        router.push({ name: 'login' })
+      })
+      return
+    }
+
     rejectObject = error.response
     errorMessage = error.response.data.message
 

@@ -11,6 +11,12 @@
       </ul>
       <hr>
       <ul class="nav flex-column mb-2">
+        <li class="nav-item" v-if="user.name === 'Administrador'">
+          <a class="nav-link" href="javascript:;" @click="connectContaAzul">
+            <font-awesome-icon icon="file-invoice" />
+            Conectar Conta Azul
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="javascript:;" @click="logout">
             <font-awesome-icon icon="power-off" />
@@ -23,6 +29,9 @@
 </template>
 
 <script>
+import AuthApi from '@/api/auth'
+import {mapGetters} from "vuex";
+
 export default {
   name: 'Sidebar',
 
@@ -45,6 +54,10 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters(['user']),
+  },
+
   methods: {
     setActive(route) {
       this.links.map(link => {
@@ -55,6 +68,12 @@ export default {
       if (elSidebarMenu.$el.style.display !== 'none') {
         this.$root.$emit('bv::toggle::collapse', 'sidebarMenu')
       }
+    },
+
+    connectContaAzul() {
+      AuthApi.connectContaAzul().then(data => {
+        window.location = data.redirect_authorize
+      })
     },
 
     async logout(){

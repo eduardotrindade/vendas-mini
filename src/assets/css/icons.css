@@ -18,3 +18,9 @@
 .icon-youtube {
   mask: url(../icons/youtube-square-brands.svg) no-repeat;
 }
+.icon-ebook {
+  mask: url(../icons/book-solid.svg) no-repeat;
+}
+.icon-form {
+  mask: url(../icons/file-invoice-solid.svg) no-repeat;
+}

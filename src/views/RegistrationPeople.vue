@@ -21,7 +21,7 @@
 
                 <div class="mb-3">
                   <label for="document_number">CPF/CNPJ</label>
-                  <ValidationProvider rules="required" v-slot="{ classes }" name="document_number" tag="div">
+                  <ValidationProvider rules="required|cpf_cnpj" v-slot="{ classes }" name="document_number" tag="div">
                     <the-mask :mask="['###.###.###-##', '##.###.###/####-##']" class="form-control" :class="classes" id="document_number" v-model.lazy="people.document_number" />
                     <div class="invalid-feedback">{{ errorMessages.document_number }}</div>
                   </ValidationProvider>
@@ -54,15 +54,6 @@
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-md-12 mb-3">
-                    <label for="indicated_by">Indicado por <span class="text-muted">(Master)</span></label>
-                    <ValidationProvider rules="required" v-slot="{ classes }" name="indicated_by" tag="div">
-                      <input type="text" class="form-control" :class="classes" id="indicated_by" v-model.lazy="people.indicated_by" />
-                      <div class="invalid-feedback">{{ errorMessages.indicated_by }}</div>
-                    </ValidationProvider>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -167,7 +158,7 @@ export default {
       cities: {},
       errorMessages: {
         name: requiredMessage,
-        document_number: requiredMessage,
+        document_number: 'Informe um CPF/CNPJ válido.',
         cellphone: requiredMessage,
         email: requiredMessage,
         address: requiredMessage,
@@ -177,7 +168,6 @@ export default {
         state_id: requiredMessage,
         city_id: requiredMessage,
         zip_code: requiredMessage,
-        indicated_by: requiredMessage,
         resume: requiredMessage,
         terms_accepted: 'Para solicitar o cadastro deve aceitar os nossos Termos e Politícas de privacidade.',
       },
@@ -189,44 +179,55 @@ export default {
       return this.$refs.$validator.validate().then(isValid => {
         if (!isValid) return Promise.reject()
 
-        PeopleApi.save(this.people)
-          .then(() => {
-            EventBus.$emit(
-              'alert-success',
-              'Solicitação realizada com sucesso!! <br>' +
-              'Em breve entraremos em contato sobre a analise do seu cadastro.'
-            );
-            this.people = {}
-            this.cities = {}
-          }).catch(error => {
-            let errors = error.data.errors
-            this.setValidationErrors(errors)
-            return Promise.reject(error)
+        this.setIndicatedBy()
+
+        PeopleApi.save(this.people).then(() => {
+          EventBus.$emit(
+            'alert-success',
+            'Solicitação realizada com sucesso!! <br>' +
+            'Em breve entraremos em contato sobre a analise do seu cadastro.'
+          );
+          this.people = {}
+          this.cities = {}
+          this.$refs.$validator.reset()
+        }).catch(error => {
+          let errors = error.data.errors
+          this.setValidationErrors(errors)
+          return Promise.reject(error)
         })
       })
     },
 
-    getCities() {
-      StateApi.getCities(this.people.state_id)
-        .then(cities => {
-          this.cities = cities
-        }).catch(error => {
+    getStates() {
+      StateApi.getAll().then(states => {
+          this.states = states
+      }).catch(error => {
         let errors = error.data.errors
         this.setValidationErrors(errors)
         return Promise.reject(error)
       })
+    },
+
+    getCities() {
+      StateApi.getCities(this.people.state_id).then(cities => {
+          this.cities = cities
+      }).catch(error => {
+        let errors = error.data.errors
+        this.setValidationErrors(errors)
+        return Promise.reject(error)
+      })
+    },
+
+    setIndicatedBy() {
+      if (!this.$route.params.indicated_by) {
+        return;
+      }
+      this.people.indicated_by = this.$route.params.indicated_by
     }
   },
 
   created() {
-    StateApi.getAll()
-      .then(states => {
-        this.states = states
-      }).catch(error => {
-      let errors = error.data.errors
-      this.setValidationErrors(errors)
-      return Promise.reject(error)
-    })
+    this.getStates()
   },
 }
 </script>

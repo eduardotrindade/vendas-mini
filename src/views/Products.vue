@@ -14,18 +14,27 @@
             <small class="text-muted">espaço assinatura anual</small>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">
+            <h2 class="card-title pricing-card-title">
               <span v-if="product.quantity">{{ product.price | formatMoney }}</span>
               <money v-else v-model.lazy="price" v-bind="money" class="form-control" placeholder="Digite o valor"></money>
               <small class="text-muted" v-if="product.quantity">/anual</small>
               <small class="text-muted" v-else>/parcela</small>
-            </h1>
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary" @click="buy(product)">Comprar</button>
+            </h2>
+            <button
+              type="button"
+              class="btn btn-lg btn-block btn-outline-primary"
+              @click="buy(product)"
+            >
+              <span v-if="product.quantity">Comprar</span>
+              <span v-else>Pagar</span>
+            </button>
           </div>
         </div>
 
       </div>
     </div>
+
+    <order-information-modal/>
   </div>
 </template>
 
@@ -33,10 +42,13 @@
 import { mapGetters } from 'vuex'
 import { Money } from 'v-money'
 import ProfileApi from '@/api/profile'
+import EventBus from '@/event-bus'
+import OrderInformationModal from '@/views/OrderInformationModal'
 
 export default {
   name: 'Products',
-  components: { Money },
+  components: { Money, OrderInformationModal },
+
   computed: {
     ...mapGetters(['people']),
     isMaster() {
@@ -47,6 +59,7 @@ export default {
   data() {
     return {
       products: {},
+      product: {},
       price: 0.00,
       money: {
         decimal: ',',
@@ -61,13 +74,35 @@ export default {
 
   methods: {
     buy(product) {
-      if (product.price == 0) {
+      if (product.price === 0) {
         product.price = this.price
       }
 
+      if (!product.price) {
+        EventBus.$emit('alert-error', 'Deve ser um valor diferente que zero.')
+        return
+      }
+
+      this.product = product;
+
+      if (this.product.quantity) {
+        this.product.orderInformation = null
+        this.finalizeBuy(product)
+        return
+      }
+
+      EventBus.$emit('order-information-modal-show')
+    },
+
+    finalizeBuy(product) {
       this.$store.dispatch('setProduct', product)
       this.$router.push({ name: `finalize-order` })
-    }
+    },
+
+    setOrderInformation(information) {
+      this.product.orderInformation = information
+      this.finalizeBuy(this.product)
+    },
   },
 
   created() {
@@ -79,6 +114,8 @@ export default {
       .then(products => {
         this.products = products
       }).catch(error => Promise.reject(error))
+
+    EventBus.$on('order-set-information', this.setOrderInformation)
   },
 
   mounted() {
@@ -92,8 +129,26 @@ export default {
 </script>
 
 <style scoped>
+.pricing-header {
+  max-width: 700px;
+}
+
 .pricing-card-title span,
 .pricing-card-title small {
   display: block;
+}
+
+.card-deck .card {
+  min-width: 220px;
+}
+
+@media (min-width: 576px) {
+  .card-deck {
+    justify-content: center;
+  }
+
+  .card-deck .card {
+    max-width: 247.5px;
+  }
 }
 </style>

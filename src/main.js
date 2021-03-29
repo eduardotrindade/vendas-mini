@@ -28,8 +28,19 @@ Vue.use(VueSweetalert2)
 import { ValidationObserver, ValidationProvider, configure, extend, localize } from 'vee-validate'
 import { required, max_value } from 'vee-validate/dist/rules'
 import pt_BR from 'vee-validate/dist/locale/pt_BR'
+import { cpf, cnpj } from 'cpf-cnpj-validator'
 extend('required', required)
 extend('max_value', max_value)
+extend('cpf_cnpj', {
+  validate: (value) => {
+    if (value.length <= 11) {
+      return cpf.isValid(value)
+    } else {
+      return cnpj.isValid(value)
+    }
+  },
+  message: 'O campo {_field_} deve ter um valor válido'
+})
 localize('pt_BR', pt_BR)
 configure({ classes: {invalid: 'is-invalid'}, mode: 'lazy', useConstraintAttrs: false })
 Vue.component('ValidationObserver', ValidationObserver)
@@ -37,10 +48,10 @@ Vue.component('ValidationProvider', ValidationProvider)
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHome, faFile, faShoppingCart, faUsers, faEye, faPowerOff, faUserCircle, faCheckCircle, faTimesCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faFile, faShoppingCart, faUsers, faEye, faPowerOff, faUserCircle, faCheckCircle, faTimesCircle, faExclamationCircle, faFileInvoice } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-library.add(faHome, faFile, faShoppingCart, faUsers, faEye, faPowerOff, faUserCircle, faCheckCircle, faTimesCircle, faExclamationCircle)
+library.add(faHome, faFile, faShoppingCart, faUsers, faEye, faPowerOff, faUserCircle, faCheckCircle, faTimesCircle, faExclamationCircle, faFileInvoice)
 
 // Bootstrap Components
 // It is necessary to import the components individually
