@@ -20,7 +20,7 @@ jobs:
 
       - name: Remove unnecessary files
         run: |
-          rm -rf .git .github .gitattributes .gitignore .editorconfig .env.example
+          rm -rf .github .gitattributes .gitignore .editorconfig .env.example
           rm -rf .phpstorm.meta.php .styleci.yml _ide_helper.php
           rm -rf docker-compose.yml package.json webpack.mix.js
 
