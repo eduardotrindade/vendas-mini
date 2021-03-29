@@ -42,7 +42,7 @@ jobs:
           php artisan route:clear
 
       - name: Commit deploy changes
-        run:
+        run: |
           git config --local user.name "Felipe Martins"
           git config --local user.email "felipemjesus@outlook.com"
           git add .
