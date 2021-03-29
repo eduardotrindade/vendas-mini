@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Gateway\ContaAzul\Services;
+
+use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\RequestOptions;
+
+final class Customers
+{
+    private HttpClient $http;
+    private Auth $auth;
+
+    public function __construct(Auth $auth)
+    {
+        $this->http = new HttpClient(['base_uri' => config('conta-azul.url_api')]);
+        $this->auth = $auth;
+    }
+
+    /**
+     * @param array $customer
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function create(array $customer): array
+    {
+        $response = $this->http->post(
+            '/v1/customers',
+            [
+                RequestOptions::HEADERS => [
+                    'Authorization' => 'Bearer ' . $this->auth->getAccessToken()
+                ],
+                RequestOptions::JSON => $customer
+            ]
+        );
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+}
