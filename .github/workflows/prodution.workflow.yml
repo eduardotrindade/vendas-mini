@@ -54,4 +54,4 @@ jobs:
           url: ${{ secrets.PROD_FTP_HOST }}
           user: ${{ secrets.PROD_FTP_USER }}
           password: ${{ secrets.PROD_FTP_PASS }}
-          options: '--auto-init --force --verbose'
+          options: '--auto-init --force --verbose --insecure'
