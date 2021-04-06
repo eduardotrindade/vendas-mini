@@ -73,7 +73,7 @@ final class Auth
     {
         $params = [
             'grant_type' => 'authorization_code',
-            'redirect_uri' => 'https://felipemjesus.com/vendas-minisitio/api/conta-azul/token',//$this->redirectUri,
+            'redirect_uri' => $this->redirectUri,
             'code' => $code
         ];
 
