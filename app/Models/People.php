@@ -75,8 +75,12 @@ class People extends Model
         return url('/seja-nosso-representante/' . $referralSecret . $idEncoded);
     }
 
-    public function setPeopleId(string $indicatedBy): void
+    public function setPeopleId(string $indicatedBy = null): void
     {
+        if (!$indicatedBy) {
+            return;
+        }
+
         $indicatedByEncode = substr($indicatedBy, 10);
 
         $this->people_id = Base64Url::decode($indicatedByEncode);
