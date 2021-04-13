@@ -219,6 +219,7 @@ export default {
     },
 
     setIndicatedBy() {
+      this.people.indicated_by = ''
       if (!this.$route.params.indicated_by) {
         return;
       }
