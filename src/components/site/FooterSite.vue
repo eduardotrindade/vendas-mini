@@ -15,7 +15,7 @@
               </a>
             </li>
             <li class="list-inline-item">
-              <a href="https://www.youtube.com/channel/UCSd23dekVLXs8gNcgE9wvPA" title="YouTube" target="_blank">
+              <a href="https://youtu.be/TPlPukQTUS4" title="YouTube" target="_blank">
                 <i class="icon icon-youtube"></i>
               </a>
             </li>
