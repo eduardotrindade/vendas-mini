@@ -31,6 +31,7 @@ Route::post('orders', [OrdersController::class, 'store']);
 Route::post('orders/payment-notification', [OrdersController::class, 'paymentNotification'])->name('paymentNotification');
 
 Route::get('conta-azul/token', [ContaAzulController::class, 'token'])->name('contaAzulToken');
+Route::get('conta-azul/refresh-token', [ContaAzulController::class, 'refreshToken']);
 
 Route::post('auth/login', [AuthController::class, 'login']);
 
