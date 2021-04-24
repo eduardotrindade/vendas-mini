@@ -94,7 +94,7 @@ class OrderService
             }
 
             /** @var Order $order */
-            $order = Order::find($payment->external_reference)->first();
+            $order = Order::where('id', $payment->external_reference)->first();
             $order->status = true;
             $order->payment_date = date('Y-m-d H:i:s');
 
