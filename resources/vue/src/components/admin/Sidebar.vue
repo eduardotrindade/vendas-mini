@@ -1,0 +1,95 @@
+<template>
+  <b-collapse tag="nav" id="sidebarMenu" ref="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+    <div class="sidebar-sticky pt-3">
+      <ul class="nav flex-column">
+        <li class="nav-item" v-for="(link, index) in links" :key="index">
+          <router-link class="nav-link" :class="{ 'active': link.active }" :to="{ name: link.route }">
+            <font-awesome-icon :icon="link.icon" />
+            {{ link.name }}
+          </router-link>
+        </li>
+      </ul>
+      <hr>
+      <ul class="nav flex-column mb-2">
+        <li class="nav-item" v-if="user.name === 'Administrador'">
+          <a class="nav-link" href="javascript:;" @click="connectContaAzul">
+            <font-awesome-icon icon="file-invoice" />
+            Conectar Conta Azul
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:;" @click="logout">
+            <font-awesome-icon icon="power-off" />
+            Sair
+          </a>
+        </li>
+      </ul>
+    </div>
+  </b-collapse>
+</template>
+
+<script>
+import AuthApi from '@/api/auth'
+import {mapGetters} from "vuex";
+
+export default {
+  name: 'Sidebar',
+
+  data() {
+    return {
+      links: [
+        {
+          name: 'Compras',
+          icon: 'shopping-cart',
+          route: 'orders-list',
+          active: false
+        },
+        {
+          name: 'Representantes',
+          icon: 'users',
+          route: 'people-list',
+          active: false
+        }
+      ]
+    }
+  },
+
+  computed: {
+    ...mapGetters(['user']),
+  },
+
+  methods: {
+    setActive(route) {
+      this.links.map(link => {
+        link.active = link.route === route
+      })
+
+      let elSidebarMenu = this.$refs.sidebarMenu
+      if (elSidebarMenu.$el.style.display !== 'none') {
+        this.$root.$emit('bv::toggle::collapse', 'sidebarMenu')
+      }
+    },
+
+    connectContaAzul() {
+      AuthApi.connectContaAzul().then(data => {
+        window.location = data.redirect_authorize
+      })
+    },
+
+    async logout(){
+      await this.$store.dispatch('logout')
+      this.$router.push({ name: 'login' })
+    }
+  },
+
+  mounted() {
+    this.setActive(this.$route.name)
+  },
+
+  watch: {
+    '$route' () {
+      this.setActive(this.$route.name)
+    }
+  }
+}
+</script>
