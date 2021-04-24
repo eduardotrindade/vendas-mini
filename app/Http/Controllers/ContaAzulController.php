@@ -18,4 +18,11 @@ class ContaAzulController extends Controller
 
         return redirect(url('/admin'));
     }
+
+    public function refreshToken()
+    {
+        ContaAzul::auth()->getAccessToken();
+
+        return response()->json(['message' => 'Token renovado']);
+    }
 }
