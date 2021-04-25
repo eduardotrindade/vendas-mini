@@ -38,7 +38,8 @@ class PeopleResource extends JsonResource
             'city' => CityResource::make($this->resource->city),
             'profile' => ProfileResource::make($this->resource->profile),
             'indicated_by' => $this->resource->people->name ?? null,
-            'referral_link' => $this->resource->getReferralLink()
+            'referral_link' => $this->resource->getReferralLink(),
+            'created_at' => $this->resource->created_at->format('Y-m-d H:i:s'),
         ];
     }
 }

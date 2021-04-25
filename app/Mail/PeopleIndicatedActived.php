@@ -4,10 +4,11 @@ namespace App\Mail;
 
 use App\Models\People;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class PeopleActived extends Mailable
+class PeopleIndicatedActived extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -32,11 +33,10 @@ class PeopleActived extends Mailable
     {
         return $this
             ->bcc(env('MAIL_BCC', ''))
-            ->subject(__('Solicitação aprovada'))
+            ->subject(__('Novo representante atribuido a você'))
             ->with([
                 'person' => $this->people,
-                'referralLink' => $this->people->getReferralLink()
             ])
-            ->view('emails.people.actived');
+            ->view('emails.people.indicated_actived');
     }
 }

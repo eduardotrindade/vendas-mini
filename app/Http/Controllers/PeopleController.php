@@ -21,7 +21,10 @@ class PeopleController extends Controller
 
     public function index()
     {
-        $results = People::query()->orderBy('is_active')->paginate();
+        $results = People::query()
+            ->orderBy('is_active')
+            ->orderBy('name')
+            ->paginate();
 
         return PeopleResource::collection($results);
     }
