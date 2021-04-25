@@ -3,19 +3,19 @@
 @section('content')
     <p style="margin:0;-webkit-font-smoothing:antialiased;padding-bottom:20px;">
         <strong style="margin:0;-webkit-font-smoothing:antialiased">
-            Olá {{ $person->name }},
+            Olá {{ $person->people->name }},
         </strong>
         <br>
-        Confirmamos que sua candidatura foi aprovada, um Diretor ou Máster entrará em contato para
+        Confirmamos que a candidatura do {{ $person->name }} foi aprovada, entre em contato e forneça mais
         informações adicionais, formalizações e início imediato.
     </p>
     <p style="margin:0;-webkit-font-smoothing:antialiased;padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid #eee">
         <strong style="margin:0;-webkit-font-smoothing:antialiased">
-            Você foi indicado por
+            Dados do Representante
         </strong>
         <br>
-        Nome: {{ $person->people->name }}<br>
-        E-mail: {{ $person->people->email }}<br>
-        Telefone: {{ $person->people->cellphone }}<br>
+        Nome: {{ $person->name }}<br>
+        E-mail: {{ $person->email }}<br>
+        Telefone: {{ $person->cellphone }}<br>
     </p>
 @endsection

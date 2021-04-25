@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Mail\PeopleActived;
+use App\Mail\PeopleIndicatedActived;
 use App\Mail\PeopleRegistered;
 use App\Models\People;
 use App\Models\Profile;
@@ -89,7 +90,8 @@ class PeopleService
         }
 
         if ($profileId) {
-            Mail::to($people->email)->send(new PeopleActived($people->name));
+            Mail::to($people->email)->send(new PeopleActived($people));
+            Mail::to($people->people->email)->send(new PeopleIndicatedActived($people));
         }
 
         return $people;
