@@ -35,6 +35,7 @@ class PeopleActived extends Mailable
             ->subject(__('Solicitação aprovada'))
             ->with([
                 'person' => $this->people,
+                'referralLink' => $this->people->getReferralLink()
             ])
             ->view('emails.people.actived');
     }
