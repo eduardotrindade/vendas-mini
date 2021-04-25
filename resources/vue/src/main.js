@@ -15,6 +15,10 @@ Vue.filter('formatDocumentNumber', formatDocumentNumber)
 Vue.filter('formatZipCode', formatZipCode)
 Vue.filter('formatPhone', formatPhone)
 
+// Clipboard
+import Clipboard from 'v-clipboard'
+Vue.use(Clipboard)
+
 // Mask
 import VueTheMask from 'vue-the-mask'
 Vue.use(VueTheMask)
@@ -48,10 +52,10 @@ Vue.component('ValidationProvider', ValidationProvider)
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHome, faFile, faShoppingCart, faUsers, faEye, faPowerOff, faUserCircle, faCheckCircle, faTimesCircle, faExclamationCircle, faFileInvoice } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faFile, faShoppingCart, faUsers, faEye, faPowerOff, faUserCircle, faCheckCircle, faTimesCircle, faExclamationCircle, faFileInvoice, faCopy } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-library.add(faHome, faFile, faShoppingCart, faUsers, faEye, faPowerOff, faUserCircle, faCheckCircle, faTimesCircle, faExclamationCircle, faFileInvoice)
+library.add(faHome, faFile, faShoppingCart, faUsers, faEye, faPowerOff, faUserCircle, faCheckCircle, faTimesCircle, faExclamationCircle, faFileInvoice, faCopy)
 
 // Bootstrap Components
 // It is necessary to import the components individually

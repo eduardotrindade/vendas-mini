@@ -17,6 +17,7 @@
     "bootstrap-vue": "^2.20.1",
     "core-js": "^3.6.5",
     "cpf-cnpj-validator": "^1.0.3",
+    "v-clipboard": "^2.2.3",
     "v-money": "^0.8.1",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.11",

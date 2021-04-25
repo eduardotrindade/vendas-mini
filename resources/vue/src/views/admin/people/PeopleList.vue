@@ -13,20 +13,31 @@
         <thead>
         <tr>
           <th>Nome</th>
-          <th>E-mail</th>
-          <th>Celular</th>
+          <th>UF</th>
+          <th>Cidade</th>
+          <th>Indicado por</th>
+          <th>Data</th>
           <th>Status</th>
           <th>Perfil</th>
+          <th>Link Indicação</th>
           <th width="100px"></th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="person in people" :key="person.id">
           <td>{{ person.name }}</td>
-          <td>{{ person.email }}</td>
-          <td>{{ person.cellphone | formatPhone }}</td>
+          <td>{{ person.city.state.abbreviation }}</td>
+          <td>{{ person.city.name }}</td>
+          <td>{{ person.indicated_by }}</td>
+          <td>{{ person.created_at | formatDate }}</td>
           <td>{{ person.is_active ? 'Ativo' : 'Inativo' }}</td>
           <td>{{ person.profile ? person.profile.name : 'Não definido' }}</td>
+          <td>
+            <button class="btn btn-link" title="Copiar link indicação" @click="copyReferralLink(person.referral_link)" v-if="person.referral_link.length">
+              <font-awesome-icon icon="copy" />
+              Copiar link
+            </button>
+          </td>
           <td>
             <router-link class="btn btn-info btn-sm" :to="{ name: 'people-view', params: { id: person.id } }">
               Visualizar
@@ -80,6 +91,10 @@ export default {
     paginate(page) {
       let filters = Object.assign({}, this.filters, { page })
       this.getAll(filters)
+    },
+
+    copyReferralLink(link) {
+      this.$clipboard(link);
     },
   },
 

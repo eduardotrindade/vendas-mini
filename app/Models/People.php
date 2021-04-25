@@ -64,7 +64,7 @@ class People extends Model
 
     public function getReferralLink(): string
     {
-        if ($this->profile_id === Profile::AFILIADO) {
+        if (!in_array($this->profile_id, [Profile::DIRETOR, Profile::MASTER])) {
             return '';
         }
 
