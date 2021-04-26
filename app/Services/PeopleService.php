@@ -91,6 +91,9 @@ class PeopleService
 
         if ($profileId) {
             Mail::to($people->email)->send(new PeopleActived($people));
+        }
+        
+        if ($people->people_id && $profileId) {
             Mail::to($people->people->email)->send(new PeopleIndicatedActived($people));
         }
 
