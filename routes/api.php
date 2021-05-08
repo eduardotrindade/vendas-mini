@@ -50,6 +50,8 @@ Route::middleware('auth:api')->group(function () {
         Route::patch('{people}/change-active', [PeopleController::class, 'changeActive']);
     });
 
+    Route::get('export-people', [PeopleController::class, 'export']);
+
     Route::get('orders', [OrdersController::class, 'index']);
 
     Route::get('conta-azul/authorize', [ContaAzulController::class, 'auth']);

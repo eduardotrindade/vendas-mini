@@ -69,4 +69,11 @@ class PeopleController extends Controller
             return response()->json(['message' => 'CPF/CNPJ não encontrado.'], 404);
         }
     }
+
+    public function export()
+    {
+        $file = $this->peopleService->export();
+
+        return response()->download($file);
+    }
 }
