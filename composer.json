@@ -15,6 +15,7 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "mercadopago/dx-php": "^2.2",
+        "phpoffice/phpspreadsheet": "^1.17",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {

@@ -3,9 +3,14 @@
     <div class="row">
       <div class="col-12 d-flex justify-content-between align-items-center">
         <h2>Representantes</h2>
-        <router-link class="btn btn-primary" :to="{ name: 'people-form' }">
-          Novo
-        </router-link>
+        <span>
+          <router-link class="btn btn-primary" :to="{ name: 'people-form' }">
+            Novo
+          </router-link>
+          <a class="btn btn-secondary ml-1" :href="`${baseUrl}/export-people?token=${token}`" target="_blank">
+            Exportar
+          </a>
+        </span>
       </div>
     </div>
     <div class="table-responsive">
@@ -61,13 +66,20 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import PeopleApi from '@/api/people'
 
 export default {
   name: "PeopleList",
 
+  computed: {
+    ...mapGetters(['user']),
+  },
+
   data() {
     return {
+      baseUrl: null,
+      token: null,
       people: {},
       filters: {},
       pagination: {}
@@ -89,16 +101,22 @@ export default {
     },
 
     paginate(page) {
-      let filters = Object.assign({}, this.filters, { page })
+      let filters = Object.assign({}, this.filters, {page})
       this.getAll(filters)
     },
 
     copyReferralLink(link) {
       this.$clipboard(link);
     },
+
+    exportFile() {
+      PeopleApi.exportFile()
+    },
   },
 
   created() {
+    this.baseUrl = process.env.VUE_APP_API_BASE_URL;
+    this.token = this.user.access_token;
     this.getAll(this.filters)
   }
 }
