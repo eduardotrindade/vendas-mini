@@ -19,7 +19,4 @@ export default {
   changeActive(peopleId, profile_id = null) {
     return ApiInstance.patch(`people/${peopleId}/change-active`, {profile_id}).then(response => response.data.data)
   },
-  exportFile() {
-    return ApiInstance.get(`export-people`).then(response => response.data.data)
-  },
 }

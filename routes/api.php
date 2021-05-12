@@ -20,12 +20,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('states', [StatesController::class, 'index']);
-Route::get('states/{state}/cities', [StatesController::class, 'showCities']);
+Route::get('states/{state}/cities', [StatesController::class, 'showCities'])->where('state', '[0-9]+');
 
 Route::post('people', [PeopleController::class, 'store']);
 Route::post('people/document-number', [PeopleController::class, 'showDocumentNumber']);
 
-Route::get('profiles/{profile}/products', [ProfilesController::class, 'showProducts']);
+Route::get('profiles/{profile}/products', [ProfilesController::class, 'showProducts'])->where('profile', '[0-9]+');
 
 Route::post('orders', [OrdersController::class, 'store']);
 Route::post('orders/payment-notification', [OrdersController::class, 'paymentNotification'])->name('paymentNotification');
@@ -45,14 +45,16 @@ Route::middleware('auth:api')->group(function () {
 
     Route::prefix('people')->group(function () {
         Route::get('', [PeopleController::class, 'index']);
-        Route::get('{people}', [PeopleController::class, 'show']);
-        Route::put('{people}', [PeopleController::class, 'update']);
-        Route::patch('{people}/change-active', [PeopleController::class, 'changeActive']);
+        Route::get('{people}', [PeopleController::class, 'show'])->where('people', '[0-9]+');
+        Route::put('{people}', [PeopleController::class, 'update'])->where('people', '[0-9]+');
+        Route::patch('{people}/change-active', [PeopleController::class, 'changeActive'])->where('people', '[0-9]+');
+        Route::get('export', [PeopleController::class, 'export']);
     });
 
-    Route::get('export-people', [PeopleController::class, 'export']);
-
-    Route::get('orders', [OrdersController::class, 'index']);
+    Route::prefix('orders')->group(function () {
+        Route::get('', [OrdersController::class, 'index']);
+        Route::get('export', [OrdersController::class, 'export']);
+    });
 
     Route::get('conta-azul/authorize', [ContaAzulController::class, 'auth']);
 });

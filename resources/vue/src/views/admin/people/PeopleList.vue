@@ -7,7 +7,7 @@
           <router-link class="btn btn-primary" :to="{ name: 'people-form' }">
             Novo
           </router-link>
-          <a class="btn btn-secondary ml-1" :href="`${baseUrl}/export-people?token=${token}`" target="_blank">
+          <a class="btn btn-secondary ml-1" :href="linkExportFile" target="_blank">
             Exportar
           </a>
         </span>
@@ -74,6 +74,9 @@ export default {
 
   computed: {
     ...mapGetters(['user']),
+    linkExportFile() {
+      return `${this.baseUrl}/people/export?token=${this.token}`
+    }
   },
 
   data() {
@@ -108,15 +111,12 @@ export default {
     copyReferralLink(link) {
       this.$clipboard(link);
     },
-
-    exportFile() {
-      PeopleApi.exportFile()
-    },
   },
 
   created() {
     this.baseUrl = process.env.VUE_APP_API_BASE_URL;
     this.token = this.user.access_token;
+
     this.getAll(this.filters)
   }
 }
