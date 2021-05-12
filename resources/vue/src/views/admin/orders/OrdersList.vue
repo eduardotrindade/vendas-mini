@@ -1,6 +1,15 @@
 <template>
   <div>
-    <h2 class="mb-3">Compras</h2>
+    <div class="row">
+      <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2 class="mb-3">Compras</h2>
+        <span>
+          <a class="btn btn-secondary ml-1" :href="linkExportFile" target="_blank">
+            Exportar
+          </a>
+        </span>
+      </div>
+    </div>
     <div class="table-responsive">
       <table id="orders-list" class="table table-striped table-sm">
         <thead>
@@ -43,13 +52,23 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import OrderApi from '@/api/order'
 
 export default {
   name: 'OrdersList',
 
+  computed: {
+    ...mapGetters(['user']),
+    linkExportFile() {
+      return `${this.baseUrl}/orders/export?token=${this.token}`
+    }
+  },
+
   data() {
     return {
+      baseUrl: null,
+      token: null,
       orders: {},
       filters: {},
       pagination: {}
@@ -65,18 +84,25 @@ export default {
       this.orders = result.data
       this.pagination = {
         currentPage: result.meta.current_page,
-        totalRows : result.meta.total,
-        perPage   : result.meta.per_page
+        totalRows: result.meta.total,
+        perPage: result.meta.per_page
       }
     },
 
     paginate(page) {
-      let filters = Object.assign({}, this.filters, { page })
+      let filters = Object.assign({}, this.filters, {page})
       this.getAll(filters)
+    },
+
+    exportFile() {
+      OrderApi.exportFile()
     },
   },
 
   created() {
+    this.baseUrl = process.env.VUE_APP_API_BASE_URL;
+    this.token = this.user.access_token;
+
     this.getAll(this.filters)
   }
 }

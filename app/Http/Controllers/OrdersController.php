@@ -38,4 +38,11 @@ class OrdersController extends Controller
 
         return response()->json(['message' => 'Pagamento processado'], 200);
     }
+
+    public function export()
+    {
+        $file = $this->orderService->export();
+
+        return response()->download($file);
+    }
 }
