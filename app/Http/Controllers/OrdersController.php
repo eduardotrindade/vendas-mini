@@ -32,11 +32,18 @@ class OrdersController extends Controller
         return $this->orderService->insert($orderRequest->validated());
     }
 
+    public function destroy(Order $order)
+    {
+        $order->delete();
+
+        return response()->json(['message' => 'Compra removida']);
+    }
+
     public function paymentNotification(Request $request)
     {
         $this->orderService->paymentNotification($request->all());
 
-        return response()->json(['message' => 'Pagamento processado'], 200);
+        return response()->json(['message' => 'Pagamento processado']);
     }
 
     public function export()

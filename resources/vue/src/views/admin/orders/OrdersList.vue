@@ -22,6 +22,7 @@
           <th>Informação</th>
           <th>Representante</th>
           <th>Perfil</th>
+          <th width="100px"></th>
         </tr>
         </thead>
         <tbody>
@@ -34,6 +35,11 @@
           <td>{{ order.information }}</td>
           <td>{{ order.people.name }}</td>
           <td>{{ order.people.profile.name }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" @click="cancel(order)">
+              Cancelar
+            </button>
+          </td>
         </tr>
         </tbody>
       </table>
@@ -53,6 +59,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import EventBus from '@/event-bus'
 import OrderApi from '@/api/order'
 
 export default {
@@ -94,8 +101,17 @@ export default {
       this.getAll(filters)
     },
 
-    exportFile() {
-      OrderApi.exportFile()
+    cancel(order) {
+      if (!confirm('Deseja cancelar está compra?')) return
+
+      OrderApi.cancel(order).then(() => {
+        this.getAll({})
+        EventBus.$emit('alert-success', 'Compra cancelada com sucesso!')
+      }).catch(error => {
+        let errors = error.data.errors
+        this.setValidationErrors(errors)
+        return Promise.reject(error)
+      })
     },
   },
 

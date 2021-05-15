@@ -53,6 +53,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::prefix('orders')->group(function () {
         Route::get('', [OrdersController::class, 'index']);
+        Route::delete('{order}', [OrdersController::class, 'destroy'])->where('order', '[0-9]+');
         Route::get('export', [OrdersController::class, 'export']);
     });
 
