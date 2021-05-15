@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\PhoneFormatter;
 use App\Mail\PeopleActived;
 use App\Mail\PeopleIndicatedActived;
 use App\Mail\PeopleRegistered;
@@ -108,26 +109,28 @@ class PeopleService
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setTitle('Representantes');
         $sheet->setCellValue('A1', 'Nome');
-        $sheet->setCellValue('B1', 'UF');
-        $sheet->setCellValue('C1', 'Cidade');
-        $sheet->setCellValue('D1', 'Indicado por');
-        $sheet->setCellValue('E1', 'Data');
-        $sheet->setCellValue('F1', 'Status');
-        $sheet->setCellValue('G1', 'Perfil');
-        $sheet->setCellValue('H1', 'Link Indicação');
+        $sheet->setCellValue('B1', 'Telefone');
+        $sheet->setCellValue('C1', 'UF');
+        $sheet->setCellValue('D1', 'Cidade');
+        $sheet->setCellValue('E1', 'Indicado por');
+        $sheet->setCellValue('F1', 'Data');
+        $sheet->setCellValue('G1', 'Status');
+        $sheet->setCellValue('H1', 'Perfil');
+        $sheet->setCellValue('I1', 'Link Indicação');
 
         $people = People::all();
 
         $line = 2;
         foreach ($people as $person) {
             $sheet->setCellValue('A' . $line, $person->name);
-            $sheet->setCellValue('B' . $line, $person->city->state->abbreviation);
-            $sheet->setCellValue('C' . $line, $person->city->name);
-            $sheet->setCellValue('D' . $line, $person->people_id ? $person->people->name : '');
-            $sheet->setCellValue('E' . $line, $person->created_at->format('d/m/Y'));
-            $sheet->setCellValue('F' . $line, $person->is_active ? 'Ativo' : 'Inativo');
-            $sheet->setCellValue('G' . $line, $person->profile->name);
-            $sheet->setCellValue('H' . $line, $person->getReferralLink());
+            $sheet->setCellValue('B' . $line, PhoneFormatter::formatter($person->cellphone));
+            $sheet->setCellValue('C' . $line, $person->city->state->abbreviation);
+            $sheet->setCellValue('D' . $line, $person->city->name);
+            $sheet->setCellValue('E' . $line, $person->people_id ? $person->people->name : '');
+            $sheet->setCellValue('F' . $line, $person->created_at->format('d/m/Y'));
+            $sheet->setCellValue('G' . $line, $person->is_active ? 'Ativo' : 'Inativo');
+            $sheet->setCellValue('H' . $line, $person->profile->name);
+            $sheet->setCellValue('I' . $line, $person->getReferralLink());
             $line++;
         }
 
