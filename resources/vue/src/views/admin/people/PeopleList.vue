@@ -25,7 +25,7 @@
           <th>Status</th>
           <th>Perfil</th>
           <th>Link Indicação</th>
-          <th width="100px"></th>
+          <th width="170px"></th>
         </tr>
         </thead>
         <tbody>
@@ -44,9 +44,12 @@
             </button>
           </td>
           <td>
-            <router-link class="btn btn-info btn-sm" :to="{ name: 'people-view', params: { id: person.id } }">
+            <router-link class="btn btn-info btn-sm mr-1" :to="{ name: 'people-view', params: { id: person.id } }">
               Visualizar
             </router-link>
+            <button class="btn btn-danger btn-sm" @click="cancel(person)">
+              Cancelar
+            </button>
           </td>
         </tr>
         </tbody>
@@ -67,6 +70,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import EventBus from '@/event-bus'
 import PeopleApi from '@/api/people'
 
 export default {
@@ -110,6 +114,19 @@ export default {
 
     copyReferralLink(link) {
       this.$clipboard(link);
+    },
+
+    cancel(people) {
+      if (!confirm('Deseja cancelar este representante?')) return
+
+      PeopleApi.cancel(people).then(() => {
+        this.getAll({})
+        EventBus.$emit('alert-success', 'Representante cancelado com sucesso!')
+      }).catch(error => {
+        let errors = error.data.errors
+        this.setValidationErrors(errors)
+        return Promise.reject(error)
+      })
     },
   },
 
