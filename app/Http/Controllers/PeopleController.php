@@ -46,6 +46,13 @@ class PeopleController extends Controller
         return PeopleResource::make($people);
     }
 
+    public function destroy(People $people)
+    {
+        $people->delete();
+
+        return response()->json(['message' => 'Representante removido']);
+    }
+
     public function changeActive(People $people, Request $request)
     {
         $profileId = $request->get('profile_id');

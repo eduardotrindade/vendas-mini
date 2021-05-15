@@ -5,7 +5,7 @@ export default {
     return ApiInstance.post(`people/document-number`, {documentNumber}).then(response => response.data.data)
   },
   getAll(filters = {}) {
-    return ApiInstance.get(`people`, { params: filters }).then(response => response.data)
+    return ApiInstance.get(`people`, {params: filters}).then(response => response.data)
   },
   get(peopleId) {
     return ApiInstance.get(`people/${peopleId}`).then(response => response.data.data)
@@ -15,6 +15,9 @@ export default {
   },
   update(people) {
     return ApiInstance.put(`people/${people.id}`, people).then(response => response.data.data)
+  },
+  cancel(people) {
+    return ApiInstance.delete(`people/${people.id}`).then(response => response.data)
   },
   changeActive(peopleId, profile_id = null) {
     return ApiInstance.patch(`people/${peopleId}/change-active`, {profile_id}).then(response => response.data.data)

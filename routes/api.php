@@ -48,6 +48,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('{people}', [PeopleController::class, 'show'])->where('people', '[0-9]+');
         Route::put('{people}', [PeopleController::class, 'update'])->where('people', '[0-9]+');
         Route::patch('{people}/change-active', [PeopleController::class, 'changeActive'])->where('people', '[0-9]+');
+        Route::delete('{people}', [PeopleController::class, 'destroy'])->where('people', '[0-9]+');
         Route::get('export', [PeopleController::class, 'export']);
     });
 
