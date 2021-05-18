@@ -190,6 +190,7 @@ export default {
           this.people = {}
           this.cities = {}
           this.$refs.$validator.reset()
+          return gtag_report_conversion(process.env.BASE_URL + '/seja-nosso-representante');
         }).catch(error => {
           let errors = error.data.errors
           this.setValidationErrors(errors)
