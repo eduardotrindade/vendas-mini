@@ -175,6 +175,14 @@ export default {
   },
 
   methods: {
+    track() {
+      this.$gtag.event('conversion', {
+        'event_category': 'engagement',
+        'event_label': 'Minisitio - Leads',
+        'send_to': 'AW-439899664/9GrDCIr1zJUCEJCs4dEB'
+      })
+    },
+
     registrationPeople() {
       return this.$refs.$validator.validate().then(isValid => {
         if (!isValid) return Promise.reject()
@@ -190,7 +198,7 @@ export default {
           this.people = {}
           this.cities = {}
           this.$refs.$validator.reset()
-          return gtag_report_conversion(process.env.BASE_URL + '/seja-nosso-representante');
+          this.track()
         }).catch(error => {
           let errors = error.data.errors
           this.setValidationErrors(errors)

@@ -63,6 +63,16 @@ library.add(faHome, faFile, faShoppingCart, faUsers, faEye, faPowerOff, faUserCi
 import { PaginationPlugin, ModalPlugin, CollapsePlugin } from 'bootstrap-vue'
 [PaginationPlugin, ModalPlugin, CollapsePlugin].forEach(component => Vue.use(component))
 
+// Google Tag
+import VueGtag from 'vue-gtag'
+Vue.use(VueGtag, {
+  appName: 'Vendas MINISITIO',
+  config: { id: 'G-N77VQPB779' },
+  includes: [
+    { id: 'AW-439899664' }
+  ]
+}, router)
+
 Vue.config.productionTip = false
 
 new Vue({
