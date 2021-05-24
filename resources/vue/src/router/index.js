@@ -9,8 +9,14 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: () => import(/* webpackChunkName: "site" */ '@/views/HomePage'),
+    name: 'landing-page',
+    component: () => import(/* webpackChunkName: "site" */ '@/views/LandingPage'),
+    meta: { layout: Site },
+  },
+  {
+    path: '/compra-de-espacos',
+    name: 'buy-space',
+    component: () => import(/* webpackChunkName: "site" */ '@/views/BuySpace'),
     meta: { layout: Site },
   },
   {
