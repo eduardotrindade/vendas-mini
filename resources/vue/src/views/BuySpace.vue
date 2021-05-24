@@ -36,7 +36,7 @@ import ValidationMixin from '@/mixins/validation'
 import PeopleApi from '@/api/people'
 
 export default {
-  name: "HomePage",
+  name: "BuySpace",
   mixins: [ValidationMixin],
 
   data() {
@@ -70,7 +70,7 @@ export default {
     let script = document.createElement('script')
     script.src = 'https://www.mercadopago.com/v2/security.js'
     script.type = 'text/javascript'
-    script.setAttribute('view', 'home')
+    script.setAttribute('view', 'buy-space')
     document.querySelector('body').appendChild(script)
   }
 }

@@ -4,10 +4,13 @@
       <div class="collapse navbar-collapse justify-content-md-center">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link class="nav-link text-uppercase" :to="{ name: 'home' }">Compra de espaços</router-link>
+            <router-link class="nav-link text-uppercase" :to="{ name: 'landing-page' }">Sobre a oportunidade</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link text-uppercase" :to="{ name: 'registration-people' }">Seja nosso representante</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link text-uppercase" :to="{ name: 'buy-space' }">Compra de espaços</router-link>
           </li>
         </ul>
       </div>
