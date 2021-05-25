@@ -75,7 +75,14 @@
 
             <hr class="mb-4">
 
-            <button class="btn btn-primary btn-lg btn-block" type="button" @click="finalize()">Realizar pagamento</button>
+            <button
+              class="btn btn-primary btn-lg btn-block"
+              id="btnFinalizarCompra"
+              type="button"
+              @click="finalize()"
+            >
+              Realizar pagamento
+            </button>
           </form>
           <div id="button-checkout"></div>
         </div>

@@ -25,7 +25,7 @@
           />
           <div class="invalid-feedback">{{ errorMessages.document_number }}</div>
         </ValidationProvider>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Continuar</button>
+        <button class="btn btn-lg btn-primary btn-block" id="btnValidarCpfCnpj" type="submit">Continuar</button>
       </ValidationObserver>
     </div>
   </div>

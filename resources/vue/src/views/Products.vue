@@ -23,6 +23,7 @@
             <button
               type="button"
               class="btn btn-lg btn-block btn-outline-primary"
+              :id="`btnComprar${product.id}`"
               @click="buy(product)"
             >
               <span v-if="product.quantity">Comprar</span>
