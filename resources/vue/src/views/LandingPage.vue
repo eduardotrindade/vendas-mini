@@ -13,7 +13,7 @@
     <p class="h5 mb-3">
       Para saber mais informações, fale com um de nossos Másters.
     </p>
-    <a class="btn btn-success btn-lg mb-3" href="https://wa.me/5561998322621">
+    <a class="btn btn-success btn-lg mb-3" id="btnLinkWhatsApp" href="https://wa.me/5561998322621">
       <img src="../assets/icons/whatsapp.svg" alt="WhatsApp" style="width:30px;">
       CLIQUE AQUI
     </a>
@@ -34,7 +34,11 @@
     <p class="h5 mb-3">
       Faça <strong>AGORA</strong> seu cadastro <strong>GRATUITO</strong>
     </p>
-    <a class="btn btn-warning btn-lg" href="https://vendas.minisitio.net/seja-nosso-representante/6WjJNfgLzwMg">
+    <a
+      class="btn btn-warning btn-lg"
+      id="btnLinkSejaNossoRepresentante"
+      href="https://vendas.minisitio.net/seja-nosso-representante/6WjJNfgLzwMg"
+    >
       CLIQUE AQUI E MUDE SUA VIDA
     </a>
   </div>

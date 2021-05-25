@@ -129,7 +129,7 @@
               </ValidationProvider>
             </div>
 
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Solicitar cadastro</button>
+            <button class="btn btn-primary btn-lg btn-block" id="btnSolicitarCadastro" type="submit">Solicitar cadastro</button>
           </ValidationObserver>
         </div>
       </div>
