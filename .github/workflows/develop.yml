@@ -1,0 +1,51 @@
+name: 🚀 Deploy website on push
+
+on:
+  workflow_dispatch:
+    branches:
+      - develop
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: Frontend - install dependencies
+        uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: --cwd resources/vue install
+
+      - name: Frontend - build application
+        uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: --cwd resources/vue build
+
+      - name: Backend - setup enviroment
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+
+      - name: Backend - install dependencies
+        run: composer install --prefer-dist --no-dev --optimize-autoloader --no-suggest --ignore-platform-reqs --no-scripts --no-interaction
+
+      - name: Backend - build application
+        env:
+          ENV_FILE: ${{ secrets.HOM_ENV_FILE }}
+        run: |
+          echo $ENV_FILE | base64 --decode > .env
+          php artisan key:generate --ansi
+          php artisan jwt:secret --force
+          php artisan config:clear
+          php artisan view:clear
+          php artisan route:clear
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ${{ secrets.HOM_FTP_HOST }}
+          username: ${{ secrets.HOM_FTP_USER }}
+          password: ${{ secrets.HOM_FTP_PWD }}
+          server-dir: public_html/vendas-minisitio/
