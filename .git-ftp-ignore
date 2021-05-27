@@ -1,0 +1,14 @@
+.editorconfig
+.env.example
+.gitattributes
+.gitignore
+.phpstorm.meta.php
+.styleci.yml
+.git-ftp-ignore
+.git-ftp-include
+_ide_helper.php
+docker-compose.yml
+package.json
+phpunit.xml
+webpack.mix.js
+**/node_modules/**
