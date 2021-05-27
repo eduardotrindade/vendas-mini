@@ -42,13 +42,6 @@ jobs:
           php artisan view:clear
           php artisan route:clear
 
-      - name: Remove unnecessary files
-        run: |
-          rm -rf .github .gitattributes .gitignore .editorconfig .env.example
-          rm -rf .phpstorm.meta.php .styleci.yml _ide_helper.php
-          rm -rf docker-compose.yml package.json webpack.mix.js
-          rm -rf resources/vue/node_modules/
-
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
@@ -56,3 +49,10 @@ jobs:
           username: ${{ secrets.HOM_FTP_USER }}
           password: ${{ secrets.HOM_FTP_PWD }}
           server-dir: /public_html/vendas-minisitio/
+          exclude: .git*
+            - **.git*
+            - .git*/**
+            -  **/.git*/**
+            - node_modules/**
+            - node_modules/**/*
+            - **/node_modules/**
