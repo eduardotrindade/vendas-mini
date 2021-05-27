@@ -29,7 +29,7 @@
       Renda extra imediata. Investimento <strong>ZERO</strong>
     </p>
     <p class="h5 mb-3">
-      <strong>1000 vagas exclusicas nos municípios</strong>
+      <strong>1000 vagas exclusivas nos municípios</strong>
     </p>
     <p class="h5 mb-3">
       Faça <strong>AGORA</strong> seu cadastro <strong>GRATUITO</strong>
