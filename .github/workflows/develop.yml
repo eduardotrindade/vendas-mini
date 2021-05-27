@@ -1,4 +1,4 @@
-name: 🚀 Deploy website on push
+name: 🚀 Develop deploy website
 
 on:
   workflow_dispatch:
@@ -49,3 +49,11 @@ jobs:
           username: ${{ secrets.HOM_FTP_USER }}
           password: ${{ secrets.HOM_FTP_PWD }}
           server-dir: public_html/vendas-minisitio/
+          exclude: .git*
+            - **.git*
+            - .git*/**
+            -  **/.git*/**
+            - node_modules/**
+            - node_modules/**/*
+            - **/node_modules/**
+            - **/.github/**
