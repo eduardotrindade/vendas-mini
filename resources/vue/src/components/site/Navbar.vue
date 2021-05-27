@@ -31,8 +31,15 @@ export default {
 a {
   color: #000000;
   font-weight: bold;
+  font-size: 0.8rem;
 }
 a:hover {
   color: #fff;
+}
+@media (max-width: 576px) {
+  .navbar {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 </style>
