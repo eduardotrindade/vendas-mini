@@ -1,4 +1,4 @@
-name: 🚀 Deploy website on push
+name: 🚀 Develop deploy website
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
 
       - name: Frontend - install dependencies
         uses: borales/actions-yarn@v2.0.0
@@ -43,9 +43,9 @@ jobs:
           php artisan route:clear
 
       - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        uses: sebastianpopp/git-ftp-action@releases/v3
         with:
-          server: ${{ secrets.HOM_FTP_HOST }}
-          username: ${{ secrets.HOM_FTP_USER }}
+          url: ${{ secrets.HOM_GIT_FTP_URL }}
+          user: ${{ secrets.HOM_FTP_USER }}
           password: ${{ secrets.HOM_FTP_PWD }}
-          server-dir: public_html/vendas-minisitio/
+          options: --force --auto-init
