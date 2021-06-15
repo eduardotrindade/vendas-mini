@@ -3,6 +3,7 @@
 use App\Http\Controllers\{AuthController,
     ContaAzulController,
     OrdersController,
+    PageController,
     PeopleController,
     ProfilesController,
     StatesController};
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('more-information', [PageController::class, 'iWantMoreInfomation']);
 
 Route::get('states', [StatesController::class, 'index']);
 Route::get('states/{state}/cities', [StatesController::class, 'showCities'])->where('state', '[0-9]+');
