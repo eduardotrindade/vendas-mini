@@ -124,7 +124,10 @@
             <div class="mb-3">
               <ValidationProvider rules="required" v-slot="{ classes }" class="form-check" name="terms_accepted" tag="div">
                 <input type="checkbox" class="form-check-input" :class="classes" id="terms_accepted" v-model.lazy="people.terms_accepted">
-                <label class="form-check-label" for="terms_accepted">Ao solicitar cadastro, você concorda com nossos <strong>Termos</strong> e <strong>Políticas de Privacidade</strong>.</label>
+                <label class="form-check-label" for="terms_accepted">
+                  Ao solicitar cadastro, você concorda com nossos
+                  <a href="/termos-e-politicas-de-privacidade" class="font-weight-bold" target="_blank">Termos e Políticas de Privacidade</a>.
+                </label>
                 <div class="invalid-feedback">{{ errorMessages.terms_accepted }}</div>
               </ValidationProvider>
             </div>
