@@ -34,7 +34,7 @@ class IWantMoreInfomation extends Mailable
             ->to(env('MAIL_BCC', 'contatobr@mycardcity.net'))
             ->subject(__('Quero mais informações sobre MINISITIO'))
             ->with([
-                'whatapp' => $this->numberWhatsApp
+                'whatsapp' => $this->numberWhatsApp
             ])
             ->view('emails.iwantmoreinformation');
     }
