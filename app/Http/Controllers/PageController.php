@@ -12,6 +12,6 @@ class PageController extends Controller
     {
         Mail::send(new IWantMoreInfomation($request->get('numberWhatsApp')));
 
-        response()->json(['message' => 'Em breve entramos em contato.']);
+        return response()->json(['message' => 'Em breve entramos em contato.']);
     }
 }
