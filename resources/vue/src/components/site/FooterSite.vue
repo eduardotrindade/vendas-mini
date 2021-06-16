@@ -32,7 +32,7 @@
           </ul>
         </div>
         <div class="col-md-6 col-sm-12 py-2 text-md-right">
-          © Copyright - My Card City - 2001-{{ (new Date()).getFullYear() }}
+          © Copyright - My Card City - 2015-{{ (new Date()).getFullYear() }}
         </div>
       </div>
     </div>

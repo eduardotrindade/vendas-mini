@@ -14,6 +14,12 @@ const routes = [
     meta: { layout: Site },
   },
   {
+    path: '/termos-e-politicas-de-privacidade',
+    name: 'privacy-policies',
+    component: () => import(/* webpackChunkName: "site" */ '@/views/PrivacyPoliciesAndTerms'),
+    meta: { layout: Site },
+  },
+  {
     path: '/compra-de-espacos',
     name: 'buy-space',
     component: () => import(/* webpackChunkName: "site" */ '@/views/BuySpace'),
