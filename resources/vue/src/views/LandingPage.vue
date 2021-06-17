@@ -86,6 +86,13 @@ export default {
         })
       })
     },
+  },
+
+  mounted() {
+    let script = document.createElement('script')
+    script.type = 'text/javascript'
+    script.innerHTML = '(function(n,r,l,d){try{var h=r.head||r.getElementsByTagName("head")[0],s=r.createElement("script");s.setAttribute("type","text/javascript");s.setAttribute("src",l);n.neuroleadId=d;h.appendChild(s);}catch(e){}})(window,document,"https://cdn.leadster.com.br/neurolead/neurolead.min.js", 21908);'
+    document.querySelector('body').appendChild(script)
   }
 }
 </script>
