@@ -81,7 +81,8 @@ class OrderService
 
     public function paymentNotification(array $data): void
     {
-        if ($data['topic'] !== 'payment') {
+        $typeNotification = $data['topic'] ?? $data['type'];
+        if ($typeNotification !== 'payment') {
             return;
         }
 
