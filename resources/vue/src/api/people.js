@@ -11,7 +11,7 @@ export default {
     return ApiInstance.get(`people/${peopleId}`).then(response => response.data.data)
   },
   save(people) {
-    return ApiInstance.post(`people`, people).then(response => response.data.data)
+    return ApiInstance.post(`people`, people).then(response => response.data)
   },
   update(people) {
     return ApiInstance.put(`people/${people.id}`, people).then(response => response.data.data)

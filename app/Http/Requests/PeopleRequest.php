@@ -33,6 +33,8 @@ class PeopleRequest extends FormRequest
             'document_number' => ['required', Rule::unique('people')->ignore($people)],
             'cellphone' => 'required',
             'email' => ['required', Rule::unique('people')->ignore($people)],
+            'birth_date' => $people->id ? 'nullable' : 'required',
+            'education' => $people->id ? 'nullable' : 'required',
             'address' => 'required',
             'number' => 'required',
             'complement' => 'nullable',

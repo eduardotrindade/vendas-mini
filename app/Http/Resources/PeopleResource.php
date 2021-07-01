@@ -28,6 +28,8 @@ class PeopleResource extends JsonResource
             'cellphone' => $this->resource->cellphone,
             'email' => $this->resource->email,
             'address' => $this->resource->address,
+            'birth_date' => $this->resource->birth_date,
+            'education' => $this->resource->education,
             'number' => $this->resource->number,
             'complement' => $this->resource->complement,
             'neighborhood' => $this->resource->neighborhood,

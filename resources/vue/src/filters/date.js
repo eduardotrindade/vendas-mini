@@ -1,5 +1,5 @@
-const DateFormatter = new Intl.DateTimeFormat('pt-BR');
-const DateTimeFormatter = new Intl.DateTimeFormat('pt-BR', {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false});
+const DateFormatter = new Intl.DateTimeFormat('pt-BR', {timeZone: 'UTC'});
+const DateTimeFormatter = new Intl.DateTimeFormat('pt-BR', {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false, timeZone: 'UTC'});
 
 function dateFormatter(date, dateTime = false) {
   let formatter = dateTime ? DateTimeFormatter : DateFormatter,

@@ -29,6 +29,14 @@
                 </ValidationProvider>
               </div>
 
+              <div class="mb-3">
+                <label for="email">E-mail</label>
+                <ValidationProvider rules="required" v-slot="{ classes }" name="email" tag="div">
+                  <input type="email" class="form-control" :class="classes" id="email" v-model.lazy="people.email">
+                  <div class="invalid-feedback">{{ errorMessages.email }}</div>
+                </ValidationProvider>
+              </div>
+
             </div>
             <div class="col-md-6">
 
@@ -41,10 +49,21 @@
               </div>
 
               <div class="mb-3">
-                <label for="email">E-mail</label>
-                <ValidationProvider rules="required" v-slot="{ classes }" name="email" tag="div">
-                  <input type="email" class="form-control" :class="classes" id="email" v-model.lazy="people.email">
-                  <div class="invalid-feedback">{{ errorMessages.email }}</div>
+                <label for="birth_date">Data de nascimento</label>
+                <ValidationProvider :rules="{required: !people.id}" v-slot="{ classes }" name="birth_date" tag="div">
+                  <input type="date" class="form-control" :class="classes" id="birth_date" v-model.lazy="people.birth_date">
+                  <div class="invalid-feedback">{{ errorMessages.birth_date }}</div>
+                </ValidationProvider>
+              </div>
+
+              <div class="mb-3">
+                <label for="education">Escolaridade</label>
+                <ValidationProvider :rules="{required: !people.id}" v-slot="{ classes }" name="education" tag="div">
+                  <select class="custom-select d-block w-100" :class="classes" id="education" v-model.lazy="people.education">
+                    <option value="">Selecione</option>
+                    <option v-for="education in educations" :key="education.id" :value="education.id">{{ education.name }}</option>
+                  </select>
+                  <div class="invalid-feedback">{{ errorMessages.education }}</div>
                 </ValidationProvider>
               </div>
 
@@ -179,6 +198,7 @@ import EventBus from '@/event-bus'
 import StateApi from '@/api/state'
 import ProfileApi from '@/api/profile'
 import PeopleApi from '@/api/people'
+import EducationApi from '@/api/education'
 
 export default {
   name: 'PeopleView',
@@ -206,11 +226,14 @@ export default {
       people: {},
       states: {},
       cities: {},
+      educations: {},
       errorMessages: {
         name: requiredMessage,
         document_number: 'Informe um CPF/CNPJ válido.',
         cellphone: requiredMessage,
         email: requiredMessage,
+        birth_date: requiredMessage,
+        education: requiredMessage,
         address: requiredMessage,
         number: requiredMessage,
         neighborhood: requiredMessage,
@@ -252,6 +275,10 @@ export default {
       })
     },
 
+    getEducations() {
+      this.educations = EducationApi.getAll()
+    },
+
     setPeople(people) {
       this.people = people
       this.people.profile_id = people.profile.id
@@ -287,12 +314,14 @@ export default {
 
   created() {
     this.getStates()
+    this.getEducations()
     this.getPeople()
   },
 
   watch: {
     '$route' () {
       this.getStates()
+      this.getEducations()
       this.getPeople()
     }
   }
