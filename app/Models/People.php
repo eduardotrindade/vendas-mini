@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
  * @property string $document_number
  * @property string $cellphone
  * @property string $email
+ * @property string $birth_date
+ * @property int $education
  * @property string $address
  * @property string $number
  * @property string|null $complement
@@ -39,7 +41,7 @@ class People extends Model
     protected $fillable = [
         'name', 'document_number', 'cellphone', 'email', 'address', 'number', 'complement', 'neighborhood',
         'zip_code', 'city_id', 'resume', 'terms_accepted', 'is_active', 'profile_id', 'people_id', 'user_id',
-        'conta_azul_code'
+        'conta_azul_code', 'birth_date', 'education'
     ];
 
     public function city()

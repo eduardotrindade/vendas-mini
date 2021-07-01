@@ -49,6 +49,15 @@
         <p>{{ people.cellphone | formatPhone }}</p>
       </div>
       <div class="form-group col-12 col-sm-4"></div>
+      <div class="form-group col-12 col-sm-4">
+        <label>Data de nascimento:</label>
+        <p>{{ people.birth_date | formatDate }}</p>
+      </div>
+      <div class="form-group col-12 col-sm-4">
+        <label>Escolaridade:</label>
+        <p>{{ people.education }}</p>
+      </div>
+      <div class="form-group col-12 col-sm-4"></div>
       <div class="form-group col-12 col-sm-12">
         <label>Endereço:</label>
         <p>
@@ -81,6 +90,7 @@
 <script>
 import EventBus from '@/event-bus'
 import PeopleApi from '@/api/people'
+import EducationApi from '@/api/education'
 import PeopleActive from './PeopleActive'
 
 export default {
@@ -100,6 +110,8 @@ export default {
 
     setPeople(people) {
       this.people = people
+      let education = EducationApi.get(people.education)
+      this.people.education = education.name
     },
 
     makeActive() {

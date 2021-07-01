@@ -46,6 +46,25 @@
               <div class="col-md-6">
                 <div class="row">
                   <div class="col-md-12 mb-3">
+                    <label for="birth_date">Data de nascimento</label>
+                    <ValidationProvider rules="required" v-slot="{ classes }" name="birth_date" tag="div">
+                      <input type="date" class="form-control" :class="classes" id="birth_date" v-model.lazy="people.birth_date">
+                      <div class="invalid-feedback">{{ errorMessages.birth_date }}</div>
+                    </ValidationProvider>
+                  </div>
+
+                  <div class="col-md-12 mb-3">
+                    <label for="education">Escolaridade</label>
+                    <ValidationProvider rules="required" v-slot="{ classes }" name="education" tag="div">
+                      <select class="custom-select d-block w-100" :class="classes" id="education" v-model.lazy="people.education">
+                        <option value="">Selecione</option>
+                        <option v-for="education in educations" :key="education.id" :value="education.id">{{ education.name }}</option>
+                      </select>
+                      <div class="invalid-feedback">{{ errorMessages.education }}</div>
+                    </ValidationProvider>
+                  </div>
+
+                  <div class="col-md-12 mb-3">
                     <label for="resume">Resumo de sua experiência</label>
                     <ValidationProvider rules="required" v-slot="{ classes }" name="resume" tag="div">
                       <textarea class="form-control" :class="classes" id="resume" cols="30" rows="5" v-model.lazy="people.resume"></textarea>
@@ -146,6 +165,7 @@ import ValidationMixin from '@/mixins/validation'
 import EventBus from '@/event-bus'
 import StateApi from '@/api/state'
 import PeopleApi from '@/api/people'
+import EducationApi from '@/api/education'
 
 export default {
   name: 'RegistrationPeople',
@@ -159,11 +179,14 @@ export default {
       people: {},
       states: {},
       cities: {},
+      educations: {},
       errorMessages: {
         name: requiredMessage,
         document_number: 'Informe um CPF/CNPJ válido.',
         cellphone: requiredMessage,
         email: requiredMessage,
+        birth_date: requiredMessage,
+        education: requiredMessage,
         address: requiredMessage,
         number: requiredMessage,
         neighborhood: requiredMessage,
@@ -232,6 +255,7 @@ export default {
 
   created() {
     this.getStates()
+    this.educations = EducationApi.getAll()
   },
 }
 </script>
