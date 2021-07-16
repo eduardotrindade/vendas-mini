@@ -46,6 +46,13 @@ class OrdersController extends Controller
         return response()->json(['message' => 'Pagamento processado']);
     }
 
+    public function searchStatusPayment(Request $request)
+    {
+        $this->orderService->searchStatusPayment();
+
+        return response()->json(['message' => 'Pagamentos processados']);
+    }
+
     public function export()
     {
         $file = $this->orderService->export();

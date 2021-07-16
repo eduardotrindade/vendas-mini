@@ -86,31 +86,52 @@ class OrderService
             return;
         }
 
-        DB::beginTransaction();
+        SDK::setAccessToken(config('mercado-pago.access_token'));
+
+        $payment = Payment::find_by_id($data['id']);
+
+        $order = Order::where('id', $payment->external_reference)->first();
+
+        $this->changeStatusPayment($order, $payment);
+    }
+
+    public function searchStatusPayment(): void
+    {
         try {
             SDK::setAccessToken(config('mercado-pago.access_token'));
 
-            $payment = Payment::find_by_id($data['id']);
+            $orders = Order::query()->where('status', false)->get();
+            foreach ($orders as $order) {
+                $search = Payment::search([
+                    'sort' => 'date_created',
+                    'criteria' => 'desc',
+                    'external_reference' => $order->id
+                ]);
 
-            if ($payment->status !== 'approved') {
-                return;
+                $payments = $search->getArrayCopy();
+
+                $payment = array_shift($payments);
+                if (!$payment) {
+                    continue;
+                }
+
+                $this->changeStatusPayment($order, $payment);
             }
-
-            /** @var Order $order */
-            $order = Order::where('id', $payment->external_reference)->first();
-            $order->status = true;
-            $order->payment_date = date('Y-m-d H:i:s');
-
-            $order->conta_azul_code = $this->contaAzulService->createSale($order);
-
-            $order->save();
-
-            DB::commit();
         } catch (Exception $e) {
-            DB::rollBack();
             Log::error($e);
+        }
+    }
+
+    private function changeStatusPayment(Order $order, Payment $payment): void
+    {
+        if ($payment->status !== 'approved') {
             return;
         }
+
+        $order->status = true;
+        $order->payment_date = date('Y-m-d H:i:s');
+        $order->conta_azul_code = $this->contaAzulService->createSale($order);
+        $order->save();
 
         Mail::to($order->people->email)->send(new OrderIdentifiedPayment($order));
     }

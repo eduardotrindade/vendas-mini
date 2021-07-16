@@ -32,6 +32,7 @@ Route::get('profiles/{profile}/products', [ProfilesController::class, 'showProdu
 
 Route::post('orders', [OrdersController::class, 'store']);
 Route::post('orders/payment-notification', [OrdersController::class, 'paymentNotification'])->name('paymentNotification');
+Route::get('orders/search-status-payment', [OrdersController::class, 'searchStatusPayment']);
 
 Route::get('conta-azul/token', [ContaAzulController::class, 'token'])->name('contaAzulToken');
 Route::get('conta-azul/refresh-token', [ContaAzulController::class, 'refreshToken']);
