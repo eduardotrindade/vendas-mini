@@ -118,6 +118,7 @@ class PeopleService
         $sheet->setCellValue('H1', 'Perfil');
         $sheet->setCellValue('I1', 'Link Indicação');
 
+        /** @var People[] $people */
         $people = People::all();
 
         $line = 2;
@@ -129,7 +130,7 @@ class PeopleService
             $sheet->setCellValue('E' . $line, $person->people_id ? $person->people->name : '');
             $sheet->setCellValue('F' . $line, $person->created_at->format('d/m/Y'));
             $sheet->setCellValue('G' . $line, $person->is_active ? 'Ativo' : 'Inativo');
-            $sheet->setCellValue('H' . $line, $person->profile->name);
+            $sheet->setCellValue('H' . $line, $person->profile_id ? $person->profile->name : '');
             $sheet->setCellValue('I' . $line, $person->getReferralLink());
             $line++;
         }
