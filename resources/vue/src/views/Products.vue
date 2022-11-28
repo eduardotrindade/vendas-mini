@@ -1,11 +1,24 @@
 <template>
   <div>
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-      <h1 class="display-4">{{ people.profile.name }}</h1>
-      <p class="lead" v-if="isMaster">Somente máster na compra de lotes econômicos para revenda e pagamentos de espaços no programa semente digital.</p>
-      <p class="lead" v-else>Todo afiliado receberá o crédito da compra no ID do respectivo Máster.</p>
-    </div>
     <div class="container">
+      <div class="row">
+        <div class="col-3">
+          <img v-if="isMaster" src="../assets/img/promo-masters.jpeg" alt="Promo Masters" class="img-fluid mt-5 mb-5">
+        </div>
+        <div class="col-6">
+          <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <h1 class="display-4">{{ people.profile.name }}</h1>
+            <p class="lead" v-if="isMaster">Somente máster na compra de lotes econômicos para revenda e pagamentos de espaços no programa semente digital.</p>
+            <p class="lead" v-else>Todo afiliado receberá o crédito da compra no ID do respectivo Máster.</p>
+          </div>
+        </div>
+        <div class="col-3">
+          <a v-if="isMaster" href="https://drive.google.com/drive/folders/1XK_zclJo0_2QjZ0ifEXFWJXgeCY9WhEr?usp=share_link" target="_blank" title="Acesse o conteúdo">
+            <img src="../assets/img/link-masters.jpeg" alt="Link Masters" class="img-fluid mt-5 mb-5">
+          </a>
+        </div>
+      </div>
+
       <div class="card-deck mb-3 text-center">
 
         <div class="card mb-4 shadow-sm" v-for="(product, index) in products" :key="index">

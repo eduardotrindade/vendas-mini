@@ -223,7 +223,10 @@ export default {
           name: 'Afiliado'
         }
       ],
-      people: {},
+      people: {
+        terms_accepted: true,
+        indicated_by: null
+      },
       states: {},
       cities: {},
       educations: {},
