@@ -52,3 +52,4 @@ jobs:
           password: ${{ secrets.PROD_FTP_PWD }}
           local_dir: "./"
           remote_dir: "/vendas"
+          ftp_ssl_allow: "true"
