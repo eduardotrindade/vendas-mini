@@ -45,9 +45,11 @@ jobs:
           php artisan route:clear
 
       - name: Sync files
-        uses: sebastianpopp/git-ftp-action@releases/v3
+        uses: sebastianpopp/git-ftp-action@releases/v2
         with:
-          url: ${{ secrets.HOM_GIT_FTP_URL }}
-          user: ${{ secrets.HOM_FTP_USER }}
-          password: ${{ secrets.HOM_FTP_PWD }}
+          url: ${{ secrets.PROD_GIT_FTP_URL }}
+          user: ${{ secrets.PROD_FTP_USER }}
+          password: ${{ secrets.PROD_FTP_PWD }}
+          localDir: "./"
+          remoteDir: "vendas"
           options: --force --auto-init --insecure -vv
