@@ -50,4 +50,4 @@ jobs:
           url: ${{ secrets.HOM_GIT_FTP_URL }}
           user: ${{ secrets.HOM_FTP_USER }}
           password: ${{ secrets.HOM_FTP_PWD }}
-          options: --force --auto-init --insecure
+          options: --force --auto-init --insecure -vv
