@@ -50,4 +50,4 @@ jobs:
           url: ${{ secrets.PROD_GIT_FTP_URL }}
           user: ${{ secrets.PROD_FTP_USER }}
           password: ${{ secrets.PROD_FTP_PWD }}
-          options: --force --auto-init
+          options: --force --auto-init --insecure
