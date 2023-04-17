@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-3">
-          <img v-if="isMaster" src="../assets/img/promo-masters.jpeg" alt="Promo Masters" class="img-fluid mt-5 mb-5">
+          <img v-if="isMaster" src="../assets/img/promo-masters-2.jpeg" alt="Promo Masters" class="img-fluid mt-5 mb-5">
         </div>
         <div class="col-6">
           <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
