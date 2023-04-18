@@ -22,6 +22,7 @@ class PeopleController extends Controller
     public function index()
     {
         $results = People::query()
+            ->where('is_active', '!=', 2)
             ->orderBy('is_active')
             ->orderBy('name')
             ->paginate();
@@ -48,7 +49,8 @@ class PeopleController extends Controller
 
     public function destroy(People $people)
     {
-        $people->delete();
+        $people->is_active = 2;
+        $people->save();
 
         return response()->json(['message' => 'Representante removido']);
     }
