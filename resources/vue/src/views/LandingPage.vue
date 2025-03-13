@@ -42,7 +42,7 @@
     <a
       class="btn btn-warning btn-lg"
       id="btnLinkSejaNossoRepresentante"
-      href="https://vendas.minisitio.net/seja-nosso-representante/6WjJNfgLzwMg"
+      href="/seja-nosso-representante/6WjJNfgLzwMg"
     >
       CLIQUE AQUI E MUDE SUA VIDA
     </a>
