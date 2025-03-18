@@ -21,4 +21,9 @@ class UserService
 
         return $user->id;
     }
+
+    public function delete(int $id): void
+    {
+        User::destroy($id);
+    }
 }

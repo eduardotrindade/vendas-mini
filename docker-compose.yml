@@ -26,7 +26,7 @@ services:
       - '8003:80'
 
   php-fpm:
-    build: .docker/php-fpm
+    image: felipemjesus/php:7.4-fpm
     working_dir: /application
     volumes:
       - '.:/application'

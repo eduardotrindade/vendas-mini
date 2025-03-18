@@ -63,7 +63,21 @@ class PeopleService
                 $people->setPeopleId($data['indicated_by']);
             }
 
+            if ($people->profile_id === Profile::DIRETOR && !$people->user_id) {
+                $people->user_id = $this->userService->insert($data);
+            }
+
+            $idUserForDelete = null;
+            if ($people->profile_id !== Profile::DIRETOR && $people->user_id) {
+                $idUserForDelete = $people->user_id;
+                $people->user_id = null;
+            }
+
             $people->save();
+
+            if ($idUserForDelete) {
+                $this->userService->delete($idUserForDelete);
+            }
 
             DB::commit();
         } catch (Exception $e) {
