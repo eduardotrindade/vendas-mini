@@ -1,13 +1,13 @@
-###############################################################################
-#                          Generated on phpdocker.io                          #
-###############################################################################
-version: '3.1'
+volumes:
+  mysql:
+
 services:
   mysql:
     image: 'mysql:5.7'
     working_dir: /application
     volumes:
       - '.:/application'
+      - 'mysql:/var/lib/mysql'
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=vendas

@@ -9,6 +9,7 @@ use App\Mail\PeopleRegistered;
 use App\Models\People;
 use App\Models\Profile;
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -60,7 +61,9 @@ class PeopleService
             $people->fill($data);
 
             if (strlen($data['indicated_by']) >= 12 && $people->profile_id != Profile::DIRETOR) {
-                $people->setPeopleId($data['indicated_by']);
+                $indicatedBy = explode('/', $data['indicated_by']);
+                $indicatedBy = Arr::last($indicatedBy);
+                $people->setPeopleId($indicatedBy);
             }
 
             if ($people->profile_id === Profile::DIRETOR && !$people->user_id) {
