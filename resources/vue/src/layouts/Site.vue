@@ -12,12 +12,11 @@
 
 <script>
 import HeaderSite from '@/components/site/HeaderSite'
-import Navbar from '@/components/site/Navbar'
 import FooterSite from '@/components/site/FooterSite'
 
 export default {
   name: 'Site',
-  components: { HeaderSite, Navbar, FooterSite },
+  components: { HeaderSite, FooterSite },
 
   mounted() {
 

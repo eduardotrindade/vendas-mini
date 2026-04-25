@@ -122,7 +122,6 @@ export default {
 
   methods: {
     getAll(filters) {
-      console.log('Fetching people with filters:', filters);
       PeopleApi.getAll(filters).then(this.setResults)
     },
 

@@ -111,7 +111,6 @@ export default {
 
   methods: {
     getAll(filters) {
-      console.log('Fetching orders with filters:', filters);
       OrderApi.getAll(filters).then(this.setResults)
     },
 
