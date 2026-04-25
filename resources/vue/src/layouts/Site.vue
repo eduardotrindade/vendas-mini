@@ -1,7 +1,6 @@
 <template>
   <div class="d-flex flex-column h-100" id="app-wrapper">
     <header-site />
-    <navbar />
     <main role="main" class="flex-shrink-0 mb-3">
       <div class="container">
         <slot />

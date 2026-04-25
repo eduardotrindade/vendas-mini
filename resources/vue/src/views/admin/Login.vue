@@ -17,7 +17,28 @@
         </ValidationProvider>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+
+        <div class="text-center mt-3">
+          <a href="#" @click.prevent="showForgotPassword = true" class="text-muted">Esqueci minha senha</a>
+        </div>
       </ValidationObserver>
+
+      <div v-if="showForgotPassword" class="mt-4">
+        <h5 class="text-center">Recuperar Senha</h5>
+        <ValidationObserver ref="$validatorForgot" tag="form" @submit.prevent="forgotPassword">
+          <ValidationProvider rules="required|email" v-slot="{ classes }" name="email" tag="div" class="mb-3">
+            <input type="email" id="emailForgot" name="email" placeholder="Seu e-mail" class="form-control" :class="classes" v-model.lazy="forgotEmail" />
+            <div class="invalid-feedback">Informe seu e-mail</div>
+          </ValidationProvider>
+
+          <button class="btn btn-lg btn-warning btn-block" type="submit" :disabled="loadingForgot">
+            {{ loadingForgot ? 'Enviando...' : 'Enviar Link de Recuperação' }}
+          </button>
+          <div class="text-center mt-3">
+            <a href="#" @click.prevent="showForgotPassword = false" class="text-muted">Voltar ao login</a>
+          </div>
+        </ValidationObserver>
+      </div>
     </div>
   </div>
 </template>
@@ -25,6 +46,8 @@
 <script>
 import { mapActions } from "vuex";
 import ValidationMixin from '@/mixins/validation'
+import AuthApi from '@/api/auth'
+import EventBus from '@/event-bus'
 
 export default {
   name: 'Login',
@@ -32,7 +55,10 @@ export default {
 
   data() {
     return {
-      user: {}
+      user: {},
+      showForgotPassword: false,
+      forgotEmail: '',
+      loadingForgot: false
     }
   },
 
@@ -45,6 +71,21 @@ export default {
 
         await this.login(this.user)
         this.$router.push({ name: 'orders-list' })
+      })
+    },
+
+    forgotPassword() {
+      return this.$refs.$validatorForgot.validate().then(async isValid => {
+        if (!isValid) return Promise.reject()
+
+        this.loadingForgot = true
+        AuthApi.forgotPassword(this.forgotEmail).then(response => {
+          EventBus.$emit('alert-success', response.message)
+          this.showForgotPassword = false
+          this.forgotEmail = ''
+        }).finally(() => {
+          this.loadingForgot = false
+        })
       })
     }
   }

@@ -19,10 +19,22 @@ class PeopleController extends Controller
         $this->peopleService = $peopleService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $results = People::query()
-            ->where('is_active', '!=', 2)
+        \Illuminate\Support\Facades\Log::info('Search Params:', $request->all());
+        $query = People::with(['city.state', 'profile', 'people'])
+            ->where('is_active', '!=', 2);
+
+        if ($request->has('name') && $request->get('name')) {
+            $search = $request->get('name');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('document_number', 'like', '%' . $search . '%');
+            });
+        }
+
+        $results = $query
             ->orderBy('is_active')
             ->orderBy('name')
             ->paginate();

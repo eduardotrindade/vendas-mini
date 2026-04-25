@@ -56,6 +56,12 @@ const routes = [
     meta: { layout: Site },
   },
   {
+    path: '/reset-password/:token',
+    name: 'reset-password',
+    component: () => import(/* webpackChunkName: "login" */ '@/views/admin/ResetPassword'),
+    meta: { layout: Site },
+  },
+  {
     path: '/admin',
     name: 'admin',
     component: () => import(/* webpackChunkName: "admin" */ '@/layouts/Admin'),

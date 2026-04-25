@@ -12,15 +12,21 @@ class IWantMoreInfomation extends Mailable
     use Queueable, SerializesModels;
 
     private $numberWhatsApp;
+    private $name;
+    private $city;
+    private $email;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($numberWhatsApp)
+    public function __construct($numberWhatsApp, $name = null, $city = null, $email = null)
     {
         $this->numberWhatsApp = $numberWhatsApp;
+        $this->name = $name;
+        $this->city = $city;
+        $this->email = $email;
     }
 
     /**
@@ -34,7 +40,10 @@ class IWantMoreInfomation extends Mailable
             ->to(env('MAIL_BCC', 'contatobr@mycardcity.net'))
             ->subject(__('Quero mais informações sobre MINISITIO'))
             ->with([
-                'whatsapp' => $this->numberWhatsApp
+                'whatsapp' => $this->numberWhatsApp,
+                'name' => $this->name,
+                'city' => $this->city,
+                'email' => $this->email
             ])
             ->view('emails.iwantmoreinformation');
     }

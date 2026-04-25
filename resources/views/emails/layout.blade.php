@@ -26,6 +26,10 @@
         <tr style="margin:0;-webkit-font-smoothing:antialiased">
             <td style="margin:0;-webkit-font-smoothing:antialiased;padding:0;text-align:left;font-family:system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;font-size:17px;-webkit-font-smoothing:antialiased;line-height:26px;">
 
+                <div style="text-align: center; padding: 20px 0;">
+                    <img src="{{ config('app.url') }}/logo.png" alt="MINISITIO" width="150">
+                </div>
+
                 @yield('content')
 
                 <p style="margin:0;-webkit-font-smoothing:antialiased;padding-bottom:10px;margin-bottom:10px;">

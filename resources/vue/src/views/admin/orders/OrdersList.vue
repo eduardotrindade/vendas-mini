@@ -10,6 +10,29 @@
         </span>
       </div>
     </div>
+    <div class="row mt-3">
+      <div class="col-12 col-md-4">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <font-awesome-icon icon="search" />
+            </span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar por ID, nome ou item..."
+            v-model="searchQuery"
+            @keyup.enter="debouncedSearch"
+          >
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button" @click="applySearch">
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="table-responsive">
       <table id="orders-list" class="table table-striped table-sm">
         <thead>
@@ -68,7 +91,9 @@ export default {
   computed: {
     ...mapGetters(['user']),
     linkExportFile() {
-      return `${this.baseUrl}/orders/export?token=${this.token}`
+      const apiPath = this.baseUrl.replace(window.location.origin, '');
+      const fullUrl = `${window.location.origin}${apiPath}`;
+      return `${fullUrl}/orders/export?token=${this.token}`
     }
   },
 
@@ -78,12 +103,15 @@ export default {
       token: null,
       orders: {},
       filters: {},
-      pagination: {}
+      pagination: {},
+      searchQuery: '',
+      searchTimeout: null
     }
   },
 
   methods: {
     getAll(filters) {
+      console.log('Fetching orders with filters:', filters);
       OrderApi.getAll(filters).then(this.setResults)
     },
 
@@ -101,6 +129,19 @@ export default {
       this.getAll(filters)
     },
 
+    debouncedSearch() {
+      clearTimeout(this.searchTimeout)
+      this.searchTimeout = setTimeout(() => {
+        this.applySearch()
+      }, 300)
+    },
+
+    applySearch() {
+      clearTimeout(this.searchTimeout)
+      this.$set(this.filters, 'search', this.searchQuery.trim())
+      delete this.filters.page
+      this.getAll(this.filters)
+    },
     cancel(order) {
       if (!confirm('Deseja cancelar está compra?')) return
 

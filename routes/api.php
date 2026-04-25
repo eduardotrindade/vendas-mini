@@ -6,7 +6,8 @@ use App\Http\Controllers\{AuthController,
     PageController,
     PeopleController,
     ProfilesController,
-    StatesController};
+    StatesController,
+    ForgotPasswordController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,8 @@ Route::get('conta-azul/token', [ContaAzulController::class, 'token'])->name('con
 Route::get('conta-azul/refresh-token', [ContaAzulController::class, 'refreshToken']);
 
 Route::post('auth/login', [AuthController::class, 'login']);
+Route::post('auth/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('auth/reset-password', [ForgotPasswordController::class, 'resetPassword']);
 
 Route::middleware('auth:api')->group(function () {
 

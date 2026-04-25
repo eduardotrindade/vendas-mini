@@ -17,9 +17,26 @@ class OrdersController extends Controller
         $this->orderService = $orderService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::query()
+        \Illuminate\Support\Facades\Log::info('Orders Search Params:', $request->all());
+        $query = Order::query();
+
+        if ($request->has('search') && $request->get('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                if (is_numeric($search)) {
+                    $q->where('id', $search);
+                }
+                $q->orWhereHas('people', function ($qp) use ($search) {
+                    $qp->where('name', 'like', '%' . $search . '%');
+                })->orWhereHas('product', function ($qpr) use ($search) {
+                    $qpr->where('description', 'like', '%' . $search . '%');
+                });
+            });
+        }
+
+        $orders = $query
             ->orderByDesc('created_at')
             ->orderBy('status')
             ->paginate();

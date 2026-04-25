@@ -80,4 +80,17 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(People::class);
     }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $url = env('APP_FRONTEND_URL', env('APP_URL')) . '/reset-password/' . $token . '?email=' . urlencode($this->email);
+
+        $this->notify(new \App\Notifications\ResetPasswordNotification($url));
+    }
 }

@@ -13,6 +13,29 @@
         </span>
       </div>
     </div>
+    <div class="row mt-3">
+      <div class="col-12 col-md-4">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <font-awesome-icon icon="search" />
+            </span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar por nome, CPF/CNPJ ou e-mail..."
+            v-model="searchName"
+            @keyup.enter="debouncedSearch"
+          >
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button" @click="applySearch">
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="table-responsive">
       <table id="people-list" class="table table-hover table-striped table-sm">
         <thead>
@@ -79,7 +102,9 @@ export default {
   computed: {
     ...mapGetters(['user']),
     linkExportFile() {
-      return `${this.baseUrl}/people/export?token=${this.token}`
+      const apiPath = this.baseUrl.replace(window.location.origin, '');
+      const fullUrl = `${window.location.origin}${apiPath}`;
+      return `${fullUrl}/people/export?token=${this.token}`
     }
   },
 
@@ -89,12 +114,15 @@ export default {
       token: null,
       people: {},
       filters: {},
-      pagination: {}
+      pagination: {},
+      searchName: '',
+      searchTimeout: null
     }
   },
 
   methods: {
     getAll(filters) {
+      console.log('Fetching people with filters:', filters);
       PeopleApi.getAll(filters).then(this.setResults)
     },
 
@@ -110,6 +138,20 @@ export default {
     paginate(page) {
       let filters = Object.assign({}, this.filters, {page})
       this.getAll(filters)
+    },
+
+    debouncedSearch() {
+      clearTimeout(this.searchTimeout)
+      this.searchTimeout = setTimeout(() => {
+        this.applySearch()
+      }, 300)
+    },
+
+    applySearch() {
+      clearTimeout(this.searchTimeout)
+      this.$set(this.filters, 'name', this.searchName.trim())
+      delete this.filters.page
+      this.getAll(this.filters)
     },
 
     copyReferralLink(link) {

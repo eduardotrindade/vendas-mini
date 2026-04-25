@@ -1,7 +1,7 @@
 import ApiInstance from "./index";
 
 export default {
-  sendMoreInformation(numberWhatsApp) {
-    return ApiInstance.post(`more-information`, { numberWhatsApp }).then(response => response.data);
+  sendMoreInformation(data) {
+    return ApiInstance.post(`more-information`, data).then(response => response.data);
   },
 }

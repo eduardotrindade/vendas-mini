@@ -122,40 +122,34 @@ class PeopleService
 
     public function export(): string
     {
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setTitle('Representantes');
-        $sheet->setCellValue('A1', 'Nome');
-        $sheet->setCellValue('B1', 'Telefone');
-        $sheet->setCellValue('C1', 'UF');
-        $sheet->setCellValue('D1', 'Cidade');
-        $sheet->setCellValue('E1', 'Indicado por');
-        $sheet->setCellValue('F1', 'Data');
-        $sheet->setCellValue('G1', 'Status');
-        $sheet->setCellValue('H1', 'Perfil');
-        $sheet->setCellValue('I1', 'Link Indicação');
+        $file = storage_path('app/representantes.csv');
+        $handle = fopen($file, 'w');
+
+        // Add UTF-8 BOM for Excel compatibility
+        fprintf($handle, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        fputcsv($handle, [
+            'Nome', 'Telefone', 'UF', 'Cidade', 'Indicado por', 'Data', 'Status', 'Perfil', 'Link Indicação'
+        ], ';');
 
         /** @var People[] $people */
         $people = People::all();
 
-        $line = 2;
         foreach ($people as $person) {
-            $sheet->setCellValue('A' . $line, $person->name);
-            $sheet->setCellValue('B' . $line, PhoneFormatter::formatter($person->cellphone));
-            $sheet->setCellValue('C' . $line, $person->city->state->abbreviation);
-            $sheet->setCellValue('D' . $line, $person->city->name);
-            $sheet->setCellValue('E' . $line, $person->people_id ? $person->people->name : '');
-            $sheet->setCellValue('F' . $line, $person->created_at->format('d/m/Y'));
-            $sheet->setCellValue('G' . $line, $person->is_active ? 'Ativo' : 'Inativo');
-            $sheet->setCellValue('H' . $line, $person->profile_id ? $person->profile->name : '');
-            $sheet->setCellValue('I' . $line, $person->getReferralLink());
-            $line++;
+            fputcsv($handle, [
+                $person->name,
+                PhoneFormatter::formatter($person->cellphone),
+                $person->city->state->abbreviation ?? '',
+                $person->city->name ?? '',
+                $person->people_id ? ($person->people->name ?? '') : '',
+                $person->created_at->format('d/m/Y'),
+                $person->is_active ? 'Ativo' : 'Inativo',
+                $person->profile_id ? ($person->profile->name ?? '') : '',
+                $person->getReferralLink()
+            ], ';');
         }
 
-        $file = storage_path('app/representantes.xlsx');
-
-        $writer = new Xlsx($spreadsheet);
-        $writer->save($file);
+        fclose($handle);
 
         return $file;
     }

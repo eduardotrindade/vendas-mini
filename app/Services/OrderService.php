@@ -138,37 +138,32 @@ class OrderService
 
     public function export(): string
     {
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setTitle('Compras');
-        $sheet->setCellValue('A1', 'Código');
-        $sheet->setCellValue('B1', 'Item');
-        $sheet->setCellValue('C1', 'Valor');
-        $sheet->setCellValue('D1', 'Status');
-        $sheet->setCellValue('E1', 'Criado');
-        $sheet->setCellValue('F1', 'Informação');
-        $sheet->setCellValue('G1', 'Representante');
-        $sheet->setCellValue('H1', 'Perfil');
+        $file = storage_path('app/compras.csv');
+        $handle = fopen($file, 'w');
+
+        // Add UTF-8 BOM for Excel compatibility
+        fprintf($handle, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        fputcsv($handle, [
+            'Código', 'Item', 'Valor', 'Status', 'Criado', 'Informação', 'Representante', 'Perfil'
+        ], ';');
 
         $orders = Order::all();
 
-        $line = 2;
         foreach ($orders as $order) {
-            $sheet->setCellValue('A' . $line, $order->id);
-            $sheet->setCellValue('B' . $line, $order->product->description);
-            $sheet->setCellValue('C' . $line, number_format($order->amount_paid, 2, ',', '.'));
-            $sheet->setCellValue('D' . $line, $order->status ? 'Pago' : 'Aguardando Pagamento');
-            $sheet->setCellValue('E' . $line, $order->created_at->format('d/m/Y'));
-            $sheet->setCellValue('F' . $line, $order->information);
-            $sheet->setCellValue('G' . $line, $order->people->name);
-            $sheet->setCellValue('H' . $line, $order->people->profile->name);
-            $line++;
+            fputcsv($handle, [
+                $order->id,
+                $order->product->description ?? '',
+                number_format($order->amount_paid, 2, ',', '.'),
+                $order->status ? 'Pago' : 'Aguardando Pagamento',
+                $order->created_at->format('d/m/Y'),
+                $order->information,
+                $order->people->name ?? '',
+                $order->people->profile->name ?? ''
+            ], ';');
         }
 
-        $file = storage_path('app/compras.xlsx');
-
-        $writer = new Xlsx($spreadsheet);
-        $writer->save($file);
+        fclose($handle);
 
         return $file;
     }

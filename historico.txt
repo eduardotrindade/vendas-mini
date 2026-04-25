@@ -1,0 +1,43 @@
+Histórico de Conversa - Instalação e Publicação Local
+======================================================
+
+Data: 25/04/2026
+Projeto: vendas-minisitio (Laravel 8)
+
+1. Análise do Projeto:
+   - Projeto Laravel 8 com PHP ^7.4
+   - composer.json identificado com dependências: laravel/framework ^8.12, tymon/jwt-auth, mercadopago/dx-php, etc.
+   - .env configurado para MySQL (DB_HOST=mysql, porta 3306, banco: vendas_minisitio)
+   - APP_URL=http://localhost:8003
+
+2. Verificação de Dependências Locais:
+   - Node.js: v20.20.2 (instalado)
+   - npm: 10.8.2 (instalado)
+   - PHP: não encontrado no PATH
+   - Composer: não encontrado no PATH
+   - Docker: não reconhecido no terminal inicial
+
+3. Docker Compose Existente:
+   - docker-compose.yml já configurado
+   - Serviços: mysql (porta 8333), webserver nginx (porta 8003), php-fpm (PHP 7.4), frontend (node:18)
+   - .docker/ com configurações nginx e php-fpm
+
+4. Instalações Realizadas:
+   - npm install -g opencode-ai (concluído)
+   - npm install -g opencode-windows-x64 (concluído - v1.14.25)
+
+5. Decisão do Usuário:
+   - Opção escolhida: Usar Laravel Sail (Docker)
+   - Docker não estava acessível no terminal atual
+   - Usuário optou por reinstalar o Docker
+
+6. Próximos Passos (após reinstalação do Docker):
+   - Verificar: docker --version
+   - Navegar até: C:\sistemas\NovoSiteVendasMinisitio\SiteAtualMini\vendas-minisitio
+   - Executar: docker-compose up -d
+   - Acessar: http://localhost:8003
+
+7. Observações:
+   - O .env usa DB_HOST=mysql (para Docker) - correto para ambiente containerizado
+   - MySQL exposto na porta 8333 para acesso externo
+   - O projeto já possui arquivos compilados em public/assets/js/
