@@ -41,3 +41,49 @@ Projeto: vendas-minisitio (Laravel 8)
    - O .env usa DB_HOST=mysql (para Docker) - correto para ambiente containerizado
    - MySQL exposto na porta 8333 para acesso externo
    - O projeto já possui arquivos compilados em public/assets/js/
+
+---
+
+Data: 25/04/2026 - Segunda Sessão
+=================================
+
+1. Mudança de Computador:
+   - Usuário mudou para novo computador
+   - Precisou configurar git (user.email, user.name)
+   - Token GitHubPAT configurado para push
+
+2. Análise de Segurança:
+   - .env.local estava STAGED (problema de segurança)
+   - Adicionado .env.local ao .gitignore
+   - Removido .env.local do staging
+   - Commit: "Corrige .gitignore e adiciona .env.local para proteção de credenciais"
+
+3. Correção de Erros de Lint:
+   - Erro em Site.vue: componente Navbar registrado mas não usado
+   - Erro em OrdersList.vue: console.log encontrado
+   - Erro em PeopleList.vue: console.log encontrado
+   - Correções aplicadas para build funcionar
+
+4. Build do Frontend:
+   - npm install (node 20)
+   - npm run build concluído com sucesso
+   - Arquivos gerados em: resources/vue/public/
+   - Warnings de tamanho (487 KiB > 244 KiB recomendado) - apenas warning
+
+5. Deploy Realizado:
+   - Código pushado para: github.com/eduardotrindade/vendas-mini.git
+   - Branch main atualizada
+   - Deploy manual (FTP) pendente - arquivos prontos em public/
+
+6. Ambiente Local (pendente):
+   - docker-compose.local.yml configurado
+   - MySQL: porta 3307
+   - Nginx: porta 8003
+   - PHP-FPM: 7.4
+   - Faltarodar: docker --version
+   - Comando: docker-compose -f docker-compose.local.yml up -d
+   - Após subir: php artisan migrate
+
+7. Repositórios:
+   - Original: github.com/mycardcity/vendas-minisitio
+   - Novo: github.com/eduardotrindade/vendas-mini
