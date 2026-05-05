@@ -11,8 +11,14 @@
           <div class="invalid-feedback">Deve informar o e-mail</div>
         </ValidationProvider>
 
-        <ValidationProvider rules="required" v-slot="{ classes }" name="password" tag="div" class="mb-3">
-          <input type="password" id="password" name="password" placeholder="Senha" class="form-control" :class="classes" v-model.lazy="user.password" />
+        <ValidationProvider rules="required" v-slot="{ classes }" name="password" tag="div" class="mb-3 input-group">
+          <input :type="showPassword ? 'text' : 'password'" id="password" name="password" placeholder="Senha" class="form-control" :class="classes" v-model.lazy="user.password" />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" @click="showPassword = !showPassword">
+              <span v-if="showPassword">&#128065;</span>
+              <span v-else>&#128064;</span>
+            </button>
+          </div>
           <div class="invalid-feedback">Deve informar a senha</div>
         </ValidationProvider>
 
@@ -58,7 +64,8 @@ export default {
       user: {},
       showForgotPassword: false,
       forgotEmail: '',
-      loadingForgot: false
+      loadingForgot: false,
+      showPassword: false
     }
   },
 

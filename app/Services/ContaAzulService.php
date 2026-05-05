@@ -12,7 +12,7 @@ use Log;
 
 class ContaAzulService
 {
-    private function createCustomer(People $people): string
+    private function createCustomer($people)
     {
         $customer = ContaAzul::customers()->create([
             'name' => $people->name,
@@ -35,7 +35,7 @@ class ContaAzulService
         return $people->conta_azul_code;
     }
 
-    public function createSale(Order $order): ?string
+    public function createSale($order)
     {
         try {
             $dateNow = new \DateTime();

@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 final class Auth
 {
-    private HttpClient $http;
-    private string $urlApi;
-    private string $clientId;
-    private string $clientSecret;
-    private string $state;
-    private string $redirectUri;
+    private $http;
+    private $urlApi;
+    private $clientId;
+    private $clientSecret;
+    private $state;
+    private $redirectUri;
 
     public function __construct()
     {
@@ -27,7 +27,7 @@ final class Auth
         $this->http = new HttpClient(['base_uri' => $this->urlApi]);
     }
 
-    private function setToken(string $json): void
+    private function setToken($json)
     {
         $data = json_decode($json, true);
         $data['expires_in'] = (new DateTime())->modify("+ {$data['expires_in']} seconds")->format('Y-m-d H:i:s');
@@ -35,7 +35,7 @@ final class Auth
         Storage::put('conta-azul.json', json_encode($data));
     }
 
-    public function getAccessToken(): string
+    public function getAccessToken()
     {
         $contaAzul = json_decode(Storage::get('conta-azul.json'), true);
         $dateExpires = new DateTime($contaAzul['expires_in']);
@@ -48,14 +48,14 @@ final class Auth
         return $contaAzul['access_token'];
     }
 
-    private function getRefreshToken(): string
+    private function getRefreshToken()
     {
         $contaAzul = json_decode(Storage::get('conta-azul.json'), true);
 
         return $contaAzul['refresh_token'];
     }
 
-    public function authorize(): string
+    public function authorize()
     {
         $resource = '/auth/authorize?';
 
@@ -69,7 +69,7 @@ final class Auth
         return $this->urlApi . $resource . http_build_query($params);
     }
 
-    public function token(string $code): void
+    public function token($code)
     {
         $params = [
             'grant_type' => 'authorization_code',
@@ -88,7 +88,7 @@ final class Auth
         $this->setToken($response->getBody()->getContents());
     }
 
-    private function refreshToken(): string
+    private function refreshToken()
     {
         $params = [
             'grant_type' => 'refresh_token',

@@ -59,12 +59,17 @@ class People extends Model
         return $this->belongsTo(People::class);
     }
 
-    public function user()
+public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function getReferralLink(): string
+    public function indicatedBy()
+    {
+        return $this->belongsTo(People::class, 'people_id');
+    }
+
+    public function getReferralLink()
     {
         if (!in_array($this->profile_id, [Profile::DIRETOR, Profile::MASTER])) {
             return '';
@@ -77,7 +82,7 @@ class People extends Model
         return url('/seja-nosso-representante/' . $referralSecret . $idEncoded);
     }
 
-    public function setPeopleId(string $indicatedBy = null): void
+    public function setPeopleId($indicatedBy = null)
     {
         if (!$indicatedBy) {
             return;

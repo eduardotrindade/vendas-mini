@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
-    private OrderService $orderService;
+    private $orderService;
 
     public function __construct(OrderService $orderService)
     {

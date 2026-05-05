@@ -27,7 +27,7 @@
         <a href="https://play.google.com/store/apps/details?id=net.mycardcity" target="_blank" class="btn-app d-none d-sm-block mr-3">
           BAIXE O APP
         </a>
-        <a href="#register" class="btn-participar">QUERO PARTICIPAR</a>
+        <router-link :to="{ name: 'buy-space' }" class="btn-participar">QUERO PARTICIPAR</router-link>
       </div>
     </div>
     </header>
@@ -131,6 +131,15 @@ export default {
 .btn-participar:hover {
   transform: scale(1.05);
   box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+/* Botão piscando */
+.btn-participar {
+  animation: pulse-orange 2s infinite;
+}
+@keyframes pulse-orange {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.7); }
+  50% { box-shadow: 0 0 0 10px rgba(255, 140, 0, 0); }
 }
 
 @media (max-width: 768px) {

@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class UserService
 {
-    public function insert(array $data): int
+    public function insert($data)
     {
         $user = new User([
             'name' => $data['name'],
@@ -22,7 +22,7 @@ class UserService
         return $user->id;
     }
 
-    public function delete(int $id): void
+    public function delete($id)
     {
         User::destroy($id);
     }

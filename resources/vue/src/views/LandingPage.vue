@@ -25,7 +25,7 @@
           </div>
         </div>
 
-        <a href="#register" class="btn btn-lg-premium">QUERO COMEÇAR AGORA</a>
+        <a href="/seja-nosso-representante" class="btn btn-lg-premium">QUERO COMEÇAR AGORA</a>
       </div>
     </section>
 
@@ -187,44 +187,164 @@
             <div class="label">vagas restantes</div>
           </div>
         </div>
-        <a href="#register" class="btn btn-lg-premium">GARANTIR MINHA VAGA</a>
+        <a href="/seja-nosso-representante" class="btn btn-lg-premium">GARANTIR MINHA VAGA</a>
       </div>
     </section>
 
     <!-- Registration -->
     <section class="register py-5" id="register">
-      <div class="container" v-if="!showPayment">
-        <h2>🎯 Comece Agora</h2>
-        <p class="text-dark mb-4">Primeiro passo: preencha seus dados</p>
+      <div class="container">
+        <h2 class="text-center">🎯 Comece Agora</h2>
+        <p class="text-dark text-center mb-4">Preencha seus dados para se tornar um representante</p>
+        
+        <div class="row">
+          <div class="col-md-12 px-5">
+            <ValidationObserver ref="$validatorLanding" tag="form" @submit.prevent="registrationPeople">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="name">Nome</label>
+                    <ValidationProvider rules="required" v-slot="{ classes }" name="name" tag="div">
+                      <input type="text" class="form-control" :class="classes" id="name" v-model.lazy="people.name">
+                      <div class="invalid-feedback">{{ errorMessages.name }}</div>
+                    </ValidationProvider>
+                  </div>
 
-        <ValidationObserver ref="$validator" tag="form" class="form-premium mx-auto" @submit.prevent="sendLead">
-          <ValidationProvider rules="required" v-slot="{ classes }" name="nome" tag="div" class="mb-3">
-            <input type="text" class="form-control-premium" :class="classes" placeholder="Seu nome completo" v-model="lead.name">
-          </ValidationProvider>
-          
-          <ValidationProvider rules="required" v-slot="{ classes }" name="cidade" tag="div" class="mb-3">
-            <input type="text" class="form-control-premium" :class="classes" placeholder="Cidade" v-model="lead.city">
-          </ValidationProvider>
+                  <div class="mb-3">
+                    <label for="document_number">CPF/CNPJ</label>
+                    <ValidationProvider rules="required|cpf_cnpj" v-slot="{ classes }" name="document_number" tag="div">
+                      <the-mask :mask="['###.###.###-##', '##.###.###/####-##']" class="form-control" :class="classes" id="document_number" v-model.lazy="people.document_number" />
+                      <div class="invalid-feedback">{{ errorMessages.document_number }}</div>
+                    </ValidationProvider>
+                  </div>
 
-          <ValidationProvider rules="required" v-slot="{ classes }" name="whatsapp" tag="div" class="mb-3">
-            <input type="tel" class="form-control-premium" :class="classes" placeholder="WhatsApp com DDD" v-model="lead.numberWhatsApp">
-          </ValidationProvider>
+                  <div class="mb-3">
+                    <label for="cellphone">Celular <span class="text-muted">(com WhatsApp)</span></label>
+                    <ValidationProvider rules="required" v-slot="{ classes }" name="cellphone" tag="div">
+                      <the-mask :mask="['(##) ####-####', '(##) #####-####']" class="form-control" :class="classes" id="cellphone" v-model.lazy="people.cellphone" />
+                      <div class="invalid-feedback">{{ errorMessages.cellphone }}</div>
+                    </ValidationProvider>
+                  </div>
 
-          <ValidationProvider rules="required|email" v-slot="{ classes }" name="email" tag="div" class="mb-3">
-            <input type="email" class="form-control-premium" :class="classes" placeholder="Seu email" v-model="lead.email">
-          </ValidationProvider>
+                  <div class="mb-3">
+                    <label for="email">E-mail</label>
+                    <ValidationProvider rules="required" v-slot="{ classes }" name="email" tag="div">
+                      <input type="email" class="form-control" :class="classes" id="email" v-model.lazy="people.email">
+                      <div class="invalid-feedback">{{ errorMessages.email }}</div>
+                    </ValidationProvider>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12 mb-3">
+                      <label for="birth_date">Data de nascimento</label>
+                      <ValidationProvider rules="required" v-slot="{ classes }" name="birth_date" tag="div">
+                        <input type="date" class="form-control" :class="classes" id="birth_date" v-model.lazy="people.birth_date">
+                        <div class="invalid-feedback">{{ errorMessages.birth_date }}</div>
+                      </ValidationProvider>
+                    </div>
 
-          <button type="submit" class="btn btn-block-premium" :disabled="loadingLead">
-            {{ loadingLead ? 'ENVIANDO...' : 'CONTINUAR' }}
-          </button>
-        </ValidationObserver>
-      </div>
+                    <div class="col-md-12 mb-3">
+                      <label for="education">Escolaridade</label>
+                      <ValidationProvider rules="required" v-slot="{ classes }" name="education" tag="div">
+                        <select class="custom-select d-block w-100" :class="classes" id="education" v-model.lazy="people.education">
+                          <option value="">Selecione</option>
+                          <option v-for="education in educations" :key="education.id" :value="education.id">{{ education.name }}</option>
+                        </select>
+                        <div class="invalid-feedback">{{ errorMessages.education }}</div>
+                      </ValidationProvider>
+                    </div>
 
-      <!-- Payment Section (UI Only as requested) -->
-      <div class="container text-center" v-else id="pagamento">
-        <h2 class="text-gold-premium">💳 Ative Seu Acesso</h2>
-        <p class="text-muted-premium my-4">Pagamento único de <strong class="text-white h3">R$120/ano</strong></p>
-        <a href="/seja-nosso-representante/6WjJNfgLzwMg" class="btn btn-lg-premium">PAGAR AGORA R$120</a>
+                    <div class="col-md-12 mb-3">
+                      <label for="resume">Resumo de sua experiência</label>
+                      <ValidationProvider rules="required" v-slot="{ classes }" name="resume" tag="div">
+                        <textarea class="form-control" :class="classes" id="resume" cols="30" rows="5" v-model.lazy="people.resume"></textarea>
+                        <div class="invalid-feedback">{{ errorMessages.resume }}</div>
+                      </ValidationProvider>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row mt-3">
+                <h4 class="col-md-12 mb-3">Dados de Endereço</h4>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="address">Logradouro</label>
+                    <ValidationProvider rules="required" v-slot="{ classes }" name="address" tag="div">
+                      <input type="text" class="form-control" :class="classes" id="address" v-model.lazy="people.address">
+                      <div class="invalid-feedback">{{ errorMessages.address }}</div>
+                    </ValidationProvider>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="number">Número</label>
+                    <ValidationProvider rules="required" v-slot="{ classes }" name="number" tag="div">
+                      <input type="text" class="form-control" :class="classes" id="number" v-model.lazy="people.number">
+                      <div class="invalid-feedback">{{ errorMessages.number }}</div>
+                    </ValidationProvider>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="complement">Complemento <span class="text-muted">(opcional)</span></label>
+                    <input type="text" class="form-control" id="complement" v-model.lazy="people.complement">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="neighborhood">Bairro</label>
+                    <ValidationProvider rules="required" v-slot="{ classes }" name="neighborhood" tag="div">
+                      <input type="text" class="form-control" :class="classes" id="neighborhood" v-model.lazy="people.neighborhood">
+                      <div class="invalid-feedback">{{ errorMessages.neighborhood }}</div>
+                    </ValidationProvider>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="city">Cidade</label>
+                    <ValidationProvider rules="required" v-slot="{ classes }" name="city" tag="div">
+                      <input type="text" class="form-control" :class="classes" id="city" v-model.lazy="people.city">
+                      <div class="invalid-feedback">{{ errorMessages.city }}</div>
+                    </ValidationProvider>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="state">Estado</label>
+                    <ValidationProvider rules="required" v-slot="{ classes }" name="state" tag="div">
+                      <select class="custom-select d-block w-100" :class="classes" id="state" v-model.lazy="people.state_id">
+                        <option value="">Selecione</option>
+                        <option v-for="state in states" :key="state.id" :value="state.id">{{ state.name }}</option>
+                      </select>
+                      <div class="invalid-feedback">{{ errorMessages.state_id }}</div>
+                    </ValidationProvider>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-12 mb-3">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="terms" v-model="people.terms_accepted">
+                      <label class="form-check-label" for="terms">
+                        Ao solicitar cadastro, você concorda com nossos <a href="/termos-e-politicas-de-privacidade" target="_blank">Termos e Políticas de Privacidade</a>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-danger" v-if="errorSubmit">{{ errorSubmit }}</div>
+                  <div class="alert alert-success" v-if="successSubmit">{{ successSubmit }}</div>
+                  <button type="submit" class="btn btn-primary btn-lg btn-block" :disabled="loadingSubmit">
+                    {{ loadingSubmit ? 'ENVIANDO...' : 'SOLICITAR CADASTRO' }}
+                  </button>
+                </div>
+              </div>
+            </ValidationObserver>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -234,7 +354,7 @@
     </footer>
 
     <!-- WhatsApp Floating Button -->
-    <a class="floating-wa" href="https://wa.me/5561984213444" target="_blank">
+    <a class="floating-wa" href="https://wa.me/5561998322621" target="_blank">
       <img src="../assets/icons/whatsapp.png" alt="WhatsApp" width="30">
     </a>
   </div>
@@ -244,13 +364,44 @@
 import ValidationMixin from '@/mixins/validation'
 import EventBus from '@/event-bus'
 import PageApi from '@/api/page'
+import PeopleApi from '@/api/people'
+import StateApi from '@/api/state'
+import EducationApi from '@/api/education'
+import {mask} from 'vue-the-mask'
 
 export default {
   name: "LandingPage",
   mixins: [ValidationMixin],
+  directives: {mask},
 
   data() {
+    const requiredMessage = 'Preenchimento obrigatório.'
+
     return {
+      people: {},
+      states: {},
+      cities: {},
+      educations: {},
+      errorMessages: {
+        name: requiredMessage,
+        document_number: 'Informe um CPF/CNPJ válido.',
+        cellphone: requiredMessage,
+        email: requiredMessage,
+        birth_date: requiredMessage,
+        education: requiredMessage,
+        address: requiredMessage,
+        number: requiredMessage,
+        neighborhood: requiredMessage,
+        state: requiredMessage,
+        state_id: requiredMessage,
+        city_id: requiredMessage,
+        zip_code: requiredMessage,
+        resume: requiredMessage,
+        terms_accepted: 'Para solicitar o cadastro deve aceitar os nossos Termos e Politícas de privacidade.',
+      },
+      loadingSubmit: false,
+      errorSubmit: '',
+      successSubmit: '',
       lead: {
         name: '',
         city: '',
@@ -279,13 +430,49 @@ export default {
   },
 
   methods: {
+    registrationPeople() {
+      return this.$refs.$validatorLanding.validate().then(isValid => {
+        if (!isValid) return Promise.reject()
+
+        this.loadingSubmit = true
+        this.errorSubmit = ''
+        this.successSubmit = ''
+
+        PeopleApi.save(this.people).then(() => {
+          this.successSubmit = 'Solicitação realizada com sucesso!! Em breve entraremos em contato sobre a analise do seu cadastro.'
+          this.people = {}
+          this.cities = {}
+          this.$refs.$validatorLanding.reset()
+        }).catch(error => {
+          let errors = error.data.errors
+          this.setValidationErrors(errors)
+          this.errorSubmit = 'Erro ao enviar. Verifique os dados.'
+          return Promise.reject(error)
+        }).finally(() => {
+          this.loadingSubmit = false
+        })
+      })
+    },
+
+    getStates() {
+      StateApi.getAll().then(states => {
+        this.states = states
+      })
+    },
+
+    getCities() {
+      StateApi.getCities(this.people.state_id).then(cities => {
+        this.cities = cities
+      })
+    },
+
     sendLead() {
       return this.$refs.$validator.validate().then(isValid => {
         if (!isValid) return Promise.reject()
 
         this.loadingLead = true
         PageApi.sendMoreInformation(this.lead).then(() => {
-          EventBus.$emit('alert-success', 'Informações enviadas com sucesso!')
+          EventBus.$emit('alert-success', 'Informações enviada com sucesso!')
           this.showPayment = true
           this.$nextTick(() => {
             document.getElementById('pagamento')?.scrollIntoView({ behavior: 'smooth' })
@@ -294,15 +481,30 @@ export default {
           this.loadingLead = false
         })
       })
+    },
+
+    setValidationErrors(errors) {
+      if (!errors) return
+      for (let key in errors) {
+        let input = this.$refs.$validatorLanding.inputs.find(i => i.name === key)
+        if (input) {
+          input.setErrors(errors[key])
+        }
+      }
+    },
+
+    loadLeadster() {
+      let script = document.createElement('script')
+      script.type = 'text/javascript'
+      script.innerHTML = '(function(n,r,l,d){try{var h=r.head||r.getElementsByTagName("head")[0],s=r.createElement("script");s.setAttribute("type","text/javascript");s.setAttribute("src",l);n.neuroleadId=d;h.appendChild(s);}catch(e){}})(window,document,"https://cdn.leadster.com.br/neurolead/neurolead.min.js", 21908);'
+      document.querySelector('body').appendChild(script)
     }
   },
 
-  mounted() {
-    // Leadster script
-    let script = document.createElement('script')
-    script.type = 'text/javascript'
-    script.innerHTML = '(function(n,r,l,d){try{var h=r.head||r.getElementsByTagName("head")[0],s=r.createElement("script");s.setAttribute("type","text/javascript");s.setAttribute("src",l);n.neuroleadId=d;h.appendChild(s);}catch(e){}})(window,document,"https://cdn.leadster.com.br/neurolead/neurolead.min.js", 21908);'
-    document.querySelector('body').appendChild(script)
+  created() {
+    this.getStates()
+    this.educations = EducationApi.getAll()
+    this.loadLeadster()
   }
 }
 </script>
@@ -539,5 +741,14 @@ footer { background: #000; color: #666; text-align: center; }
 @media(max-width: 768px) {
   .hero h1 { font-size: 2rem; }
   .level { width: 100%; }
+}
+
+/* Botões piscando */
+.btn-lg-premium {
+  animation: pulse-gold 2s infinite;
+}
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+  50% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
 }
 </style>

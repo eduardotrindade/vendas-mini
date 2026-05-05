@@ -1,89 +1,18 @@
-Histórico de Conversa - Instalação e Publicação Local
-======================================================
 
-Data: 25/04/2026
-Projeto: vendas-minisitio (Laravel 8)
-
-1. Análise do Projeto:
-   - Projeto Laravel 8 com PHP ^7.4
-   - composer.json identificado com dependências: laravel/framework ^8.12, tymon/jwt-auth, mercadopago/dx-php, etc.
-   - .env configurado para MySQL (DB_HOST=mysql, porta 3306, banco: vendas_minisitio)
-   - APP_URL=http://localhost:8003
-
-2. Verificação de Dependências Locais:
-   - Node.js: v20.20.2 (instalado)
-   - npm: 10.8.2 (instalado)
-   - PHP: não encontrado no PATH
-   - Composer: não encontrado no PATH
-   - Docker: não reconhecido no terminal inicial
-
-3. Docker Compose Existente:
-   - docker-compose.yml já configurado
-   - Serviços: mysql (porta 8333), webserver nginx (porta 8003), php-fpm (PHP 7.4), frontend (node:18)
-   - .docker/ com configurações nginx e php-fpm
-
-4. Instalações Realizadas:
-   - npm install -g opencode-ai (concluído)
-   - npm install -g opencode-windows-x64 (concluído - v1.14.25)
-
-5. Decisão do Usuário:
-   - Opção escolhida: Usar Laravel Sail (Docker)
-   - Docker não estava acessível no terminal atual
-   - Usuário optou por reinstalar o Docker
-
-6. Próximos Passos (após reinstalação do Docker):
-   - Verificar: docker --version
-   - Navegar até: C:\sistemas\NovoSiteVendasMinisitio\SiteAtualMini\vendas-minisitio
-   - Executar: docker-compose up -d
-   - Acessar: http://localhost:8003
-
-7. Observações:
-   - O .env usa DB_HOST=mysql (para Docker) - correto para ambiente containerizado
-   - MySQL exposto na porta 8333 para acesso externo
-   - O projeto já possui arquivos compilados em public/assets/js/
-
----
-
-Data: 25/04/2026 - Segunda Sessão
-=================================
-
-1. Mudança de Computador:
-   - Usuário mudou para novo computador
-   - Precisou configurar git (user.email, user.name)
-   - Token GitHubPAT configurado para push
-
-2. Análise de Segurança:
-   - .env.local estava STAGED (problema de segurança)
-   - Adicionado .env.local ao .gitignore
-   - Removido .env.local do staging
-   - Commit: "Corrige .gitignore e adiciona .env.local para proteção de credenciais"
-
-3. Correção de Erros de Lint:
-   - Erro em Site.vue: componente Navbar registrado mas não usado
-   - Erro em OrdersList.vue: console.log encontrado
-   - Erro em PeopleList.vue: console.log encontrado
-   - Correções aplicadas para build funcionar
-
-4. Build do Frontend:
-   - npm install (node 20)
-   - npm run build concluído com sucesso
-   - Arquivos gerados em: resources/vue/public/
-   - Warnings de tamanho (487 KiB > 244 KiB recomendado) - apenas warning
-
-5. Deploy Realizado:
-   - Código pushado para: github.com/eduardotrindade/vendas-mini.git
-   - Branch main atualizada
-   - Deploy manual (FTP) pendente - arquivos prontos em public/
-
-6. Ambiente Local (pendente):
-   - docker-compose.local.yml configurado
-   - MySQL: porta 3307
-   - Nginx: porta 8003
-   - PHP-FPM: 7.4
-   - Faltarodar: docker --version
-   - Comando: docker-compose -f docker-compose.local.yml up -d
-   - Após subir: php artisan migrate
-
-7. Repositórios:
-   - Original: github.com/mycardcity/vendas-minisitio
-   - Novo: github.com/eduardotrindade/vendas-mini
+222:
+223: -------------------------------------------
+224: 
+225: Data: 28/04/2026 - Alteração para deploy via SSH
+226: ===============================
+227: 1. Motivo
+228:    - Produzir deploy mais seguro usando rsync/ssh em vez de FTP.
+229: 2. Implementação
+230:    - Substituído trabalho `airvzxf/ftp-deployment-action` por `appleboy/ssh-action`.
+231:    - Adicionado novo secret `PROD_SSH_HOST`, `PROD_SSH_USER`, `PROD_SSH_KEY`.
+232:    - Workflow atualiza `remote_dir: /vendas` via `rsync -avz --delete`.
+233:    - Arquivos temporários mantidos apenas no runner.
+234:    - Testes de integração enviados via `docker compose up` local.
+235: 3. Passos futuros
+236:    - Configuração de chave SSH sem senha (passphrase‑free) no repositório.
+237:    - Backup de arquivos antigos no servidor antes do deploy.
+238:"

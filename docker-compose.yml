@@ -1,12 +1,15 @@
+version: '3.8'
+
 volumes:
   mysql:
+  vendor:
 
 services:
   mysql:
     image: 'mysql:5.7'
-    working_dir: /application
+    container_name: vendas-mysql
+    restart: unless-stopped
     volumes:
-      - '.:/application'
       - 'mysql:/var/lib/mysql'
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -15,31 +18,53 @@ services:
       - MYSQL_PASSWORD=vendas
     ports:
       - '8333:3306'
+    networks:
+      - vendas-network
 
   webserver:
     image: 'nginx:alpine'
-    working_dir: /application
+    container_name: vendas-nginx
+    restart: unless-stopped
     volumes:
       - '.:/application'
       - './.docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf'
     ports:
       - '8003:80'
+    depends_on:
+      - php-fpm
+    networks:
+      - vendas-network
 
   php-fpm:
-    image: felipemjesus/php:7.4-fpm
-    working_dir: /application
+    build:
+      context: .
+      dockerfile: .docker/php-fpm/Dockerfile
+    container_name: vendas-php
+    restart: unless-stopped
     volumes:
       - '.:/application'
-      - './.docker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini'
+      - 'vendor:/application/vendor'
+      - './.docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini'
+    depends_on:
+      - mysql
+    networks:
+      - vendas-network
 
   frontend:
-    image: "node:18"
+    image: 'node:18-alpine'
+    container_name: vendas-frontend
+    restart: unless-stopped
     working_dir: /home/node/app
     volumes:
       - './resources/vue:/home/node/app'
     environment:
-      NODE_ENV: development
+      - NODE_ENV=development
     ports:
       - '8000:8000'
-    command: "npm run serve"
-    entrypoint: /home/node/app/entrypoint.sh
+    command: 'npm run serve'
+    networks:
+      - vendas-network
+
+networks:
+  vendas-network:
+    driver: bridge

@@ -17,8 +17,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class PeopleService
 {
-    private ContaAzulService $contaAzulService;
-    private UserService $userService;
+    private $contaAzulService;
+    private $userService;
 
     public function __construct(ContaAzulService $contaAzulService, UserService $userService)
     {
@@ -26,7 +26,7 @@ class PeopleService
         $this->userService = $userService;
     }
 
-    public function insert(array $data): People
+    public function insert($data)
     {
         DB::beginTransaction();
         try {
@@ -54,7 +54,7 @@ class PeopleService
         return $people;
     }
 
-    public function update(People $people, array $data): People
+    public function update($people, $data)
     {
         DB::beginTransaction();
         try {
@@ -91,7 +91,7 @@ class PeopleService
         return $people;
     }
 
-    public function changeActive(People $people, ?int $profileId = null): People
+    public function changeActive($people, $profileId = null)
     {
         DB::beginTransaction();
         try {
@@ -120,7 +120,7 @@ class PeopleService
         return $people;
     }
 
-    public function export(): string
+    public function export()
     {
         $file = storage_path('app/representantes.csv');
         $handle = fopen($file, 'w');

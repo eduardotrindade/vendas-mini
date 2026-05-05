@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class PeopleController extends Controller
 {
-    private PeopleService $peopleService;
+    private $peopleService;
 
     public function __construct(PeopleService $peopleService)
     {

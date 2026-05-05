@@ -1,0 +1,52 @@
+in /application/app/Helpers/PhoneFormatter.php (line 33)
+
+            return self::fixedphone($value);
+        }
+    }
+        private static function fixedphone(string $value): string
+        {
+            return preg_replace('/^(\d{2})(\d{4})(\d{4})$/', '($1) $2-$3', $value);
+        }
+        public static function formatter(string $value): string
+
+in /application/vendor/composer/ClassLoader.php Composer\Autoload\{closure} (line 427)
+ClassLoader->loadClass()
+spl_autoload_call() in /application/app/Services/PeopleService.php (line 141)
+PeopleService->export() in /application/app/Http/Controllers/PeopleController.php (line 96)
+in /application/vendor/laravel/framework/src/Illuminate/Routing/Controller.php -> export (line 54)
+in /application/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php -> callAction (line 45)
+in /application/vendor/laravel/framework/src/Illuminate/Routing/Route.php -> dispatch (line 254)
+in /application/vendor/laravel/framework/src/Illuminate/Routing/Route.php -> runController (line 197)
+in /application/vendor/laravel/framework/src/Illuminate/Routing/Router.php -> run (line 692)
+in /application/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php -> Illuminate\Routing\{closure} (line 128)
+in /application/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php -> Illuminate\Pipeline\{closure} (line 41)
+in /application/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php -> handle (line 167)
+in /application/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php -> Illuminate\Pipeline\{closure} (line 127)
+in /application/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php -> handleRequest (line 103)
+in /application/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php -> handleRequestUsingNamedLimiter (line 55)
+in /application/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php -> handle (line 167)
+in /application/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php -> Illuminate\Pipeline\{closure} (line 44)
+in /application/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php -> handle (line 167)
+in /application/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php -> Illuminate\Pipeline\{closure} (line 103)
+in /application/vendor/laravel/framework/src/Illuminate/Routing/Router.php -> then (line 694)
+in /application/vendor/laravel/framework/src/Illuminate/Routing/Router.php -> runRouteWithinStack (line 669)
+in /application/vendor/laravel/framework/src/Illuminate/Routing/Router.php -> runRoute (line 635)
+in /application/vendor/laravel/framework/src/Illuminate/Routing/Router.php -> dispatchToRoute (line 624)
+in /application/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php -> dispatch (line 166)
+in /application/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php -> Illuminate\Foundation\Http\{closure} (line 128)
+in /application/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php -> Illuminate\Pipeline\{closure} (line 21)
+in /application/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php -> handle (line 167)
+in /application/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php -> Illuminate\Pipeline\{closure} (line 21)
+in /application/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php -> handle (line 167)
+in /application/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php -> Illuminate\Pipeline\{closure} (line 27)
+in /application/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php -> handle (line 167)
+in /application/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php -> Illuminate\Pipeline\{closure} (line 86)
+in /application/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php -> handle (line 167)
+in /application/vendor/fruitcake/laravel-cors/src/HandleCors.php -> Illuminate\Pipeline\{closure} (line 57)
+in /application/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php -> handle (line 167)
+in /application/vendor/fideloper/proxy/src/TrustProxies.php -> Illuminate\Pipeline\{closure} (line 57)
+in /application/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php -> handle (line 167)
+in /application/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php -> Illuminate\Pipeline\{closure} (line 103)
+in /application/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php -> then (line 141)
+in /application/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php -> sendRequestThroughRouter (line 110)
+Kernel->handle() in /application/public/index.php (line 52) 

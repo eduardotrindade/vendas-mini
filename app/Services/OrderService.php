@@ -18,14 +18,14 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class OrderService
 {
-    private ContaAzulService $contaAzulService;
+    private $contaAzulService;
 
     public function __construct(ContaAzulService $contaAzulService)
     {
         $this->contaAzulService = $contaAzulService;
     }
 
-    public function insert(array $data): Order
+    public function insert($data)
     {
         DB::beginTransaction();
         try {
@@ -42,7 +42,7 @@ class OrderService
         return $order;
     }
 
-    private function createPayment(Order $order): void
+    private function createPayment($order)
     {
         SDK::setAccessToken(config('mercado-pago.access_token'));
 
@@ -79,7 +79,7 @@ class OrderService
         $order->save();
     }
 
-    public function paymentNotification(array $data): void
+    public function paymentNotification($data)
     {
         $typeNotification = $data['topic'] ?? $data['type'];
         if ($typeNotification !== 'payment') {
@@ -95,7 +95,7 @@ class OrderService
         $this->changeStatusPayment($order, $payment);
     }
 
-    public function searchStatusPayment(): void
+    public function searchStatusPayment()
     {
         try {
             SDK::setAccessToken(config('mercado-pago.access_token'));
@@ -122,7 +122,7 @@ class OrderService
         }
     }
 
-    private function changeStatusPayment(Order $order, Payment $payment): void
+    private function changeStatusPayment($order, $payment)
     {
         if ($payment->status !== 'approved') {
             return;
@@ -136,7 +136,7 @@ class OrderService
         Mail::to($order->people->email)->send(new OrderIdentifiedPayment($order));
     }
 
-    public function export(): string
+    public function export()
     {
         $file = storage_path('app/compras.csv');
         $handle = fopen($file, 'w');

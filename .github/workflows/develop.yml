@@ -1,4 +1,4 @@
-name: 🧪 Develop
+name: 🧪 Develop Deploy
 
 on:
   push:
@@ -9,47 +9,63 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Get latest code
-        uses: actions/checkout@v1
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           ref: develop
 
-      - name: Frontend - setup enviroment
-        uses: actions/setup-node@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '12'
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: resources/vue/package-lock.json
 
-      - name: Frontend - install dependencies and build
+      - name: Install frontend dependencies and build
         run: |
-          cd ./resources/vue/ && \
-          npm install && \
+          cd ./resources/vue/
+          npm ci
           npm run build
 
-      - name: Backend - setup enviroment
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
+          extensions: bcmath, gd, intl, mbstring, mysql, pdo, pdo_mysql, zip, soap
+          coverage: none
 
-      - name: Backend - install dependencies
-        run: composer install --prefer-dist --no-dev --optimize-autoloader --no-suggest --ignore-platform-reqs --no-scripts --no-interaction
+      - name: Install Composer dependencies
+        run: |
+          composer install --prefer-dist --no-dev --optimize-autoloader --no-scripts --no-interaction
 
-      - name: Backend - build application
+      - name: Generate application keys
         env:
-          ENV_FILE: ${{ secrets.HOM_ENV_FILE }}
+          ENV_FILE: ${{ secrets.DEV_ENV_FILE }}
         run: |
           echo $ENV_FILE | base64 --decode > .env
-          php artisan key:generate --ansi
+          php artisan key:generate --force
           php artisan jwt:secret --force
           php artisan config:clear
           php artisan view:clear
           php artisan route:clear
+          php artisan cache:clear
 
-      - name: Sync files
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: develop-build
+          path: |
+            .
+            !.git
+            !node_modules
+            !resources/vue/node_modules
+
+      - name: Deploy to develop FTP
         uses: airvzxf/ftp-deployment-action@latest
         with:
-          server: ${{ secrets.PROD_GIT_FTP_URL }}
-          user: ${{ secrets.PROD_FTP_USER }}
-          password: ${{ secrets.PROD_FTP_PWD }}
+          server: ${{ secrets.DEV_FTP_URL }}
+          user: ${{ secrets.DEV_FTP_USER }}
+          password: ${{ secrets.DEV_FTP_PWD }}
           local_dir: "./"
           remote_dir: "/vendas"
           ftp_ssl_allow: "true"

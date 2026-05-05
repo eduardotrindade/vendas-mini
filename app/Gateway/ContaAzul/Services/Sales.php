@@ -7,8 +7,8 @@ use GuzzleHttp\RequestOptions;
 
 final class Sales
 {
-    private HttpClient $http;
-    private Auth $auth;
+    private $http;
+    private $auth;
 
     public function __construct(Auth $auth)
     {
@@ -16,12 +16,7 @@ final class Sales
         $this->auth = $auth;
     }
 
-    /**
-     * @param array $sale
-     * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function create(array $sale): array
+    public function create($sale)
     {
         $response = $this->http->post(
             '/v1/sales',

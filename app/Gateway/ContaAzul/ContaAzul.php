@@ -8,17 +8,17 @@ use App\Gateway\ContaAzul\Services\Sales;
 
 final class ContaAzul
 {
-    public static function auth(): Auth
+    public static function auth()
     {
         return app(Auth::class);
     }
 
-    public static function customers(): Customers
+    public static function customers()
     {
         return app(Customers::class);
     }
 
-    public static function sales(): Sales
+    public static function sales()
     {
         return app(Sales::class);
     }
