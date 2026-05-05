@@ -1,18 +1,29 @@
-
 222:
 223: -------------------------------------------
-224: 
-225: Data: 28/04/2026 - Alteração para deploy via SSH
-226: ===============================
-227: 1. Motivo
-228:    - Produzir deploy mais seguro usando rsync/ssh em vez de FTP.
-229: 2. Implementação
-230:    - Substituído trabalho `airvzxf/ftp-deployment-action` por `appleboy/ssh-action`.
-231:    - Adicionado novo secret `PROD_SSH_HOST`, `PROD_SSH_USER`, `PROD_SSH_KEY`.
-232:    - Workflow atualiza `remote_dir: /vendas` via `rsync -avz --delete`.
-233:    - Arquivos temporários mantidos apenas no runner.
-234:    - Testes de integração enviados via `docker compose up` local.
-235: 3. Passos futuros
-236:    - Configuração de chave SSH sem senha (passphrase‑free) no repositório.
-237:    - Backup de arquivos antigos no servidor antes do deploy.
-238:"
+
+224: Data: 05/05/2026 - Remoção de botões Master e ajuste no menu Contato
+225: ===============================
+226: 1. Alterações
+227:    - Removido botão "Quero Ser Master" da seção Hero.
+228:    - Removidos campos de Nome, Email e WhatsApp do formulário de contato.
+229:    - Alterado link do menu CONTATO para http://localhost:8003/seja-nosso-representante.
+230:    - Substituído formulário por botão direto para página de cadastro.
+231: 2. Arquivo modificado
+232:    - resources/vue/src/views/LandingPage.vue
+
+233: -------------------------------------------
+
+234: Data: 28/04/2026 - Alteração para deploy via SSH
+235: ===============================
+236: 1. Motivo
+237:    - Produzir deploy mais seguro usando rsync/ssh em vez de FTP.
+238: 2. Implementação
+239:    - Substituído trabalho `airvzxf/ftp-deployment-action` por `appleboy/ssh-action`.
+240:    - Adicionado novo secret `PROD_SSH_HOST`, `PROD_SSH_USER`, `PROD_SSH_KEY`.
+241:    - Workflow atualiza `remote_dir: /vendas` via `rsync -avz --delete`.
+242:    - Arquivos temporários mantidos apenas no runner.
+243:    - Testes de integração enviados via `docker compose up` local.
+244: 3. Passos futuros
+245:    - Configuração de chave SSH sem senha (passphrase‑free) no repositório.
+246:    - Backup de arquivos antigos no servidor antes do deploy.
+247:
