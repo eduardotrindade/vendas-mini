@@ -12,6 +12,16 @@
 232: 2. Arquivo modificado
 233:    - resources/vue/src/views/LandingPage.vue
 
+234: -------------------------------------------
+
+235: Data: 05/05/2026 - Atualização Node.js para v24 nos workflows
+236: ===============================
+237: 1. Alterações
+238:    - Atualizado node-version de 18 para 24 em production.yml e develop.yml.
+239: 2. Arquivos modificados
+240:    - .github/workflows/production.yml
+241:    - .github/workflows/develop.yml
+
 233: -------------------------------------------
 
 234: Data: 28/04/2026 - Alteração para deploy via SSH
