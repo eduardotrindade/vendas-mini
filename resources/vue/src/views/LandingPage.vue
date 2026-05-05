@@ -13,8 +13,7 @@
           <a href="#ganhos" class="hover:text-orange-400">Ganhos</a>
           <a href="http://localhost:8003/seja-nosso-representante" class="hover:text-orange-400">Contato</a>
         </nav>
-        <a href="#contato" class="bg-orange-500 hover:bg-orange-600 px-5 py-2 rounded-xl font-semibold" style="background-color: #f97316;">Seja Master</a>
-      </div>
+        </div>
     </header>
 
     <!-- Hero -->
@@ -101,13 +100,7 @@
     <section id="contato" class="py-24 bg-orange-500 text-white text-center" style="background-color: #f97316;">
       <div class="max-w-4xl mx-auto px-6">
         <h2 class="text-5xl font-extrabold mb-6">Comece sua operação agora.</h2>
-        <p class="text-xl mb-10">
-          Entre para a rede nacional de Masters Minisitio e aproveite uma oportunidade escalável no mercado digital.
-        </p>
-        <a href="http://localhost:8003/seja-nosso-representante" class="inline-block bg-slate-900 hover:bg-slate-800 rounded-xl font-bold px-8 py-4 text-lg" style="background-color: #0f172a;">
-          Quero Ser Master
-        </a>
-      </div>
+        </div>
     </section>
 
     <!-- Footer -->

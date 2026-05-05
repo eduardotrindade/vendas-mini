@@ -4,12 +4,13 @@
 224: Data: 05/05/2026 - Remoção de botões Master e ajuste no menu Contato
 225: ===============================
 226: 1. Alterações
-227:    - Removido botão "Quero Ser Master" da seção Hero.
-228:    - Removidos campos de Nome, Email e WhatsApp do formulário de contato.
-229:    - Alterado link do menu CONTATO para http://localhost:8003/seja-nosso-representante.
-230:    - Substituído formulário por botão direto para página de cadastro.
-231: 2. Arquivo modificado
-232:    - resources/vue/src/views/LandingPage.vue
+227:    - Removido botão "Quero Ser Master" do Header.
+228:    - Removido botão "Quero Ser Master" da seção Hero.
+229:    - Removido botão "Quero Ser Master" da seção CTA.
+230:    - Removidos campos de Nome, Email e WhatsApp do formulário de contato.
+231:    - Alterado link do menu CONTATO para http://localhost:8003/seja-nosso-representante.
+232: 2. Arquivo modificado
+233:    - resources/vue/src/views/LandingPage.vue
 
 233: -------------------------------------------
 
